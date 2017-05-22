@@ -12,7 +12,7 @@ This repository contains LAPR2 project work.
 
 ### Contribution guidelines ###
 
-* Writing tests & other guidelins: [Moodle LAPR2](https://moodle.isep.ipp.pt/course/view.php?id=4779)
+* Writing tests & other guidelines: [Moodle LAPR2](https://moodle.isep.ipp.pt/course/view.php?id=4779)
 
 ### Who do I talk to? ###
 
