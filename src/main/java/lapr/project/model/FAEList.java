@@ -59,7 +59,7 @@ public class FAEList {
      * @param user User
      * @return true if the user exists
      */
-    boolean hasFAE(Utilizador user) {
+    boolean hasFAE(User user) {
         for (FAE fae : faeList) {
             if (fae.isUser(user)) {
                 return true;
