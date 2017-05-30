@@ -47,7 +47,7 @@ public class FAE implements Serializable{
      */
     public boolean isUser(User user) {
         if (this.user != null) {
-            return this.user.equals(u);
+            return this.user.equals(user);
         }
         return false;
     }
@@ -62,18 +62,16 @@ public class FAE implements Serializable{
         if (this == other) {
             return true;
         }
-
         if (other == null || getClass() != other.getClass()) {
             return false;
         }
-
         return other.isUser(user);
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 89 * hash + Objects.hashCode(this.utilizador);
+        hash = 89 * hash + Objects.hashCode(this.user);
         return hash;
     }
 }
