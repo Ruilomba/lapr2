@@ -19,8 +19,7 @@ class Main {
 	 */
 	public static void main(String[] args) {
 
-		CalculatorExample calculatorExample = new CalculatorExample();
-		System.out.println(calculatorExample.sum(3, 5));
+		EventCenter center = new EventCenter();
 	}
 
 }
