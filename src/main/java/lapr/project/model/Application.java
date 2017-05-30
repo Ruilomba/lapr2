@@ -7,6 +7,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.io.Serializable;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -18,17 +19,17 @@ import java.util.List;
  *
  * @author by Nuno Bettencourt [nmb@isep.ipp.pt] on 29/05/16.
  */
-public class Application implements Importable<Application>, Exportable {
+public class Application implements Importable<Application>, Exportable, Serializable {
 	private static final String ROOT_ELEMENT_NAME = "application";
 	private static final String DESCRIPTION_ELEMENT_NAME = "description";
 	private static final String KEYWORDS_ELEMENT_NAME = "keywords";
-	private final List<Keyword> keywordList = new ArrayList<>();
+	private final List<Keyword> keywordList = new ArrayList<Keyword>();
 	private String description = "";
 
 	/**
 	 * Constructor for Application
 	 *
-	 * @param description CandidaturaDescription
+	 * @param description Candidatura Description
 	 * @param keywordList Keyword List
 	 */
 	public Application(String description, List<Keyword> keywordList) {
@@ -71,7 +72,6 @@ public class Application implements Importable<Application>, Exportable {
 
 	}
 
-	@Override
 	public Node exportContentToXMLNode() throws ParserConfigurationException {
 		Node rootNode = null;
 
@@ -115,7 +115,6 @@ public class Application implements Importable<Application>, Exportable {
 		return rootNode;
 	}
 
-	@Override
 	public Application importContentFromXMLNode(Node node) throws ParserConfigurationException {
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

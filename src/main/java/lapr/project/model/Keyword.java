@@ -51,7 +51,6 @@ public class Keyword implements Exportable, Importable<Keyword> {
 		return this.value;
 	}
 
-	@Override
 	public Node exportContentToXMLNode() throws ParserConfigurationException {
 		Node node = null;
 
@@ -82,10 +81,8 @@ public class Keyword implements Exportable, Importable<Keyword> {
 		return node;
 	}
 
-	@Override
 	public Keyword importContentFromXMLNode(Node node) throws ParserConfigurationException {
-		DocumentBuilderFactory factory =
-				DocumentBuilderFactory.newInstance();
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		//Create document builder
 		DocumentBuilder builder = factory.newDocumentBuilder();
 
