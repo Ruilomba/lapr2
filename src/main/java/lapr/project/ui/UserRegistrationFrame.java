@@ -1,6 +1,8 @@
 package lapr.project.ui;
 
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import lapr.project.model.EventCenter;
 import lapr.project.model.User;
@@ -52,9 +54,12 @@ public class UserRegistrationFrame extends JFrame {
     }
 
     private void addListenerForSubmitButton() {
-        submitFormButton.addActionListener((java.awt.event.ActionEvent e) -> {
-            if (formIsValid()) {
+        submitFormButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (formIsValid()) {
                 submitForm();
+                }
             }
         });
     }
