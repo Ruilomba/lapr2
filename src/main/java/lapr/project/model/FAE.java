@@ -2,7 +2,6 @@ package lapr.project.model;
 
 
 import java.io.Serializable;
-import java.util.Objects;
 
 public class FAE implements Serializable{
     private User user;
@@ -65,13 +64,13 @@ public class FAE implements Serializable{
         if (other == null || getClass() != other.getClass()) {
             return false;
         }
-        return other.isUser(user);
+        return ((FAE)other).isUser(user);
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 89 * hash + Objects.hashCode(this.user);
+        hash = 89 * hash + this.user.hashCode();
         return hash;
     }
 }
