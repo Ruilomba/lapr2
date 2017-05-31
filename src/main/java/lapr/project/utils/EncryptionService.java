@@ -76,7 +76,7 @@ public class EncryptionService {
         return randomNumber;
     }
 
-    private static String encrypt(String originalMessage, int shift) {
+    static String encrypt(String originalMessage, int shift) {
         String cypher = "";
         int messageLength = originalMessage.length();
         for (int x = 0; x < messageLength; x++) {
@@ -90,7 +90,7 @@ public class EncryptionService {
         return cypher;
     }
 
-    private static String decrypt(String password, int shift) {
+    static String decrypt(String password, int shift) {
         String cypher = "";
         int messageLength = password.length();
         for (int x = 0; x < messageLength; x++) {
