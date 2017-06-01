@@ -66,7 +66,7 @@ public class Stand {
      *
      * @param area
      */
-    public void setLocal(double area) {
+    public void setArea(double area) {
         this.area = area;
     }
 
