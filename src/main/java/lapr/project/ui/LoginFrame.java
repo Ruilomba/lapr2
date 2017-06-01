@@ -3,12 +3,14 @@ package lapr.project.ui;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import javax.swing.*;
 import lapr.project.model.EventCenter;
 import lapr.project.utils.AuthenticationService;
 
 public class LoginFrame extends JFrame {
 
+    private static final long serialVersionUID = 1L;
     private final EventCenter eventCenter;
     private JLabel mainLabel;
     private JLabel usernameLabel;
@@ -46,8 +48,12 @@ public class LoginFrame extends JFrame {
                 if (formIsValid()) {
                     String username = usernameTextField.getText();
                     String password = passwordTextField.getText();
-                    if (AuthenticationService.loginUser(username, password)) {
-                        // TODO: send success message to user
+                    try {
+                        if (AuthenticationService.loginUser(username, password)) {
+                            // TODO: send success message to user
+                        }
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
                     }
                 }
             }

@@ -9,6 +9,7 @@ import lapr.project.model.User;
 
 public class UserRegistrationFrame extends JFrame {
 
+    private static final long serialVersionUID = 1L;
     private final EventCenter eventCenter;
     private JLabel mainLabel;
     private JLabel nameLabel;

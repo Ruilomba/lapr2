@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class StandRegistration {
 
+    private static final long serialVersionUID = 1L;
     private ArrayList<Stand> listStand;
 
     /**
@@ -95,14 +96,12 @@ public class StandRegistration {
      * @return
      */
     public boolean validStand(Stand s) {
-
         for (Stand std : listStand) {
-
-            if (std.getName().equalsIgnoreCase(s.getName()));
+            if (std.getName().equalsIgnoreCase(s.getName())) {
+                return false;
+            }
         }
-
         return true;
-
     }
 
 }

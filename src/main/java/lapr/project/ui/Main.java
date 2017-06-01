@@ -19,7 +19,9 @@ class Main {
         UserRegistrationFrame frame;
         frame = new UserRegistrationFrame(center);
         JWindow window = new JWindow();
+        /*
         window.setContentPane(frame);
+        */
         window.setAlwaysOnTop(true);
         window.setVisible(true);
     }

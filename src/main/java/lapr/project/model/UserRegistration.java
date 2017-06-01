@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 public class UserRegistration implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private List<User> userList;
     
     public UserRegistration() {
