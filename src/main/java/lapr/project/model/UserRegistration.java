@@ -48,7 +48,7 @@ public class UserRegistration implements Serializable {
         return null;
     }
     
-    public void addUser(User u) {
+    private void addUser(User u) {
         userList.add(u);
     }
 

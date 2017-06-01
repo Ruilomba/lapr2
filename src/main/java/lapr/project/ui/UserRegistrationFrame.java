@@ -50,6 +50,7 @@ public class UserRegistrationFrame extends JFrame {
         passwordTextField = new JTextField(25);
         confirmPasswordLabel = new JLabel("Confirm password");
         confirmPasswordTextField = new JTextField(25);
+        submitFormButton = new JButton("Create User");
         errorMessageLabel = new JLabel();
     }
 
@@ -140,9 +141,6 @@ public class UserRegistrationFrame extends JFrame {
         add(passwordTextField);
         add(confirmPasswordLabel);
         add(confirmPasswordTextField);
-    }
-
-    private CharSequence CharSequence() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        add(submitFormButton);
     }
 }

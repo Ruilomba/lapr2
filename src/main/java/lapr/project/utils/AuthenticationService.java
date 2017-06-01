@@ -1,32 +1,45 @@
 package lapr.project.utils;
 
-import java.util.Properties;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Properties;
 import java.util.concurrent.ThreadLocalRandom;
 import lapr.project.model.User;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 /**
  *
- * @author inesmartins
+ * @author softwareadapttech
  */
-public class EncryptionService {
+public class AuthenticationService {
 
-    public static boolean encryptAndSavePassword(String username, String originalPassword)
+    /**
+     * registers new user
+     * @param username
+     * @param password
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
+    public static boolean registerUser(String username, String password)
             throws FileNotFoundException, IOException {
 
         int userShift = generateRandomShift();
-        String encryptedPassword = encrypt(originalPassword, userShift);
+        String encryptedPassword = encryptWithCeaserCypher(password, userShift);
 
         Properties properties = new Properties();
         properties.setProperty("Username", username);
         properties.setProperty("Password", encryptedPassword);
-        properties.setProperty("Shift", String(userShift));
+        properties.setProperty("Shift", String.valueOf(userShift));
 
         try {
             File file = new File(username + ".properties");
@@ -41,7 +54,37 @@ public class EncryptionService {
         return true;
     }
 
-    public static boolean checkIfPasswordIsValid(User user, String encryptedPassword) {
+    /**
+     * authenticates user
+     * @param username
+     * @param password
+     * @return 
+     */
+    public static boolean loginUser(String username, String password) {
+        User user = getUserWithUsernameInDatabase(username);
+        if (user != null) {
+            return checkIfPasswordIsValid(user, password);
+        }
+        return false;
+    }
+
+    /**
+     * finds user with specified username in database
+     * @param username
+     * @return 
+     */
+    private static User getUserWithUsernameInDatabase(String username) {
+        // TODO: implement
+        return new User();
+    }
+
+    /**
+     * checks if given password matches stored password
+     * @param user
+     * @param encryptedPassword
+     * @return 
+     */
+    private static boolean checkIfPasswordIsValid(User user, String encryptedPassword) {
         try {
             String filename = user.getUsername() + ".properties";
             File file = new File(filename);
@@ -54,10 +97,9 @@ public class EncryptionService {
                 String shift = properties.getProperty("Shift");
                 try {
                     int intShift = Integer.parseInt(shift);
-                    String decryptedPassword = decrypt(encryptedPassword, intShift);
+                    String decryptedPassword = decryptWithCeaserCypher(encryptedPassword, intShift);
                     return decryptedPassword.equals(user.getPassword());
-                }
-                catch (NumberFormatException e) {
+                } catch (NumberFormatException e) {
                     System.out.println("\"Unable to parse user shift");
                     return false;
                 }
@@ -69,6 +111,10 @@ public class EncryptionService {
         }
     }
 
+    /**
+     * generates random shift < 26
+     * @return 
+     */
     private static int generateRandomShift() {
         int min = 1;
         int max = 25;
@@ -76,7 +122,13 @@ public class EncryptionService {
         return randomNumber;
     }
 
-    static String encrypt(String originalMessage, int shift) {
+    /**
+     * encrypt password with ceaser cypher
+     * @param originalMessage
+     * @param shift
+     * @return 
+     */
+    private static String encryptWithCeaserCypher(String originalMessage, int shift) {
         String cypher = "";
         int messageLength = originalMessage.length();
         for (int x = 0; x < messageLength; x++) {
@@ -90,7 +142,13 @@ public class EncryptionService {
         return cypher;
     }
 
-    static String decrypt(String password, int shift) {
+    /**
+     * decrypts password with ceaser cypher
+     * @param password
+     * @param shift
+     * @return 
+     */
+    private static String decryptWithCeaserCypher(String password, int shift) {
         String cypher = "";
         int messageLength = password.length();
         for (int x = 0; x < messageLength; x++) {
@@ -102,9 +160,5 @@ public class EncryptionService {
             }
         }
         return cypher;
-    }
-
-    private static String String(int userShift) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
