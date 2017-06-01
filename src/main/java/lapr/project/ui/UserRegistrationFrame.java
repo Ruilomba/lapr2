@@ -70,6 +70,11 @@ public class UserRegistrationFrame extends JFrame {
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
         String confirmPassword = confirmPasswordTextField.getText();
+        
+        CharSequence numberSequence = "1234567890";
+        CharSequence punctuationMarksSequence;
+        punctuationMarksSequence = ".,;:-";
+        
         if (name == null || name.isEmpty()) {
             errorMessageLabel.setText("Name is invalid");
             return false;
@@ -88,6 +93,18 @@ public class UserRegistrationFrame extends JFrame {
         }
         else if (confirmPassword == null || confirmPassword.isEmpty()) {
             errorMessageLabel.setText("Confirm password is invalid");
+            return false;
+        }
+        else if (!password.contains(numberSequence)) {
+            errorMessageLabel.setText("The user password must include a number");
+            return false;
+        }
+        else if (!password.matches(".*[A-Z].*") || !password.matches(".*[a-z].*")) {
+            errorMessageLabel.setText("The password must include upper and lowercase characters");
+            return false;
+        }
+        else if (!password.contains(punctuationMarksSequence)) {
+            errorMessageLabel.setText("The user password must include a punctuation mark (“,”, “.”, “;”, “:” or “-“)");
             return false;
         }
         else if (!password.equals(confirmPassword)) {
@@ -123,5 +140,9 @@ public class UserRegistrationFrame extends JFrame {
         add(passwordTextField);
         add(confirmPasswordLabel);
         add(confirmPasswordTextField);
+    }
+
+    private CharSequence CharSequence() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
