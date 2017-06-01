@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 import java.util.concurrent.ThreadLocalRandom;
-import lapr.project.model.User;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -24,11 +23,12 @@ public class AuthenticationService {
 
     /**
      * registers new user
+     *
      * @param username
      * @param password
      * @return
      * @throws FileNotFoundException
-     * @throws IOException 
+     * @throws IOException
      */
     public static boolean registerUser(String username, String password)
             throws FileNotFoundException, IOException {
@@ -56,64 +56,70 @@ public class AuthenticationService {
 
     /**
      * authenticates user
+     *
      * @param username
      * @param password
-     * @return 
+     * @return
+     * @throws java.io.IOException
      */
-    public static boolean loginUser(String username, String password) {
-        User user = getUserWithUsernameInDatabase(username);
-        if (user != null) {
-            return checkIfPasswordIsValid(user, password);
+    public static boolean loginUser(String username, String password) throws IOException {
+        if (passwordIsValid(username, password)) {
+            saveUsernameAsGlobalVariable();
+            return true;
         }
         return false;
     }
-
-    /**
-     * finds user with specified username in database
-     * @param username
-     * @return 
-     */
-    private static User getUserWithUsernameInDatabase(String username) {
-        // TODO: implement
-        return new User();
+    
+    private static void saveUsernameAsGlobalVariable() {
+        // TODO: COMPLETE
+        throw new UnsupportedOperationException();
     }
 
     /**
-     * checks if given password matches stored password
-     * @param user
-     * @param encryptedPassword
-     * @return 
+     * checks if password entered by user is valid
+     * @param username
+     * @param userPassword
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException 
      */
-    private static boolean checkIfPasswordIsValid(User user, String encryptedPassword) {
+    private static boolean passwordIsValid(String username, String password) throws FileNotFoundException, IOException {
+        String filename = username + ".properties";
         try {
-            String filename = user.getUsername() + ".properties";
             File file = new File(filename);
             if ((file.exists() && !file.isDirectory())) {
                 Properties properties = new Properties();
                 InputStream input = new FileInputStream(filename);
                 properties.load(input);
-                String usrName = properties.getProperty("Username");
-                String password = properties.getProperty("Password");
-                String shift = properties.getProperty("Shift");
+                String storedPassword = properties.getProperty("Password");
+                String storedShift = properties.getProperty("Shift");
+                int intShift = 0;
                 try {
-                    int intShift = Integer.parseInt(shift);
-                    String decryptedPassword = decryptWithCeaserCypher(encryptedPassword, intShift);
-                    return decryptedPassword.equals(user.getPassword());
+                    intShift = Integer.parseInt(storedShift);
                 } catch (NumberFormatException e) {
                     System.out.println("\"Unable to parse user shift");
                     return false;
                 }
+                if (intShift > 0) {
+                    String decryptedPassword = decryptWithCeaserCypher(storedPassword, intShift);
+                    return decryptedPassword.equals(password);                    
+                }
             }
             return false;
-        } catch (Exception e) {
-            System.out.println("Unable to save properties in file");
-            return false;
         }
+        catch (FileNotFoundException e) {
+            System.out.println("Unable to read from file " + filename + ": " + e.getMessage());            
+        }
+        catch (IOException e) {
+            System.out.println("Unable to read user data from properties file: " + e.getMessage());
+        }
+        return false;
     }
-
+ 
     /**
      * generates random shift < 26
-     * @return 
+     *
+     * @return
      */
     private static int generateRandomShift() {
         int min = 1;
@@ -123,10 +129,11 @@ public class AuthenticationService {
     }
 
     /**
-     * encrypt password with ceaser cypher
+     * encrypt password with "Ceaser cypher"
+     *
      * @param originalMessage
      * @param shift
-     * @return 
+     * @return
      */
     private static String encryptWithCeaserCypher(String originalMessage, int shift) {
         String cypher = "";
@@ -143,10 +150,11 @@ public class AuthenticationService {
     }
 
     /**
-     * decrypts password with ceaser cypher
+     * decrypts password with "Ceaser cypher"
+     *
      * @param password
      * @param shift
-     * @return 
+     * @return
      */
     private static String decryptWithCeaserCypher(String password, int shift) {
         String cypher = "";

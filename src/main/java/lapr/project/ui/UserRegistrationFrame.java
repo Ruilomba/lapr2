@@ -59,7 +59,11 @@ public class UserRegistrationFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (formIsValid()) {
-                submitForm();
+                    submitForm();
+                    showSuccessAlert();
+                }
+                else {
+                    showErrorAlert();
                 }
             }
         });
@@ -142,5 +146,13 @@ public class UserRegistrationFrame extends JFrame {
         add(confirmPasswordLabel);
         add(confirmPasswordTextField);
         add(submitFormButton);
+    }
+    
+    private void showSuccessAlert() {
+        JOptionPane.showMessageDialog(this, "Success", "User was registrated successfully", JOptionPane.PLAIN_MESSAGE);
+    }
+    
+    private void showErrorAlert() {
+        JOptionPane.showMessageDialog(this, "Error", "Login is invalid", JOptionPane.WARNING_MESSAGE);
     }
 }
