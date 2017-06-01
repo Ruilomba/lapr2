@@ -15,46 +15,48 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Candidatura class.
+ * Submission class.
  *
  * @author by Nuno Bettencourt [nmb@isep.ipp.pt] on 29/05/16.
  */
-public class Application implements Importable<Application>, Exportable, Serializable {
+public class Submission implements Importable<Submission>, Exportable, Serializable {
 	private static final String ROOT_ELEMENT_NAME = "application";
 	private static final String DESCRIPTION_ELEMENT_NAME = "description";
 	private static final String KEYWORDS_ELEMENT_NAME = "keywords";
 	private final List<Keyword> keywordList = new ArrayList<Keyword>();
+	private FAERating rating;
 	private String description = "";
 
 	/**
-	 * Constructor for Application
+	 * Constructor for Submission
 	 *
 	 * @param description Candidatura Description
 	 * @param keywordList Keyword List
 	 */
-	public Application(String description, List<Keyword> keywordList) {
+	public Submission(FAERating rating, String description, List<Keyword> keywordList) {
 		this.description = description;
 		this.keywordList.addAll(keywordList);
+		this.rating = rating;
 	}
 
 	/**
 	 * Default public constructor.
 	 */
-	public Application() {
+	public Submission() {
 
 	}
 
 	/**
-	 * Obtain Candidatura's description.
+	 * Obtain Submission description.
 	 *
-	 * @return Candidatura description
+	 * @return Submission description
 	 */
-	private String getDescription() {
+	String getDescription() {
 		return description;
 	}
 
 	/**
-	 * Add a keyword to Candidatura.
+	 * Add a keyword to Submission.
 	 *
 	 * @param keyword Keyword to be added.
 	 */
@@ -115,7 +117,7 @@ public class Application implements Importable<Application>, Exportable, Seriali
 		return rootNode;
 	}
 
-	public Application importContentFromXMLNode(Node node) throws ParserConfigurationException {
+	public Submission importContentFromXMLNode(Node node) throws ParserConfigurationException {
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -159,16 +161,15 @@ public class Application implements Importable<Application>, Exportable, Seriali
 		if (this == o) {
 			return true;
 		}
-		if (!(o instanceof Application)) {
+		if (!(o instanceof Submission)) {
 			return false;
 		}
 
-		Application that = (Application) o;
+		Submission that = (Submission) o;
 
 		if (!getDescription().equals(that.getDescription())) {
 			return false;
 		}
 		return getKeywordList().equals(that.getKeywordList());
-
 	}
 }

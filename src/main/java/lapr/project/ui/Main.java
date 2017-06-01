@@ -14,7 +14,7 @@ class Main {
 	 * @param args the command line arguments
 	 */
 	public static void main(String[] args) {
-		EventCenter center = new EventCenter();
+        System.out.println("sadasdf");
 	}
 
 }
