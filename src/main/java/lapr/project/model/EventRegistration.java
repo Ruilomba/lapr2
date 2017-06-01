@@ -18,6 +18,20 @@ public class EventRegistration {
     public void setEventList(List<Event> listaEventos) {
         this.eventList = eventList;
     }
+    
+    /**
+     * a ser editado
+//        public List<Event> getAvailableToApplicationEventList() {
+//
+//        List<Event> EventListAvailable = new ArrayList<>();
+//        for (Event e : eventList) {
+//            Data dataAtual = Data.dataAtual();
+//            if ((e.getDataFimSub().isMaior(dataAtual)) == true) {
+//                listaEventosValidos.add(e);
+//            }
+//        }
+//        return listaEventosValidos;
+//    }
 
     /*
     public List<Organizer> getListaOrganizadores() {
@@ -47,17 +61,7 @@ public class EventRegistration {
         return listaFaes;
     }
 
-    public List<Evento> getListaEventosSubmissao() {
 
-        List<Evento> listaEventosValidos = new ArrayList<>();
-        for (Evento e : listaEventos) {
-            Data dataAtual = Data.dataAtual();
-            if ((e.getDataFimSub().isMaior(dataAtual)) == true) {
-                listaEventosValidos.add(e);
-            }
-        }
-        return listaEventosValidos;
-    }
 
     public List getEventosOrganizador(Utilizador u) {
         List<Evento> output = new ArrayList<>();

@@ -8,6 +8,7 @@ public class EventCenter implements Serializable {
     private UserRegistration userRegistration;
 //    private AlgorithmRegistration algorithmRegistration;
 
+
     public EventCenter() {
         eventRegistration = new EventRegistration();
         userRegistration= new UserRegistration();
@@ -20,6 +21,9 @@ public class EventCenter implements Serializable {
     
     public UserRegistration getUserRegistration(){
         return userRegistration;
+    }
+    
+
     }
 
     /*
@@ -39,4 +43,4 @@ public class EventCenter implements Serializable {
         this.algorithmRegistration = algorithmRegistration;
     }
     */
-}
+
