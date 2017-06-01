@@ -1,12 +1,15 @@
 package lapr.project.ui;
 
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import lapr.project.model.EventCenter;
 import lapr.project.model.User;
 
 public class UserRegistrationFrame extends JFrame {
 
+    private static final long serialVersionUID = 1L;
     private final EventCenter eventCenter;
     private JLabel mainLabel;
     private JLabel nameLabel;
@@ -48,13 +51,21 @@ public class UserRegistrationFrame extends JFrame {
         passwordTextField = new JTextField(25);
         confirmPasswordLabel = new JLabel("Confirm password");
         confirmPasswordTextField = new JTextField(25);
+        submitFormButton = new JButton("Create User");
         errorMessageLabel = new JLabel();
     }
 
     private void addListenerForSubmitButton() {
-        submitFormButton.addActionListener((java.awt.event.ActionEvent e) -> {
-            if (formIsValid()) {
-                submitForm();
+        submitFormButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (formIsValid()) {
+                    submitForm();
+                    showSuccessAlert();
+                }
+                else {
+                    showErrorAlert();
+                }
             }
         });
     }
@@ -65,6 +76,11 @@ public class UserRegistrationFrame extends JFrame {
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
         String confirmPassword = confirmPasswordTextField.getText();
+        
+        CharSequence numberSequence = "1234567890";
+        CharSequence punctuationMarksSequence;
+        punctuationMarksSequence = ".,;:-";
+        
         if (name == null || name.isEmpty()) {
             errorMessageLabel.setText("Name is invalid");
             return false;
@@ -83,6 +99,18 @@ public class UserRegistrationFrame extends JFrame {
         }
         else if (confirmPassword == null || confirmPassword.isEmpty()) {
             errorMessageLabel.setText("Confirm password is invalid");
+            return false;
+        }
+        else if (!password.contains(numberSequence)) {
+            errorMessageLabel.setText("The user password must include a number");
+            return false;
+        }
+        else if (!password.matches(".*[A-Z].*") || !password.matches(".*[a-z].*")) {
+            errorMessageLabel.setText("The password must include upper and lowercase characters");
+            return false;
+        }
+        else if (!password.contains(punctuationMarksSequence)) {
+            errorMessageLabel.setText("The user password must include a punctuation mark (“,”, “.”, “;”, “:” or “-“)");
             return false;
         }
         else if (!password.equals(confirmPassword)) {
@@ -118,5 +146,14 @@ public class UserRegistrationFrame extends JFrame {
         add(passwordTextField);
         add(confirmPasswordLabel);
         add(confirmPasswordTextField);
+        add(submitFormButton);
+    }
+    
+    private void showSuccessAlert() {
+        JOptionPane.showMessageDialog(this, "Success", "User was registrated successfully", JOptionPane.PLAIN_MESSAGE);
+    }
+    
+    private void showErrorAlert() {
+        JOptionPane.showMessageDialog(this, "Error", "Login is invalid", JOptionPane.WARNING_MESSAGE);
     }
 }
