@@ -50,16 +50,16 @@ public class Application implements Importable<Application>, Exportable, Seriali
 	}
 
 	/**
-	 * Obtain Submission description.
+	 * Obtain Application description.
 	 *
-	 * @return Submission description
+	 * @return Application description
 	 */
 	String getDescription() {
 		return description;
 	}
 
 	/**
-	 * Add a keyword to Submission.
+	 * Add a keyword to Application.
 	 *
 	 * @param keyword Keyword to be added.
 	 */

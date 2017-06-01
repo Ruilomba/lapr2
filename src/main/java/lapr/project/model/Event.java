@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import lapr.project.states.EventState;
+import lapr.project.states.EventStateDefinedFAE;
+import lapr.project.states.EventStateToReceivingApplications;
+import lapr.project.states.StartingEventState;
 
 
     public class Event implements Serializable {
@@ -16,7 +19,7 @@ import lapr.project.states.EventState;
     private String local;
     private Date dataInicio;
     private Date dataFim;
-    private FAEList FaeList;
+    private FAEList faeList;
     private OrganizerRegistration registoOrganizadores;
     private ApplicationRegistration registoCandidaturas;
     private AtribuitionList listaAtribuicoes;
@@ -25,6 +28,19 @@ import lapr.project.states.EventState;
     private EventType tipoEvento;
     private EventState eventState;
 
+    
+    
+    public Event() {
+        this.registoOrganizadores = new OrganizerRegistration();
+        this.faeList = new FAEList();
+        this.registoCandidaturas = new ApplicationRegistration();
+        this.listaAtribuicoes = new AtribuitionList();
+        this.dataFim = new Date();
+        this.dataInicio = new Date();
+        this.dataInicioSubCandidatura = new Date();
+        this.tipoEvento=new Exhibition();
+        this.eventState=new StartingEventState();
+    }
     /**
      * @return the titulo
      */
@@ -64,7 +80,7 @@ import lapr.project.states.EventState;
      * @return the FaeList
      */
     public FAEList getFaeList() {
-        return FaeList;
+        return faeList;
     }
 
     /**
@@ -155,7 +171,7 @@ import lapr.project.states.EventState;
      * @param FaeList the FaeList to set
      */
     public void setFaeList(FAEList FaeList) {
-        this.FaeList = FaeList;
+        this.faeList = FaeList;
     }
 
     /**
@@ -205,6 +221,13 @@ import lapr.project.states.EventState;
      */
     public void setEventState(EventState eventState) {
         this.eventState = eventState;
+    }
+    public boolean setToReceivingAplications(){
+        if(this.eventState instanceof EventStateDefinedFAE){
+            this.eventState= new EventStateToReceivingApplications();
+            return true;
+        }
+        return false;
     }
 
     

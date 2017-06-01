@@ -9,7 +9,7 @@ public class SubmissionAssignment {
 
     /**
      * Object constructor
-     * @param submission assigned Submission
+     * @param submission assigned Application
      * @param faeList List of FAE for this submission
      */
     public SubmissionAssignment(Application submission, List<FAE> faeList, List<FAERating> faeRatings) {
