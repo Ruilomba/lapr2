@@ -25,6 +25,12 @@ public class CreateStandController {
 
     private EventCenter eventCenter;
 
+    
+    /**
+     * 
+     * @param std
+     * @param eventCenter 
+     */
     public CreateStandController(Stand std, EventCenter eventCenter) {
 
         this.std = std;
