@@ -3,6 +3,7 @@ package lapr.project.model;
 import java.util.List;
 
 public class ApplicationAssign {
+    
     private final Application application;
     private final List<FAE> faeList;
 

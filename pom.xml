@@ -151,6 +151,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.19.1</version>
                 <configuration>
+                    <printSummary>true</printSummary>
                     <!-- same configuration as in the regular test execution goal -->
                     <!-- plus argLine parameter configured by JaCoCo prepare-agent -->
                     <argLine>${argLine} -XX:-UseSplitVerifier</argLine>

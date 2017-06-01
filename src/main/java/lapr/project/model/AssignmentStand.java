@@ -14,7 +14,6 @@ import java.io.Serializable;
 public class AssignmentStand implements Serializable {
 
     private Event event;
-
     private Stand std;
 
     /**

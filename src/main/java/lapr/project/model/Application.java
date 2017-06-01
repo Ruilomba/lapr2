@@ -20,7 +20,10 @@ import java.util.List;
  * @author by Nuno Bettencourt [nmb@isep.ipp.pt] on 29/05/16.
  */
 public class Application implements Importable<Application>, Exportable, Serializable {
-	private static final String ROOT_ELEMENT_NAME = "application";
+
+    
+    private static final long serialVersionUID = 1L;
+    private static final String ROOT_ELEMENT_NAME = "application";
 	private static final String DESCRIPTION_ELEMENT_NAME = "description";
 	private static final String KEYWORDS_ELEMENT_NAME = "keywords";
 	private final List<Keyword> keywordList = new ArrayList<Keyword>();
