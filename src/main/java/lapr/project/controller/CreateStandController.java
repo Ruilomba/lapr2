@@ -5,16 +5,16 @@
  */
 package lapr.project.controller;
 
-
 import lapr.project.model.EventCenter;
 import lapr.project.model.Stand;
 import lapr.project.model.StandRegistration;
-import lapr.project.model.
 
 /**
  *
  * @author Miguel Barros
  */
+import lapr.project.model.Event;
+
 public class CreateStandController {
 
     private Stand std;
@@ -25,11 +25,10 @@ public class CreateStandController {
 
     private EventCenter eventCenter;
 
-    
     /**
-     * 
+     *
      * @param std
-     * @param eventCenter 
+     * @param eventCenter
      */
     public CreateStandController(Stand std, EventCenter eventCenter) {
 

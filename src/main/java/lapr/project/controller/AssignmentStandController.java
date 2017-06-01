@@ -6,6 +6,7 @@
 package lapr.project.controller;
 
 import java.awt.Event;
+import java.io.Serializable;
 import lapr.project.model.EventCenter;
 import lapr.project.model.EventRegistration;
 import lapr.project.model.StandRegistration;
@@ -16,7 +17,7 @@ import lapr.project.model.*;
  *
  * @author Miguel Barros
  */
-public class AssignmentStandController {
+public class AssignmentStandController implements Serializable{
     
     private EventCenter eventCenter;
     private EventRegistration eventRegistration;
@@ -28,9 +29,14 @@ public class AssignmentStandController {
     public AssignmentStandController ( EventCenter eventCenter){
         
         this.eventCenter = eventCenter;
-        this.eventCenter = eventCenter.getEventRegistration();
-        this.eventCenter = 
-        .
+        this.eventRegistration = eventCenter.getEventRegistration();
+        this.appRegistration = 
+        this.stdRegistration = eventCenter.getStandRegistration();
+        
+        
+                
+        
+        
         
     }
     
