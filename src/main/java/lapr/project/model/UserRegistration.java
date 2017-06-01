@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 public class UserRegistration implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private List<User> userList;
     
     public UserRegistration() {
@@ -48,7 +49,7 @@ public class UserRegistration implements Serializable {
         return null;
     }
     
-    public void addUser(User u) {
+    private void addUser(User u) {
         userList.add(u);
     }
 

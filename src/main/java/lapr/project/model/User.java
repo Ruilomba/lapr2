@@ -1,9 +1,11 @@
 package lapr.project.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class User implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private String name;
     private String email;
     public String username;
@@ -64,11 +66,33 @@ public class User implements Serializable {
     }
     
     @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 83 * hash + Objects.hashCode(this.email);
+        hash = 83 * hash + Objects.hashCode(this.username);
+        return hash;
+    }
+
+    @Override
     public boolean equals(Object obj) {
-        if (obj == null || obj.getClass() != this.getClass()) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        User u = (User) obj;
-        return this.email.equalsIgnoreCase(u.getEmail()) && this.username.equals(u.getUsername());
-    }    
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final User other = (User) obj;
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (!Objects.equals(this.username, other.username)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }

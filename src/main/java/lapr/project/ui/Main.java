@@ -16,10 +16,14 @@ class Main {
      */
     public static void main(String[] args) {
         EventCenter center = new EventCenter();
-        UserRegistrationFrame frame;
-        frame = new UserRegistrationFrame(center);
+        
+        // creates user registration frame for testing purposes
+        UserRegistrationFrame userRegistrationFrame;
+        userRegistrationFrame = new UserRegistrationFrame(center);
+
+        // creates and adds main window to 
         JWindow window = new JWindow();
-        window.setContentPane(frame);
+        window.setContentPane(userRegistrationFrame);
         window.setAlwaysOnTop(true);
         window.setVisible(true);
     }

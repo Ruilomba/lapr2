@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class FAE implements Serializable {
     
+    private static final long serialVersionUID = 1L;
     private User user;
 
     public FAE () {
