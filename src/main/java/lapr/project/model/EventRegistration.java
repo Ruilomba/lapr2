@@ -73,7 +73,7 @@ public class EventRegistration {
     */
 
     
-    public Event novoEvento() {
+    public Event newEvent() {
         return new Event();
     }
 
