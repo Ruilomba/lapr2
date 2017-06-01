@@ -2,15 +2,21 @@ package lapr.project.model;
 
 import java.util.List;
 import java.util.ArrayList;
+
 /**
  * Created by francisco on 30-05-2017.
  */
 public class FAEList {
-    
+
     private List<FAE> faeList;
+
+    public FAEList() {
+        faeList = new ArrayList<>();
+    }
 
     /**
      * Object constructor
+     *
      * @param faeList list of FAE's
      */
     public FAEList(List<FAE> faeList) {
@@ -73,7 +79,7 @@ public class FAEList {
 //     * Constructs a new FAW
 //     * @return
 //     */
-//    public static FAE newFAE() {
-//        return new FAE();
-//    }
+    public FAE newFAE() {
+        return new FAE();
+    }
 }
