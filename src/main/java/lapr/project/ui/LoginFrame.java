@@ -1,6 +1,9 @@
 package lapr.project.ui;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -23,12 +26,17 @@ public class LoginFrame extends JFrame {
     public LoginFrame(EventCenter center) {
         super("User Registration");
         eventCenter = center;
-        setSize(150, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new FlowLayout());
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setSize(screenSize.width, screenSize.height);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(new FlowLayout());
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(0,1));
+        this.add(panel);
         createElements();
         addListenerForSubmitButton();
-        addElementsToContentPane();
+        addElementsToJPanel(panel);
+        this.setVisible(true);
     }
 
     private void createElements() {
@@ -74,11 +82,11 @@ public class LoginFrame extends JFrame {
         return true;
     }
 
-    private void addElementsToContentPane() {
-        add(mainLabel);
-        add(usernameLabel);
-        add(usernameTextField);
-        add(passwordLabel);
-        add(passwordTextField);
+    private void addElementsToJPanel(JPanel panel) {
+        panel.add(mainLabel);
+        panel.add(usernameLabel);
+        panel.add(usernameTextField);
+        panel.add(passwordLabel);
+        panel.add(passwordTextField);
     }
 }
