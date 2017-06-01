@@ -25,5 +25,187 @@ import lapr.project.states.EventState;
     private EventType tipoEvento;
     private EventState eventState;
 
+    /**
+     * @return the titulo
+     */
+    public String getTitulo() {
+        return titulo;
+    }
+
+    /**
+     * @return the textoDescritivo
+     */
+    public String getTextoDescritivo() {
+        return textoDescritivo;
+    }
+
+    /**
+     * @return the local
+     */
+    public String getLocal() {
+        return local;
+    }
+
+    /**
+     * @return the dataInicio
+     */
+    public Date getDataInicio() {
+        return dataInicio;
+    }
+
+    /**
+     * @return the dataFim
+     */
+    public Date getDataFim() {
+        return dataFim;
+    }
+
+    /**
+     * @return the FaeList
+     */
+    public FAEList getFaeList() {
+        return FaeList;
+    }
+
+    /**
+     * @return the registoOrganizadores
+     */
+    public OrganizerRegistration getRegistoOrganizadores() {
+        return registoOrganizadores;
+    }
+
+    /**
+     * @return the registoCandidaturas
+     */
+    public ApplicationRegistration getRegistoCandidaturas() {
+        return registoCandidaturas;
+    }
+
+    /**
+     * @return the listaAtribuicoes
+     */
+    public AtribuitionList getListaAtribuicoes() {
+        return listaAtribuicoes;
+    }
+
+    /**
+     * @return the dataInicioSubCandidatura
+     */
+    public Date getDataInicioSubCandidatura() {
+        return dataInicioSubCandidatura;
+    }
+
+    /**
+     * @return the dataFimSubCandidatura
+     */
+    public Date getDataFimSubCandidatura() {
+        return dataFimSubCandidatura;
+    }
+
+    /**
+     * @return the tipoEvento
+     */
+    public EventType getTipoEvento() {
+        return tipoEvento;
+    }
+
+    /**
+     * @return the eventState
+     */
+    public EventState getEventState() {
+        return eventState;
+    }
+
+    /**
+     * @param titulo the titulo to set
+     */
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    /**
+     * @param textoDescritivo the textoDescritivo to set
+     */
+    public void setTextoDescritivo(String textoDescritivo) {
+        this.textoDescritivo = textoDescritivo;
+    }
+
+    /**
+     * @param local the local to set
+     */
+    public void setLocal(String local) {
+        this.local = local;
+    }
+
+    /**
+     * @param dataInicio the dataInicio to set
+     */
+    public void setDataInicio(Date dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    /**
+     * @param dataFim the dataFim to set
+     */
+    public void setDataFim(Date dataFim) {
+        this.dataFim = dataFim;
+    }
+
+    /**
+     * @param FaeList the FaeList to set
+     */
+    public void setFaeList(FAEList FaeList) {
+        this.FaeList = FaeList;
+    }
+
+    /**
+     * @param registoOrganizadores the registoOrganizadores to set
+     */
+    public void setRegistoOrganizadores(OrganizerRegistration registoOrganizadores) {
+        this.registoOrganizadores = registoOrganizadores;
+    }
+
+    /**
+     * @param registoCandidaturas the registoCandidaturas to set
+     */
+    public void setRegistoCandidaturas(ApplicationRegistration registoCandidaturas) {
+        this.registoCandidaturas = registoCandidaturas;
+    }
+
+    /**
+     * @param listaAtribuicoes the listaAtribuicoes to set
+     */
+    public void setListaAtribuicoes(AtribuitionList listaAtribuicoes) {
+        this.listaAtribuicoes = listaAtribuicoes;
+    }
+
+    /**
+     * @param dataInicioSubCandidatura the dataInicioSubCandidatura to set
+     */
+    public void setDataInicioSubCandidatura(Date dataInicioSubCandidatura) {
+        this.dataInicioSubCandidatura = dataInicioSubCandidatura;
+    }
+
+    /**
+     * @param dataFimSubCandidatura the dataFimSubCandidatura to set
+     */
+    public void setDataFimSubCandidatura(Date dataFimSubCandidatura) {
+        this.dataFimSubCandidatura = dataFimSubCandidatura;
+    }
+
+    /**
+     * @param tipoEvento the tipoEvento to set
+     */
+    public void setTipoEvento(EventType tipoEvento) {
+        this.tipoEvento = tipoEvento;
+    }
+
+    /**
+     * @param eventState the eventState to set
+     */
+    public void setEventState(EventState eventState) {
+        this.eventState = eventState;
+    }
+
     
 }
