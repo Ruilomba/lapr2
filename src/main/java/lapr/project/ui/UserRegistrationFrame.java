@@ -1,6 +1,10 @@
 package lapr.project.ui;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -25,16 +29,22 @@ public class UserRegistrationFrame extends JFrame {
     private JTextField confirmPasswordTextField;
     private JButton submitFormButton;
     private JLabel errorMessageLabel;
+    private JButton goToLoginButton;
 
     public UserRegistrationFrame(EventCenter center) {
         super("User Registration");
         eventCenter = center;
-        setSize(150, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new FlowLayout());
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setSize(screenSize.width, screenSize.height);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(new FlowLayout());
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(0,1));
+        this.add(panel);
         createElements();
         addListenerForSubmitButton();
-        addElementsToContentPane();
+        addElementsToJPanel(panel);
+        this.setVisible(true);
     }
 
     private void createElements() {
@@ -51,8 +61,10 @@ public class UserRegistrationFrame extends JFrame {
         passwordTextField = new JTextField(25);
         confirmPasswordLabel = new JLabel("Confirm password");
         confirmPasswordTextField = new JTextField(25);
-        submitFormButton = new JButton("Create User");
         errorMessageLabel = new JLabel();
+        errorMessageLabel.setForeground(Color.red);
+        submitFormButton = new JButton("Create User");
+        goToLoginButton = new JButton("Already registered?");
     }
 
     private void addListenerForSubmitButton() {
@@ -60,12 +72,16 @@ public class UserRegistrationFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (formIsValid()) {
-                    submitForm();
+                    registerUser();
                     showSuccessAlert();
                 }
-                else {
-                    showErrorAlert();
-                }
+            }
+        });
+        
+        goToLoginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // todo: GO TO LOGIN PAGE
             }
         });
     }
@@ -94,13 +110,14 @@ public class UserRegistrationFrame extends JFrame {
             return false;
         }
         else if (password == null || password.isEmpty()) {
-            errorMessageLabel.setText("Email is invalid");
+            errorMessageLabel.setText("Password is invalid");
             return false;
         }
         else if (confirmPassword == null || confirmPassword.isEmpty()) {
             errorMessageLabel.setText("Confirm password is invalid");
             return false;
         }
+        // TODO: not working
         else if (!password.contains(numberSequence)) {
             errorMessageLabel.setText("The user password must include a number");
             return false;
@@ -120,7 +137,7 @@ public class UserRegistrationFrame extends JFrame {
         return true;
     }
 
-    private boolean submitForm() {
+    private boolean registerUser() {
         String name = nameTextField.getText();
         String username = usernameTextField.getText();
         String email = emailTextField.getText();
@@ -133,20 +150,22 @@ public class UserRegistrationFrame extends JFrame {
         return true;
     }
 
-    private void addElementsToContentPane() {
-        add(mainLabel);
-        add(nameLabel);
-        add(nameTextField);
-        add(usernameLabel);
-        add(usernameTextField);
-        add(emailLabel);
-        add(emailTextField);
-        add(passwordLabel);
-        add(passwordFormatLabel);
-        add(passwordTextField);
-        add(confirmPasswordLabel);
-        add(confirmPasswordTextField);
-        add(submitFormButton);
+    private void addElementsToJPanel(JPanel panel) {
+        panel.add(mainLabel);
+        panel.add(nameLabel);
+        panel.add(nameTextField);
+        panel.add(usernameLabel);
+        panel.add(usernameTextField);
+        panel.add(emailLabel);
+        panel.add(emailTextField);
+        panel.add(passwordLabel);
+        panel.add(passwordFormatLabel);
+        panel.add(passwordTextField);
+        panel.add(confirmPasswordLabel);
+        panel.add(confirmPasswordTextField);
+        panel.add(errorMessageLabel);
+        panel.add(submitFormButton);
+        panel.add(goToLoginButton);
     }
     
     private void showSuccessAlert() {
