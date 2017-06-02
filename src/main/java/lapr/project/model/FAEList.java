@@ -13,6 +13,9 @@ public class FAEList {
     public FAEList() {
         faeList = new ArrayList<>();
     }
+    public FAEList(FAEList outraListaFae){
+        this.faeList= new ArrayList<>(outraListaFae.getFaeList());
+    }
 
     /**
      * Object constructor
@@ -82,4 +85,7 @@ public class FAEList {
     public FAE newFAE() {
         return new FAE();
     }
+    public List<FAE> getFaeList(){
+    return faeList;
+}
 }

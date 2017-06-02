@@ -33,26 +33,26 @@ public class CreateEventController {
 
     public void setDados(Event evento,String titulo, String descricao, Date dataInicio, Date dataFimEvento,
             Date dataInicioSubmissao, Date dataFimSubmissao, String local) {
-        evento.setTitulo(titulo);
-        evento.setTextoDescritivo(descricao);
-        evento.setDataInicio(dataInicio);
-        evento.setDataFim(dataFimEvento);
-        evento.setDataInicioSubCandidatura(dataInicioSubmissao);
-        evento.setDataFimSubCandidatura(dataFimSubmissao);
+        evento.setTitle(titulo);
+        evento.setEventDescription(descricao);
+        evento.setStartDate(dataInicio);
+        evento.setEndDate(dataFimEvento);
+        evento.setStartingSubmissionDate(dataInicioSubmissao);
+        evento.setEndingSubmissionDate(dataFimSubmissao);
         evento.setLocal(local);
     }
 
-    public RegistoUtilizadores getListaUtilizadores() {
-        return centroEventos.getRegistoUtilizadores();
+    public UserRegistration getUserList() {
+        return eventCenter.getUserRegistration();
     }
 
-    public boolean associaOrganizador(Evento evento,RegistoUtilizadores registoUtilizadores, String username) {
-        RegistoOrganizadores registoOrganizadores = evento.getRegistoOrganizadores();
-        for (Utilizador u : registoUtilizadores.getListaUtilizadores()) {
+    public boolean associaOrganizador(Event event,UserRegistration userRegistration, String username) {
+        OrganizerRegistration registoOrganizadores = event.getOrganizerRegistration();
+        for (User u : userRegistration.getuserList()) {
             if (username.equalsIgnoreCase(u.getUsername())) {
-                Organizador o = registoOrganizadores.newOrganizador();
+                Organizer o = registoOrganizadores.newOrganizer();
                 if(registoOrganizadores.validaOrganizador(o)){
-                    o.setUtilizador(u);
+                    o.setUser(u);
                     registoOrganizadores.registaOrganizador(o);
                     return true;
                 }
@@ -60,12 +60,13 @@ public class CreateEventController {
         }
         return false;
     }
-    public boolean validaEvento(Evento e){
-        return centroEventos.getRegistoEventos().validaEvento(e);
+    public boolean validaEvento(Event e){
+        return eventCenter.getEventRegistration().validatesEvent(e);
     }
-    public boolean registaEvento(Evento e) {
-        if(e.setCriado()){
-            centroEventos.getRegistoEventos().registaEvento(e);
+    
+    public boolean registaEvento(Event e) {
+        if(e.setCreated()){
+            eventCenter.getEventRegistration().registerEvento(e);
             return true;
         }     
         return false;
