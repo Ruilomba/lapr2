@@ -21,7 +21,7 @@ public class UserRegistration implements Serializable {
         this.userList = userList;
     }
     
-    public List<User> getuserList() {
+    public List<User> getUserList() {
         return userList;
     }
     

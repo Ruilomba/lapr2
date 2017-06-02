@@ -27,11 +27,11 @@ public class CreateEventController {
         this.eventCenter = eventCenter;
     }
 
-    public Event novoEvento() {
+    public Event newEvent() {
         return eventCenter.getEventRegistration().newEvent();
     }
 
-    public void setDados(Event evento,String titulo, String descricao, Date dataInicio, Date dataFimEvento,
+    public void setData(Event evento,String titulo, String descricao, Date dataInicio, Date dataFimEvento,
             Date dataInicioSubmissao, Date dataFimSubmissao, String local) {
         evento.setTitle(titulo);
         evento.setEventDescription(descricao);
@@ -46,9 +46,9 @@ public class CreateEventController {
         return eventCenter.getUserRegistration();
     }
 
-    public boolean associaOrganizador(Event event,UserRegistration userRegistration, String username) {
+    public boolean associateOrganizer(Event event,UserRegistration userRegistration, String username) {
         OrganizerRegistration registoOrganizadores = event.getOrganizerRegistration();
-        for (User u : userRegistration.getuserList()) {
+        for (User u : userRegistration.getUserList()) {
             if (username.equalsIgnoreCase(u.getUsername())) {
                 Organizer o = registoOrganizadores.newOrganizer();
                 if(registoOrganizadores.validaOrganizador(o)){
@@ -60,11 +60,11 @@ public class CreateEventController {
         }
         return false;
     }
-    public boolean validaEvento(Event e){
+    public boolean validateEvento(Event e){
         return eventCenter.getEventRegistration().validatesEvent(e);
     }
     
-    public boolean registaEvento(Event e) {
+    public boolean registEvent(Event e) {
         if(e.setCreated()){
             eventCenter.getEventRegistration().registerEvento(e);
             return true;

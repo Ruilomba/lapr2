@@ -9,13 +9,11 @@ package lapr.project.states;
  *
  * @author RuiSL
  */
-public class EventStateDefinedFAE implements EventState {
+public class EventStateClosedApplications implements EventState{
 
     @Override
     public void setCriada() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    
     
 }

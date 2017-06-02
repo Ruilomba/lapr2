@@ -7,8 +7,11 @@ import java.util.List;
 import java.util.Timer;
 import lapr.project.states.EventCreatedState;
 import lapr.project.states.EventState;
+import lapr.project.states.EventStateClosedApplications;
 import lapr.project.states.EventStateDefinedFAE;
-import lapr.project.states.EventStateToReceivingApplications;
+import lapr.project.states.EventStateReceivingApplications;
+import lapr.project.states.SetEventStateToClosedApplications;
+import lapr.project.states.SetEventStateToReceivingAplications;
 import lapr.project.states.StartingEventState;
 
 
@@ -59,14 +62,15 @@ import lapr.project.states.StartingEventState;
 
         this.applicationRegistration = new ApplicationRegistration();
         this.atribuitionList = new AtribuitionList();
-    }
+    }   
     
-    public boolean setToReceivingAplications(){
-        if(this.getEventState() instanceof EventStateDefinedFAE){
-            this.setEventState(new EventStateToReceivingApplications());
-            return true;
-        }
-        return false;
+    public void autoSetToClosedApplications(){
+        Timer timer = new Timer();
+        timer.schedule(new SetEventStateToClosedApplications(this), endingSubmissionDate);
+    }
+    public void autoSetToReceivingApplications(){
+        Timer timer = new Timer();
+        timer.schedule(new SetEventStateToReceivingAplications(this), startingSubmissionDate);
     }
     public boolean setCreated(){
         if(this.eventState instanceof StartingEventState) {
