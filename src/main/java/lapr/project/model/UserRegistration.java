@@ -28,7 +28,7 @@ public class UserRegistration implements Serializable {
     }
     
     public boolean addUserRegistration(User u) throws IOException {
-        if (validateUser(u) && AuthenticationService.registerUser(u.username, u.password)) {
+        if (validateUser(u) && AuthenticationService.registerUser(u.getUsername(), u.getEmail(), u.getPassword())) {
             return addUser(u);
         }
         return false;

@@ -1,13 +1,6 @@
 package lapr.project.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Properties;
+import java.io.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /*
@@ -21,37 +14,35 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class AuthenticationService {
 
-    public static String authenticatedUser;
-    
+    private final static String USER_DATA_FILE_PATH = "userData.txt";
+    private static String authenticatedUser;
+
     /**
      * registers new user
      *
      * @param username
+     * @param email
      * @param password
      * @return
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public static boolean registerUser(String username, String password)
+    public static boolean registerUser(String username, String email, String password)
             throws FileNotFoundException, IOException {
 
         int userShift = generateRandomShift();
         String encryptedPassword = encryptWithCeaserCypher(password, userShift);
+        String userdata = "username=" + username + ";email=" + email + ";password=" + password + 
+                ";shift=" + String.valueOf(userShift) + "\n";
 
-        Properties properties = new Properties();
-        properties.setProperty("Username", username);
-        properties.setProperty("Password", encryptedPassword);
-        properties.setProperty("Shift", String.valueOf(userShift));
-
-        try {
-            File file = new File(username + ".properties");
-            if ((file.exists() && !file.isDirectory()) || (!file.exists() && file.createNewFile())) {
-                OutputStream out = new FileOutputStream(file);
-                properties.store(out, null);
+        File file = new File(USER_DATA_FILE_PATH);
+        if ((file.exists() && !file.isDirectory()) || (!file.exists() && file.createNewFile())) {
+            try (FileWriter fw = new FileWriter(USER_DATA_FILE_PATH, true)) {
+                fw.write(userdata);
+            } catch (Exception e) {
+                System.out.println("Unable to write user info to file");
+                return false;
             }
-        } catch (Exception e) {
-            System.out.println("Unable to save properties in file");
-            return false;
         }
         return true;
     }
@@ -71,56 +62,58 @@ public class AuthenticationService {
         }
         return false;
     }
-    
+
     public static String getAuthenticatedUser() {
         return authenticatedUser;
     }
-    
+
     public static void setAuthenticatedUser(String username) {
         authenticatedUser = username;
     }
-    
+
     /**
      * checks if password entered by user is valid
+     *
      * @param username
      * @param userPassword
      * @return
      * @throws FileNotFoundException
-     * @throws IOException 
+     * @throws IOException
      */
     private static boolean passwordIsValid(String username, String password) throws FileNotFoundException, IOException {
-        String filename = username + ".properties";
-        try {
-            File file = new File(filename);
-            if ((file.exists() && !file.isDirectory())) {
-                Properties properties = new Properties();
-                InputStream input = new FileInputStream(filename);
-                properties.load(input);
-                String storedPassword = properties.getProperty("Password");
-                String storedShift = properties.getProperty("Shift");
-                int intShift = 0;
+        try (BufferedReader br = new BufferedReader(new FileReader(USER_DATA_FILE_PATH))) {
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+
+            while (line != null) {
+                sb.append(line);
+                sb.append(System.lineSeparator());
+                line = br.readLine();
+                String[] fields = line.split(";");
+                String storedUsernameField = fields[0];
+                String storedEmailField = fields[1];
+                String storedPasswordField = fields[2];
+                String storedShiftValue = fields[3];
+                String storedUsername = storedUsernameField.split("=")[1];
+                String storedEmail = storedEmailField.split("=")[1];
+                String storedPassword = storedPasswordField.split("=")[1];
+                String storedShift = storedShiftValue.split("=")[1];
+                int intShift;
                 try {
                     intShift = Integer.parseInt(storedShift);
                 } catch (NumberFormatException e) {
-                    System.out.println("\"Unable to parse user shift");
+                    System.out.println("Unable to parse user shift");
                     return false;
                 }
                 if (intShift > 0) {
                     String decryptedPassword = decryptWithCeaserCypher(storedPassword, intShift);
-                    return decryptedPassword.equals(password);                    
+                    return decryptedPassword.equals(password);                  
                 }
             }
-            return false;
-        }
-        catch (FileNotFoundException e) {
-            System.out.println("Unable to read from file " + filename + ": " + e.getMessage());            
-        }
-        catch (IOException e) {
-            System.out.println("Unable to read user data from properties file: " + e.getMessage());
         }
         return false;
     }
- 
+
     /**
      * generates random shift < 26
      *
