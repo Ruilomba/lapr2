@@ -2,6 +2,8 @@ package lapr.project.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import lapr.project.states.EventCreatedState;
+import lapr.project.states.EventState;
 
 public class EventRegistration {
 
@@ -17,6 +19,15 @@ public class EventRegistration {
 
     public void setEventList(List<Event> listaEventos) {
         this.eventList = eventList;
+    }
+    public List<Event> getEventsOfState(EventState eventState){
+        List<Event> AuxEventList=new ArrayList<>();
+        for(Event e : eventList){
+            if(e.getEventState().getClass().getSimpleName().equals(eventState.getClass().getSimpleName())){
+                AuxEventList.add(e);
+            }
+        }
+        return AuxEventList;
     }
     
     /**
