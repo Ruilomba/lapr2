@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.Serializable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import lapr.project.utils.AuthenticationService;
+import lapr.project.utils.DataValidationService;
 
 public class UserRegistration implements Serializable {
 
@@ -39,12 +42,15 @@ public class UserRegistration implements Serializable {
     }
     
     private  boolean validateUser(User u) {
-        for (User user : userList) {
-            if ((user.getUsername().equals(u.getUsername())) || (user.getEmail().equals(u.getEmail()))) {
-                return false;
+        if (DataValidationService.emailIsValid(u.getEmail())) {
+            for (User user : userList) {
+                if ((user.getUsername().equals(u.getUsername())) || (user.getEmail().equals(u.getEmail()))) {
+                    return false;
+                }
             }
+            return true;
         }
-        return true;
+        return false;
     }
     
     public User getUser(String username) {

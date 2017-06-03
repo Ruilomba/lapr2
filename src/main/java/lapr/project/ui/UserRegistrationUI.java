@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.swing.*;
 import lapr.project.model.*;
 import lapr.project.utils.AuthenticationService;
+import lapr.project.utils.DataValidationService;
 
 public class UserRegistrationUI extends JFrame {
 
@@ -104,7 +105,7 @@ public class UserRegistrationUI extends JFrame {
             errorMessageLabel.setText("Username is invalid");
             return false;
         }
-        else if (email == null || email.isEmpty()) {
+        else if (email == null || email.isEmpty() || !DataValidationService.emailIsValid(email)) {
             errorMessageLabel.setText("Email is invalid");
             return false;
         }
