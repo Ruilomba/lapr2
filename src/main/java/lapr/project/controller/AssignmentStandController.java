@@ -24,7 +24,6 @@ public class AssignmentStandController {
     private StandRegistration stdRegistration;
     private Event event;
     
-    
     public AssignmentStandController (EventCenter eventCenter) {
         this.eventCenter = eventCenter;
     }

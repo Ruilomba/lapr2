@@ -38,6 +38,7 @@ public class CreateEventController {
     public void setEventType(EventType eventType){
         event.setEventType(eventType);
     }
+ 
     public Event getControllerEvent(){
         return this.event;
     }

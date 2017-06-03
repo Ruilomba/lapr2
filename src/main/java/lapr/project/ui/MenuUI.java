@@ -33,10 +33,9 @@ public class MenuUI extends JFrame {
         String username = AuthenticationService.getAuthenticatedUser();
         JMenuItem userNameItem = new JMenuItem(username);
         menubar.add(userNameItem);
-
-        JMenu file = new JMenu("File");
-        file.setMnemonic(KeyEvent.VK_F);
-        menubar.add(file);
+        
+        JMenuItem userUpdateItem = new JMenuItem("Update user data");
+        menubar.add(userUpdateItem);
 
         setJMenuBar(menubar);
     }

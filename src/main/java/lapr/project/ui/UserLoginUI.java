@@ -4,13 +4,15 @@ import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import lapr.project.controller.*;
 import lapr.project.model.*;
-import lapr.project.utils.*;
 
 public class UserLoginUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private final EventCenter eventCenter;
+    private final UserLoginController controller;
+    
     private JLabel mainLabel;
     private JLabel usernameOrEmailLabel;
     private JTextField usernameOrEmailTextField;
@@ -23,6 +25,8 @@ public class UserLoginUI extends JFrame {
     public UserLoginUI(EventCenter center) {
         super("User Authentication");
         eventCenter = center;
+        controller = new UserLoginController(eventCenter);
+        
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(screenSize.width, screenSize.height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,14 +59,14 @@ public class UserLoginUI extends JFrame {
                     String usernameOrEmail = usernameOrEmailTextField.getText();
                     String password = passwordTextField.getText();
                     try {
-                        if (AuthenticationService.loginUser(usernameOrEmail, password)) {
+                        if (controller.loginUser(usernameOrEmail, password)) {
                             goToMenu();
                         }
                         else {
                             showErrorAlert();
                         }
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
+                    } catch (IOException ioException) {
+                        showErrorAlertWithMessage(ioException.getMessage());
                     }
                 }
             }
