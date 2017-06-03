@@ -89,19 +89,19 @@ public class AuthenticationService {
                 if (intShift > 0) {
                     String decryptedPassword = decryptWithCeaserCypher(storedPassword, intShift);
                     if (storedUsername.equals(usernameOrEmail) || storedEmail.equals(usernameOrEmail)) {
-                        if (decryptedPassword.equals(storedPassword)) {
+                        if (decryptedPassword.equals(password)) {
                             setAuthenticatedUser(storedUsername);
                             return true;
                         }
                     }
                 }
             }
+            return false;
         }
         catch (IOException e) {
             System.out.println("Unable to read " + USER_DATA_FILE_PATH + " file");
             return false;
         }
-        return false;
     }
 
     public static String getAuthenticatedUser() {

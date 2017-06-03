@@ -52,7 +52,7 @@ public class UserLoginUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (formIsValid()) {
-                    String usernameOrEmail = usernameOrEmailLabel.getText();
+                    String usernameOrEmail = usernameOrEmailTextField.getText();
                     String password = passwordTextField.getText();
                     try {
                         if (AuthenticationService.loginUser(usernameOrEmail, password)) {
