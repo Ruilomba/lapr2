@@ -10,8 +10,9 @@ import java.io.IOException;
 import javax.swing.*;
 import lapr.project.model.EventCenter;
 import lapr.project.utils.AuthenticationService;
+import lapr.project.ui.UserRegistrationUI;
 
-public class LoginFrame extends JFrame {
+public class UserLoginUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private final EventCenter eventCenter;
@@ -22,9 +23,10 @@ public class LoginFrame extends JFrame {
     private JTextField passwordTextField;
     private JButton submitFormButton;
     private JLabel errorMessageLabel;
+    private JButton goToRegistrationButton;
 
-    public LoginFrame(EventCenter center) {
-        super("User Registration");
+    public UserLoginUI(EventCenter center) {
+        super("User Authentication");
         eventCenter = center;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(screenSize.width, screenSize.height);
@@ -35,8 +37,13 @@ public class LoginFrame extends JFrame {
         this.add(panel);
         createElements();
         addListenerForSubmitButton();
+        addListenerForRegistrationButton();
         addElementsToJPanel(panel);
         this.setVisible(true);
+    }
+
+    UserLoginUI() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void createElements() {
@@ -47,6 +54,7 @@ public class LoginFrame extends JFrame {
         passwordTextField = new JTextField(25);
         submitFormButton = new JButton("Login");
         errorMessageLabel = new JLabel();
+        goToRegistrationButton = new JButton("Not registered yet?");
     }
 
     private void addListenerForSubmitButton() {
@@ -64,6 +72,15 @@ public class LoginFrame extends JFrame {
                         e1.printStackTrace();
                     }
                 }
+            }
+        });
+    }
+    
+    private void addListenerForRegistrationButton() {
+        goToRegistrationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                goToRegistration();
             }
         });
     }
@@ -88,5 +105,11 @@ public class LoginFrame extends JFrame {
         panel.add(usernameTextField);
         panel.add(passwordLabel);
         panel.add(passwordTextField);
+    }
+    
+    private void goToRegistration() {
+        UserRegistrationUI registration = UserRegistrationUI(eventCenter);
+        registration.setVisible(true);
+        this.dispose();
     }
 }

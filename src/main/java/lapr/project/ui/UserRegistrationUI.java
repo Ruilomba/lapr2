@@ -1,17 +1,11 @@
 package lapr.project.ui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
-import lapr.project.model.EventCenter;
-import lapr.project.model.User;
+import lapr.project.model.*;
 
-public class UserRegistrationFrame extends JFrame {
+public class UserRegistrationUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private final EventCenter eventCenter;
@@ -31,7 +25,7 @@ public class UserRegistrationFrame extends JFrame {
     private JLabel errorMessageLabel;
     private JButton goToLoginButton;
 
-    public UserRegistrationFrame(EventCenter center) {
+    public UserRegistrationUI(EventCenter center) {
         super("User Registration");
         eventCenter = center;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -42,7 +36,7 @@ public class UserRegistrationFrame extends JFrame {
         panel.setLayout(new GridLayout(0,1));
         this.add(panel);
         createElements();
-        addListenerForSubmitButton();
+        addListenersForButtons();
         addElementsToJPanel(panel);
         this.setVisible(true);
     }
@@ -67,7 +61,7 @@ public class UserRegistrationFrame extends JFrame {
         goToLoginButton = new JButton("Already registered?");
     }
 
-    private void addListenerForSubmitButton() {
+    private void addListenersForButtons() {
         submitFormButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -77,11 +71,10 @@ public class UserRegistrationFrame extends JFrame {
                 }
             }
         });
-        
         goToLoginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // todo: GO TO LOGIN PAGE
+                goToLogin();
             }
         });
     }
@@ -92,10 +85,7 @@ public class UserRegistrationFrame extends JFrame {
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
         String confirmPassword = confirmPasswordTextField.getText();
-        
-        CharSequence numberSequence = "1234567890";
-        CharSequence punctuationMarksSequence;
-        punctuationMarksSequence = ".,;:-";
+        String punctuationMarks = ",.;:-";
         
         if (name == null || name.isEmpty()) {
             errorMessageLabel.setText("Name is invalid");
@@ -118,7 +108,7 @@ public class UserRegistrationFrame extends JFrame {
             return false;
         }
         // TODO: not working
-        else if (!password.contains(numberSequence)) {
+        else if (!password.matches(".*\\d+.*")) {
             errorMessageLabel.setText("The user password must include a number");
             return false;
         }
@@ -126,7 +116,7 @@ public class UserRegistrationFrame extends JFrame {
             errorMessageLabel.setText("The password must include upper and lowercase characters");
             return false;
         }
-        else if (!password.contains(punctuationMarksSequence)) {
+        else if (!password.matches(".*\\p{Punct}.*")) {
             errorMessageLabel.setText("The user password must include a punctuation mark (“,”, “.”, “;”, “:” or “-“)");
             return false;
         }
@@ -169,10 +159,16 @@ public class UserRegistrationFrame extends JFrame {
     }
     
     private void showSuccessAlert() {
-        JOptionPane.showMessageDialog(this, "Success", "User was registrated successfully", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(this, "User was registrated successfully", "Success", JOptionPane.PLAIN_MESSAGE);
     }
     
     private void showErrorAlert() {
-        JOptionPane.showMessageDialog(this, "Error", "Login is invalid", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Login is invalid", "Error", JOptionPane.WARNING_MESSAGE);
+    }
+    
+    private void goToLogin() {
+        this.dispose();
+        UserLoginUI login = new UserLoginUI(eventCenter);
+        login.setVisible(true);
     }
 }
