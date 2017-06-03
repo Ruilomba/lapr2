@@ -12,8 +12,8 @@ public class UserLoginUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private final EventCenter eventCenter;
     private JLabel mainLabel;
-    private JLabel usernameLabel;
-    private JTextField usernameTextField;
+    private JLabel usernameOrEmailLabel;
+    private JTextField usernameOrEmailTextField;
     private JLabel passwordLabel;
     private JTextField passwordTextField;
     private JButton submitFormButton;
@@ -38,8 +38,8 @@ public class UserLoginUI extends JFrame {
 
     private void createElements() {
         mainLabel = new JLabel("Login");
-        usernameLabel = new JLabel("Enter username");
-        usernameTextField = new JTextField(20);
+        usernameOrEmailLabel = new JLabel("Enter username or email");
+        usernameOrEmailTextField = new JTextField(20);
         passwordLabel = new JLabel("Enter password");
         passwordTextField = new JTextField(25);
         submitFormButton = new JButton("Login");
@@ -52,10 +52,10 @@ public class UserLoginUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (formIsValid()) {
-                    String username = usernameTextField.getText();
+                    String usernameOrEmail = usernameOrEmailTextField.getText();
                     String password = passwordTextField.getText();
                     try {
-                        if (AuthenticationService.loginUser(username, password)) {
+                        if (AuthenticationService.loginUser(usernameOrEmail, password)) {
                             goToMenu();
                         }
                         else {
@@ -76,10 +76,10 @@ public class UserLoginUI extends JFrame {
     }
 
     private boolean formIsValid() {
-        String username = usernameTextField.getText();
+        String usernameOrEmail = usernameOrEmailTextField.getText();
         String password = passwordTextField.getText();
-        if (username == null || username.isEmpty()) {
-            errorMessageLabel.setText("Username is invalid");
+        if (usernameOrEmail == null || usernameOrEmail.isEmpty()) {
+            errorMessageLabel.setText("Username or email is invalid");
             return false;
         }
         else if (password == null || password.isEmpty()) {
@@ -91,8 +91,8 @@ public class UserLoginUI extends JFrame {
 
     private void addElementsToJPanel(JPanel panel) {
         panel.add(mainLabel);
-        panel.add(usernameLabel);
-        panel.add(usernameTextField);
+        panel.add(usernameOrEmailLabel);
+        panel.add(usernameOrEmailTextField);
         panel.add(passwordLabel);
         panel.add(passwordTextField);
         panel.add(submitFormButton);
