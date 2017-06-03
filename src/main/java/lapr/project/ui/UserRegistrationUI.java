@@ -5,12 +5,12 @@ import java.awt.event.*;
 import java.io.IOException;
 import javax.swing.*;
 import lapr.project.model.*;
+import lapr.project.utils.AuthenticationService;
 
 public class UserRegistrationUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private final EventCenter eventCenter;
-    private JLabel mainLabel;
     private JLabel nameLabel;
     private JTextField nameTextField;
     private JLabel usernameLabel;
@@ -43,18 +43,22 @@ public class UserRegistrationUI extends JFrame {
     }
 
     private void createElements() {
-        mainLabel = new JLabel("User Registration");
         nameLabel = new JLabel("Enter name");
+        nameLabel.setFont(new Font(nameLabel.getFont().getName(), nameLabel.getFont().getStyle(), 18));
         nameTextField = new JTextField(30);
         usernameLabel = new JLabel("Enter username");
+        usernameLabel.setFont(new Font(usernameLabel.getFont().getName(), usernameLabel.getFont().getStyle(), 18));
         usernameTextField = new JTextField(20);
         emailLabel = new JLabel("Enter email");
+        emailLabel.setFont(new Font(emailLabel.getFont().getName(), emailLabel.getFont().getStyle(), 18));
         emailTextField = new JTextField(50);
         passwordLabel = new JLabel("Enter password");
+        passwordLabel.setFont(new Font(passwordLabel.getFont().getName(), passwordLabel.getFont().getStyle(), 18));
         passwordFormatLabel = new JLabel("The user password must include at least a number, " +
             "both upper and lower case characters and a punctuation mark (“,”, “.”, “;”, “:” or “-“)");
         passwordTextField = new JTextField(25);
         confirmPasswordLabel = new JLabel("Confirm password");
+        confirmPasswordLabel.setFont(new Font(confirmPasswordLabel.getFont().getName(), confirmPasswordLabel.getFont().getStyle(), 18));
         confirmPasswordTextField = new JTextField(25);
         errorMessageLabel = new JLabel();
         errorMessageLabel.setForeground(Color.red);
@@ -72,7 +76,8 @@ public class UserRegistrationUI extends JFrame {
                     } catch (IOException ex) {
                         showErrorAlertWithMessage(ex.getMessage());
                     }
-                    showSuccessAlert();
+                    saveUserCredentials();
+                    goToMenu();                        
                 }
             }
         });
@@ -146,7 +151,6 @@ public class UserRegistrationUI extends JFrame {
     }
 
     private void addElementsToJPanel(JPanel panel) {
-        panel.add(mainLabel);
         panel.add(nameLabel);
         panel.add(nameTextField);
         panel.add(usernameLabel);
@@ -174,6 +178,16 @@ public class UserRegistrationUI extends JFrame {
     private void goToLogin() {
         UserLoginUI login = new UserLoginUI(eventCenter);
         login.setVisible(true);
+        this.dispose();
+    }
+    
+    private void saveUserCredentials() {
+        AuthenticationService.setAuthenticatedUser(nameTextField.getText());
+    }
+
+    private void goToMenu() {
+        MenuUI menu = new MenuUI(eventCenter);
+        menu.setVisible(true);
         this.dispose();
     }
 }

@@ -30,7 +30,7 @@ public class MenuUI extends JFrame {
     private void createMenuBar() {
         JMenuBar menubar = new JMenuBar();
 
-        String username = AuthenticationService.getUsernameOfAuthenticatedUser();
+        String username = AuthenticationService.getAuthenticatedUser();
         JMenuItem userNameItem = new JMenuItem(username);
         menubar.add(userNameItem);
 

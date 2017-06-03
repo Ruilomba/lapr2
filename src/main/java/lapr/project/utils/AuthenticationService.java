@@ -72,8 +72,12 @@ public class AuthenticationService {
         return false;
     }
     
-    public static String getUsernameOfAuthenticatedUser() {
+    public static String getAuthenticatedUser() {
         return authenticatedUser;
+    }
+    
+    public static void setAuthenticatedUser(String username) {
+        authenticatedUser = username;
     }
     
     /**
@@ -136,16 +140,10 @@ public class AuthenticationService {
      * @param shift
      * @return
      */
-    private static String encryptWithCeaserCypher(String originalMessage, int shift) {
+    private static String encryptWithCeaserCypher(String password, int shift) {
         String cypher = "";
-        int messageLength = originalMessage.length();
-        for (int x = 0; x < messageLength; x++) {
-            char charWithShift = (char) (originalMessage.charAt(x) + shift);
-            if (charWithShift < 'z') {
-                cypher += (char) (originalMessage.charAt(x) + shift);
-            } else {
-                cypher += (char) (originalMessage.charAt(x) - (26 - shift));
-            }
+        for (int x = 0; x < password.length(); x++) {
+            cypher += (char) (password.charAt(x) - shift);
         }
         return cypher;
     }
@@ -159,14 +157,8 @@ public class AuthenticationService {
      */
     private static String decryptWithCeaserCypher(String password, int shift) {
         String cypher = "";
-        int messageLength = password.length();
-        for (int x = 0; x < messageLength; x++) {
-            char charWithShift = (char) (password.charAt(x) - shift);
-            if (charWithShift > 'a') {
-                cypher += (char) (password.charAt(x) - shift);
-            } else {
-                cypher += (char) (password.charAt(x) + (26 - shift));
-            }
+        for (int x = 0; x < password.length(); x++) {
+            cypher += (char) (password.charAt(x) + shift);
         }
         return cypher;
     }
