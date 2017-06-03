@@ -12,6 +12,7 @@ import lapr.project.model.OrganizerRegistration;
 import lapr.project.model.UserRegistration;
 import lapr.project.model.User;
 import java.util.Date;
+import lapr.project.utils.Data;
 
 /**
  *
@@ -29,8 +30,8 @@ public class CreateEventController {
         return eventCenter.getEventRegistration().newEvent();
     }
 
-    public void setData(Event evento,String titulo, String descricao, Date dataInicio, Date dataFimEvento,
-            Date dataInicioSubmissao, Date dataFimSubmissao, String local) {
+    public void setData(Event evento,String titulo, String descricao, Data dataInicio, Data dataFimEvento,
+            Data dataInicioSubmissao, Data dataFimSubmissao, String local) {
         evento.setTitle(titulo);
         evento.setEventDescription(descricao);
         evento.setStartDate(dataInicio);
@@ -49,9 +50,9 @@ public class CreateEventController {
         for (User u : userRegistration.getUserList()) {
             if (username.equalsIgnoreCase(u.getUsername())) {
                 Organizer o = registoOrganizadores.newOrganizer();
-                if(registoOrganizadores.validaOrganizador(o)){
+                if(registoOrganizadores.validateOrganizer(o)){
                     o.setUser(u);
-                    registoOrganizadores.registaOrganizador(o);
+                    registoOrganizadores.registerOrganizer(o);
                     return true;
                 }
             }
@@ -62,11 +63,13 @@ public class CreateEventController {
         return eventCenter.getEventRegistration().validatesEvent(e);
     }
     
-    public boolean registEvent(Event e) {
+    public boolean registerEvent(Event e) {
         if(e.setCreated()){
             eventCenter.getEventRegistration().registerEvento(e);
             return true;
-        }     
+        }
+        e.autoSetToClosedApplications();
+        e.autoSetToReceivingApplications();
         return false;
     }
     

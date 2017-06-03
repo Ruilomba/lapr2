@@ -20,21 +20,21 @@ public class OrganizerRegistration {
     }
     
     public OrganizerRegistration(OrganizerRegistration otherRegister) {
-        this.organizerList=new ArrayList<>(otherRegister.getListaOrganizadores());
+        this.organizerList=new ArrayList<>(otherRegister.getElementsOfOrganizerList());
     }
 
-    public boolean registaOrganizador(Organizer o) {
+    public boolean registerOrganizer(Organizer o) {
         return this.organizerList.add(o);
     }
 
-    public boolean validaOrganizador(Organizer O) {
+    public boolean validateOrganizer(Organizer O) {
         if(organizerList.contains(O)) {
             return false;
         }
         return true;
     }
     
-    public boolean hasOrganizador(User u) {
+    public boolean hasOrganizer(User u) {
         for(Organizer o : organizerList) {
             if(o.isUser(u)) {
                 return true;
@@ -45,7 +45,7 @@ public class OrganizerRegistration {
     public Organizer newOrganizer() {
         return new Organizer();
     }
-    public List<Organizer> getListaOrganizadores() {
+    public List<Organizer> getElementsOfOrganizerList() {
         return new ArrayList<>(this.organizerList);
     }
 }

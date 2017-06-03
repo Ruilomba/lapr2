@@ -1,6 +1,8 @@
 package lapr.project.ui;
 
 import javax.swing.*;
+import lapr.project.model.Congress;
+import lapr.project.model.Event;
 import lapr.project.model.EventCenter;
 
 class Main {

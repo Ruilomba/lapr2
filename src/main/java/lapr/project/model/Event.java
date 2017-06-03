@@ -13,6 +13,7 @@ import lapr.project.states.EventStateReceivingApplications;
 import lapr.project.states.SetEventStateToClosedApplications;
 import lapr.project.states.SetEventStateToReceivingAplications;
 import lapr.project.states.StartingEventState;
+import lapr.project.utils.Data;
 
 
     public class Event implements Serializable {
@@ -21,14 +22,14 @@ import lapr.project.states.StartingEventState;
     private String title;
     private String eventDescription;
     private String local;
-    private Date startDate;
-    private Date endDate;
+    private Data startDate;
+    private Data endDate;
     private FAEList faeList;
     private OrganizerRegistration organizerRegistration;
     private ApplicationRegistration applicationRegistration;
     private AtribuitionList atribuitionList;
-    private Date startingSubmissionDate;
-    private Date endingSubmissionDate;
+    private Data startingSubmissionDate;
+    private Data endingSubmissionDate;
     private EventType eventType;
     private EventState eventState;
 
@@ -39,16 +40,16 @@ import lapr.project.states.StartingEventState;
         this.faeList = new FAEList();
         this.applicationRegistration = new ApplicationRegistration();
         this.atribuitionList = new AtribuitionList();
-        this.endDate = new Date();
-        this.startDate = new Date();
-        this.startingSubmissionDate = new Date();
+        this.endDate = new Data();
+        this.startDate = new Data();
+        this.startingSubmissionDate = new Data();
         this.eventType=new Exhibition();
         this.eventState=new StartingEventState();
     }
     
     public Event(EventType eventType,String title,
-            String descricao, String local, Date dataInicio, Date dataFim, Date dataInicioSubmissao,
-            Date dataFimSubmissao, OrganizerRegistration registoOrganizadores, FAEList listaFae) {
+            String descricao, String local, Data dataInicio, Data dataFim, Data dataInicioSubmissao,
+            Data dataFimSubmissao, OrganizerRegistration registoOrganizadores, FAEList listaFae) {
         this.eventType=eventType;
         this.title = title;
         this.eventDescription = descricao;
@@ -66,11 +67,19 @@ import lapr.project.states.StartingEventState;
     
     public void autoSetToClosedApplications(){
         Timer timer = new Timer();
-        timer.schedule(new SetEventStateToClosedApplications(this), endingSubmissionDate);
+        int year=endingSubmissionDate.getAno();
+        int month=endingSubmissionDate.getMes();
+        int day=endingSubmissionDate.getDia();
+        Date aux= new Date(year,month,day);
+        timer.schedule(new SetEventStateToClosedApplications(this), aux);
     }
     public void autoSetToReceivingApplications(){
         Timer timer = new Timer();
-        timer.schedule(new SetEventStateToReceivingAplications(this), startingSubmissionDate);
+        int year=endingSubmissionDate.getAno();
+        int month=endingSubmissionDate.getMes();
+        int day=endingSubmissionDate.getDia();
+        Date aux= new Date(year,month,day);
+        timer.schedule(new SetEventStateToReceivingAplications(this), aux);
     }
     public boolean setCreated(){
         if(this.eventState instanceof StartingEventState) {
@@ -104,14 +113,14 @@ import lapr.project.states.StartingEventState;
     /**
      * @return the startDate
      */
-    public Date getStartDate() {
+    public Data getStartDate() {
         return startDate;
     }
 
     /**
      * @return the endDate
      */
-    public Date getEndDate() {
+    public Data getEndDate() {
         return endDate;
     }
 
@@ -146,14 +155,14 @@ import lapr.project.states.StartingEventState;
     /**
      * @return the startingSubmissionDate
      */
-    public Date getStartingSubmissionDate() {
+    public Data getStartingSubmissionDate() {
         return startingSubmissionDate;
     }
 
     /**
      * @return the endingSubmissionDate
      */
-    public Date getEndingSubmissionDate() {
+    public Data getEndingSubmissionDate() {
         return endingSubmissionDate;
     }
 
@@ -195,14 +204,14 @@ import lapr.project.states.StartingEventState;
     /**
      * @param startDate the startDate to set
      */
-    public void setStartDate(Date startDate) {
+    public void setStartDate(Data startDate) {
         this.startDate = startDate;
     }
 
     /**
      * @param endDate the endDate to set
      */
-    public void setEndDate(Date endDate) {
+    public void setEndDate(Data endDate) {
         this.endDate = endDate;
     }
 
@@ -237,14 +246,14 @@ import lapr.project.states.StartingEventState;
     /**
      * @param startingSubmissionDate the startingSubmissionDate to set
      */
-    public void setStartingSubmissionDate(Date startingSubmissionDate) {
+    public void setStartingSubmissionDate(Data startingSubmissionDate) {
         this.startingSubmissionDate = startingSubmissionDate;
     }
 
     /**
      * @param endingSubmissionDate the endingSubmissionDate to set
      */
-    public void setEndingSubmissionDate(Date endingSubmissionDate) {
+    public void setEndingSubmissionDate(Data endingSubmissionDate) {
         this.endingSubmissionDate = endingSubmissionDate;
     }
 
