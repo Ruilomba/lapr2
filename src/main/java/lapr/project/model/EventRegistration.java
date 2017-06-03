@@ -62,19 +62,18 @@ public class EventRegistration {
     }
 
 
-
-    public List getEventosOrganizador(Utilizador u) {
-        List<Evento> output = new ArrayList<>();
-
-        for (Evento e : listaEventos) {
-            if (e.belongsToOrganizador(u)) {
-                output.add(e);
+*/
+    public List<Event> getOrganizerEvents(User u){
+        List<Event> organizerEvents= new ArrayList<>();
+        
+        for(Event e : organizerEvents){
+            if(e.belongsToOrganizer(u)){
+                organizerEvents.add(e);
             }
         }
-
-        return output;
+        return organizerEvents;
     }
-    */
+    
 
     
     public Event newEvent() {

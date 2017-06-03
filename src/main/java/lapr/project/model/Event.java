@@ -270,7 +270,10 @@ import lapr.project.utils.Data;
     public void setEventState(EventState eventState) {
         this.eventState = eventState;
     }
-
+    
+    public boolean belongsToOrganizer(User u){
+        return organizerRegistration.hasOrganizer(u);
+    }
     
     
     

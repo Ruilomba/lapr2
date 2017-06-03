@@ -12,6 +12,7 @@ import lapr.project.model.OrganizerRegistration;
 import lapr.project.model.UserRegistration;
 import lapr.project.model.User;
 import java.util.Date;
+import lapr.project.model.EventType;
 import lapr.project.utils.Data;
 
 /**
@@ -21,31 +22,42 @@ import lapr.project.utils.Data;
 public class CreateEventController {
 
     private final EventCenter eventCenter;
+    private Event event;
 
     public CreateEventController(EventCenter eventCenter) {
         this.eventCenter = eventCenter;
     }
 
-    public Event newEvent() {
+    private Event newEventAux() {
         return eventCenter.getEventRegistration().newEvent();
     }
+    public void startNewEvent(){
+        this.event=newEventAux();
+    }
+    
+    public void setEventType(EventType eventType){
+        event.setEventType(eventType);
+    }
+    public Event getControllerEvent(){
+        return this.event;
+    }
 
-    public void setData(Event evento,String titulo, String descricao, Data dataInicio, Data dataFimEvento,
+    public void setData(String titulo, String descricao, Data dataInicio, Data dataFimEvento,
             Data dataInicioSubmissao, Data dataFimSubmissao, String local) {
-        evento.setTitle(titulo);
-        evento.setEventDescription(descricao);
-        evento.setStartDate(dataInicio);
-        evento.setEndDate(dataFimEvento);
-        evento.setStartingSubmissionDate(dataInicioSubmissao);
-        evento.setEndingSubmissionDate(dataFimSubmissao);
-        evento.setLocal(local);
+        event.setTitle(titulo);
+        event.setEventDescription(descricao);
+        event.setStartDate(dataInicio);
+        event.setEndDate(dataFimEvento);
+        event.setStartingSubmissionDate(dataInicioSubmissao);
+        event.setEndingSubmissionDate(dataFimSubmissao);
+        event.setLocal(local);
     }
 
     public UserRegistration getUserList() {
         return eventCenter.getUserRegistration();
     }
 
-    public boolean associateOrganizer(Event event,UserRegistration userRegistration, String username) {
+    public boolean associateOrganizer(UserRegistration userRegistration, String username) {
         OrganizerRegistration registoOrganizadores = event.getOrganizerRegistration();
         for (User u : userRegistration.getUserList()) {
             if (username.equalsIgnoreCase(u.getUsername())) {
