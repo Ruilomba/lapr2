@@ -5,7 +5,6 @@
  */
 package lapr.project.controller;
 
-import lapr.project.states.EventState;
 import lapr.project.model.EventCenter;
 import lapr.project.model.Event;
 import lapr.project.model.Organizer;
@@ -13,7 +12,6 @@ import lapr.project.model.OrganizerRegistration;
 import lapr.project.model.UserRegistration;
 import lapr.project.model.User;
 import java.util.Date;
-import java.util.List;
 
 /**
  *
@@ -21,7 +19,7 @@ import java.util.List;
  */
 public class CreateEventController {
 
-    private EventCenter eventCenter;
+    private final EventCenter eventCenter;
 
     public CreateEventController(EventCenter eventCenter) {
         this.eventCenter = eventCenter;

@@ -25,16 +25,7 @@ public class AssignmentStandController {
     private Event event;
     
     
-    public AssignmentStandController ( EventCenter eventCenter){
-        
+    public AssignmentStandController (EventCenter eventCenter) {
         this.eventCenter = eventCenter;
-        this.eventCenter = eventCenter.getEventRegistration();
-        this.eventCenter = 
-        .
-        
     }
-    
-    
-   
-    
 }
