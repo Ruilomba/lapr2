@@ -182,7 +182,7 @@ public class UserRegistrationUI extends JFrame {
     }
     
     private void saveUserCredentials() {
-        AuthenticationService.setAuthenticatedUser(nameTextField.getText());
+        AuthenticationService.setAuthenticatedUser(usernameTextField.getText());
     }
 
     private void goToMenu() {

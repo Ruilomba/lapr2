@@ -2,6 +2,7 @@ package lapr.project.utils;
 
 import java.io.*;
 import java.util.concurrent.ThreadLocalRandom;
+import lapr.project.model.User;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,19 +21,20 @@ public class AuthenticationService {
     /**
      * registers new user
      *
-     * @param username
-     * @param email
-     * @param password
+     * @param user
      * @return
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public static boolean registerUser(String username, String email, String password)
+    public static boolean registerUser(User user)
             throws FileNotFoundException, IOException {
 
         int userShift = generateRandomShift();
-        String encryptedPassword = encryptWithCeaserCypher(password, userShift);
-        String userdata = "username=" + username + ";email=" + email + ";password=" + password + 
+        String encryptedPassword = encryptWithCeaserCypher(user.getPassword(), userShift);
+        String userdata = "username=" + user.getUsername() +
+                ";name=" + user.getName() + 
+                ";email=" + user.getEmail() + 
+                ";password=" + encryptedPassword + 
                 ";shift=" + String.valueOf(userShift) + "\n";
 
         File file = new File(USER_DATA_FILE_PATH);
@@ -50,51 +52,30 @@ public class AuthenticationService {
     /**
      * authenticates user
      *
-     * @param username
+     * @param usernameOrEmail
      * @param password
      * @return
      * @throws java.io.IOException
      */
-    public static boolean loginUser(String username, String password) throws IOException {
-        if (passwordIsValid(username, password)) {
-            authenticatedUser = username;
-            return true;
-        }
-        return false;
-    }
-
-    public static String getAuthenticatedUser() {
-        return authenticatedUser;
-    }
-
-    public static void setAuthenticatedUser(String username) {
-        authenticatedUser = username;
-    }
-
-    /**
-     * checks if password entered by user is valid
-     *
-     * @param username
-     * @param userPassword
-     * @return
-     * @throws FileNotFoundException
-     * @throws IOException
-     */
-    private static boolean passwordIsValid(String username, String password) throws FileNotFoundException, IOException {
+    public static boolean loginUser(String usernameOrEmail, String password) throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader(USER_DATA_FILE_PATH))) {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb;
+            sb = new StringBuilder();
             String line = br.readLine();
 
             while (line != null) {
                 sb.append(line);
                 sb.append(System.lineSeparator());
-                line = br.readLine();
-                String[] fields = line.split(";");
+                String userData = sb.toString();
+                userData = userData.split("\n")[0]; // cleans breakline from data
+                String[] fields = userData.split(";");
                 String storedUsernameField = fields[0];
-                String storedEmailField = fields[1];
-                String storedPasswordField = fields[2];
-                String storedShiftValue = fields[3];
+                String storedNameField = fields[1];
+                String storedEmailField = fields[2];
+                String storedPasswordField = fields[3];
+                String storedShiftValue = fields[4];
                 String storedUsername = storedUsernameField.split("=")[1];
+                String storedName = storedNameField.split("=")[1];
                 String storedEmail = storedEmailField.split("=")[1];
                 String storedPassword = storedPasswordField.split("=")[1];
                 String storedShift = storedShiftValue.split("=")[1];
@@ -107,11 +88,28 @@ public class AuthenticationService {
                 }
                 if (intShift > 0) {
                     String decryptedPassword = decryptWithCeaserCypher(storedPassword, intShift);
-                    return decryptedPassword.equals(password);                  
+                    if (storedUsername.equals(usernameOrEmail) || storedEmail.equals(usernameOrEmail)) {
+                        if (decryptedPassword.equals(storedPassword)) {
+                            setAuthenticatedUser(storedUsername);
+                            return true;
+                        }
+                    }
                 }
             }
         }
+        catch (IOException e) {
+            System.out.println("Unable to read " + USER_DATA_FILE_PATH + " file");
+            return false;
+        }
         return false;
+    }
+
+    public static String getAuthenticatedUser() {
+        return authenticatedUser;
+    }
+
+    public static void setAuthenticatedUser(String username) {
+        authenticatedUser = username;
     }
 
     /**

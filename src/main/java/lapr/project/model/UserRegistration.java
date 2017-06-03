@@ -28,7 +28,7 @@ public class UserRegistration implements Serializable {
     }
     
     public boolean addUserRegistration(User u) throws IOException {
-        if (validateUser(u) && AuthenticationService.registerUser(u.getUsername(), u.getEmail(), u.getPassword())) {
+        if (validateUser(u) && AuthenticationService.registerUser(u)) {
             return addUser(u);
         }
         return false;
@@ -39,7 +39,12 @@ public class UserRegistration implements Serializable {
     }
     
     private  boolean validateUser(User u) {
-        return !userList.contains(u);
+        for (User user : userList) {
+            if ((user.getUsername().equals(u.getUsername())) || (user.getEmail().equals(u.getEmail()))) {
+                return false;
+            }
+        }
+        return true;
     }
     
     public User getUser(String username) {
