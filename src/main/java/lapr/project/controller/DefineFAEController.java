@@ -31,10 +31,7 @@ public class DefineFAEController {
 
     public List<Event> getOrganizerEvents(String username) {
         User u = eventCenter.getUserRegistration().getUser(username);
-        List<Event> auxEvents = eventCenter.getEventRegistration().getOrganizerEvents(u);
-        EventRegistration auxRegister = new EventRegistration();
-        auxRegister.setEventList(auxEvents);
-        return auxRegister.getEventsOfState(new EventCreatedState());
+        return eventCenter.getEventRegistration().getOrganizerEvents(u,new EventCreatedState());
     }
 
     public void selectEvent(Event e) {

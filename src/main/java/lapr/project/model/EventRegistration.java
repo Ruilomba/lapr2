@@ -74,11 +74,11 @@ public class EventRegistration {
 
 
 */
-    public List<Event> getOrganizerEvents(User u){
+    public List<Event> getOrganizerEvents(User u,EventState eventState){
         List<Event> organizerEvents= new ArrayList<>();
         
         for(Event e : organizerEvents){
-            if(e.belongsToOrganizer(u)){
+            if(e.belongsToOrganizer(u)&&e.getEventState().getClass().getSimpleName().equals(eventState.getClass().getSimpleName())){
                 organizerEvents.add(e);
             }
         }
