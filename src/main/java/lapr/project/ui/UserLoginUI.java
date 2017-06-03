@@ -1,16 +1,11 @@
 package lapr.project.ui;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
+import java.io.*;
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
-import lapr.project.model.EventCenter;
-import lapr.project.utils.AuthenticationService;
-import lapr.project.ui.UserRegistrationUI;
+import lapr.project.model.*;
+import lapr.project.utils.*;
 
 public class UserLoginUI extends JFrame {
 
@@ -36,14 +31,9 @@ public class UserLoginUI extends JFrame {
         panel.setLayout(new GridLayout(0,1));
         this.add(panel);
         createElements();
-        addListenerForSubmitButton();
-        addListenerForRegistrationButton();
+        addListenersToButtons();
         addElementsToJPanel(panel);
         this.setVisible(true);
-    }
-
-    UserLoginUI() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void createElements() {
@@ -57,7 +47,7 @@ public class UserLoginUI extends JFrame {
         goToRegistrationButton = new JButton("Not registered yet?");
     }
 
-    private void addListenerForSubmitButton() {
+    private void addListenersToButtons() {
         submitFormButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -74,9 +64,6 @@ public class UserLoginUI extends JFrame {
                 }
             }
         });
-    }
-    
-    private void addListenerForRegistrationButton() {
         goToRegistrationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -108,7 +95,8 @@ public class UserLoginUI extends JFrame {
     }
     
     private void goToRegistration() {
-        UserRegistrationUI registration = UserRegistrationUI(eventCenter);
+        UserRegistrationUI registration;
+        registration = new UserRegistrationUI(eventCenter);
         registration.setVisible(true);
         this.dispose();
     }

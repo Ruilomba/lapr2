@@ -167,8 +167,8 @@ public class UserRegistrationUI extends JFrame {
     }
     
     private void goToLogin() {
-        this.dispose();
         UserLoginUI login = new UserLoginUI(eventCenter);
         login.setVisible(true);
+        this.dispose();
     }
 }
