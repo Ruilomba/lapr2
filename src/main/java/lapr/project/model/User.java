@@ -9,7 +9,7 @@ public class User implements Serializable {
     private String name;
     private String email;
     public String username;
-    private String password;
+    String password;
     
     public User() {
     }

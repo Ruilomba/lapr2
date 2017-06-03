@@ -2,6 +2,7 @@ package lapr.project.ui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import javax.swing.*;
 import lapr.project.model.*;
 
@@ -66,7 +67,11 @@ public class UserRegistrationUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (formIsValid()) {
-                    registerUser();
+                    try {
+                        registerUser();
+                    } catch (IOException ex) {
+                        showErrorAlertWithMessage(ex.getMessage());
+                    }
                     showSuccessAlert();
                 }
             }
@@ -85,7 +90,6 @@ public class UserRegistrationUI extends JFrame {
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
         String confirmPassword = confirmPasswordTextField.getText();
-        String punctuationMarks = ",.;:-";
         
         if (name == null || name.isEmpty()) {
             errorMessageLabel.setText("Name is invalid");
@@ -127,17 +131,18 @@ public class UserRegistrationUI extends JFrame {
         return true;
     }
 
-    private boolean registerUser() {
+    private boolean registerUser() throws IOException {
+        UserRegistration userRegistration = eventCenter.getUserRegistration();
         String name = nameTextField.getText();
         String username = usernameTextField.getText();
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
-        User createdUser = eventCenter.getUserRegistration().createUser();
+        User createdUser = userRegistration.createUser();
         createdUser.setName(name);
         createdUser.setUsername(username);
         createdUser.setEmail(email);
         createdUser.setPassword(password);
-        return true;
+        return userRegistration.addUserRegistration(createdUser);
     }
 
     private void addElementsToJPanel(JPanel panel) {
@@ -161,9 +166,9 @@ public class UserRegistrationUI extends JFrame {
     private void showSuccessAlert() {
         JOptionPane.showMessageDialog(this, "User was registrated successfully", "Success", JOptionPane.PLAIN_MESSAGE);
     }
-    
-    private void showErrorAlert() {
-        JOptionPane.showMessageDialog(this, "Login is invalid", "Error", JOptionPane.WARNING_MESSAGE);
+
+    private void showErrorAlertWithMessage(String message) {
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.WARNING_MESSAGE);
     }
     
     private void goToLogin() {

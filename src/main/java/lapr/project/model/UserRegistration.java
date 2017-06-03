@@ -1,8 +1,10 @@
 package lapr.project.model;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.Serializable;
+import lapr.project.utils.AuthenticationService;
 
 public class UserRegistration implements Serializable {
 
@@ -25,10 +27,11 @@ public class UserRegistration implements Serializable {
         return userList;
     }
     
-    public void addUserRegistration(User u) {
-        if (validateUser(u)) {
-            addUser(u);
+    public boolean addUserRegistration(User u) throws IOException {
+        if (validateUser(u) && AuthenticationService.registerUser(u.username, u.password)) {
+            return addUser(u);
         }
+        return false;
     }
     
     public User createUser() {
@@ -49,8 +52,8 @@ public class UserRegistration implements Serializable {
         return null;
     }
     
-    private void addUser(User u) {
-        userList.add(u);
+    private boolean addUser(User u) {
+        return userList.add(u);
     }
 
 }

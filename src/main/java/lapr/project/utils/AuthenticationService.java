@@ -21,6 +21,8 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class AuthenticationService {
 
+    public static String authenticatedUser;
+    
     /**
      * registers new user
      *
@@ -64,17 +66,16 @@ public class AuthenticationService {
      */
     public static boolean loginUser(String username, String password) throws IOException {
         if (passwordIsValid(username, password)) {
-            saveUsernameAsGlobalVariable();
+            authenticatedUser = username;
             return true;
         }
         return false;
     }
     
-    private static void saveUsernameAsGlobalVariable() {
-        // TODO: COMPLETE
-        throw new UnsupportedOperationException();
+    public static String getUsernameOfAuthenticatedUser() {
+        return authenticatedUser;
     }
-
+    
     /**
      * checks if password entered by user is valid
      * @param username

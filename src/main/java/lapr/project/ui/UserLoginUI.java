@@ -56,7 +56,10 @@ public class UserLoginUI extends JFrame {
                     String password = passwordTextField.getText();
                     try {
                         if (AuthenticationService.loginUser(username, password)) {
-                            // TODO: send success message to user
+                            goToMenu();
+                        }
+                        else {
+                            showErrorAlert();
                         }
                     } catch (IOException e1) {
                         e1.printStackTrace();
@@ -92,12 +95,32 @@ public class UserLoginUI extends JFrame {
         panel.add(usernameTextField);
         panel.add(passwordLabel);
         panel.add(passwordTextField);
+        panel.add(submitFormButton);
+        panel.add(goToRegistrationButton);
     }
     
     private void goToRegistration() {
         UserRegistrationUI registration;
         registration = new UserRegistrationUI(eventCenter);
         registration.setVisible(true);
+        this.dispose();
+    }
+    
+    private void showSuccessAlert() {
+        JOptionPane.showMessageDialog(this, "User was registrated successfully", "Success", JOptionPane.PLAIN_MESSAGE);
+    }
+
+    private void showErrorAlert() {
+        JOptionPane.showMessageDialog(this, "Login was unsuccessful, please check username and password", "Error", JOptionPane.WARNING_MESSAGE);
+    }
+    
+    private void showErrorAlertWithMessage(String message) {
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.WARNING_MESSAGE);
+    }
+    
+    private void goToMenu() {
+        MenuUI menu = new MenuUI(eventCenter);
+        menu.setVisible(true);
         this.dispose();
     }
 }
