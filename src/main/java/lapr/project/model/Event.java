@@ -109,7 +109,15 @@ import lapr.project.utils.Data;
     public String getLocal() {
         return local;
     }
-
+    public List<Application> getApplicationsWithoutAtribuition(){
+        List<Application> applicationList= new ArrayList<>();
+        for(Application a : applicationRegistration.getApplicationListElements()){
+            if(!atribuitionList.hasApplication(a)){
+                applicationList.add(a);
+            }
+        }
+        return applicationList;
+    }
     /**
      * @return the startDate
      */

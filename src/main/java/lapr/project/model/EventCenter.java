@@ -8,12 +8,13 @@ public class EventCenter implements Serializable {
     private EventRegistration eventRegistration;
     private UserRegistration userRegistration;
     private StandRegistration standRegistration;
+    private AlgorithmRegistration algorithmRegistration;
 //    private AlgorithmRegistration algorithmRegistration;
 
     public EventCenter() {
         eventRegistration = new EventRegistration();
         userRegistration = new UserRegistration();
-        //algorithmRegistration = new AlgorithmRegistration();
+        algorithmRegistration = new AlgorithmRegistration();
     }
 
     public EventRegistration getEventRegistration() {

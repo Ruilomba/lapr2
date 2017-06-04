@@ -58,13 +58,10 @@ public class FAEList {
 //        }
 //        return null;
 //    }
-//    /**
-//     * validates if the list is empty
-//     * @return true if empty
-//     */
-//    public boolean isEmpty() {
-//        return faeList.isEmpty();
-//    }
+
+    public boolean isEmpty() {
+        return faeList.isEmpty();
+    }
 //
 //    /**
 //     * Validates if the users exists in the fae list

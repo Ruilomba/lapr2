@@ -5,10 +5,44 @@
  */
 package lapr.project.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author RuiSL
  */
 public class AtribuitionList {
+    private List<Atribuition> atribuitionList;
     
+    public AtribuitionList(){
+        this.atribuitionList= new ArrayList<>();
+    }
+
+    /**
+     * @return the atribuitionList
+     */
+    public List<Atribuition> getAtribuitionListElements() {
+        return atribuitionList;
+    }
+    public Atribuition newAtribuition(Application c , List<FAE> faeList){
+        return new Atribuition(c,faeList);
+    }
+    /**
+     * @param atribuitionList the atribuitionList to set
+     */
+    public void setAtribuitionList(List<Atribuition> atribuitionList) {
+        this.atribuitionList = atribuitionList;
+    }
+    public boolean hasApplication(Application a){
+        for(Atribuition at : atribuitionList){
+            if(at.isFromApplication(a)){
+                return true;
+            }           
+        }
+        return false;
+    }
+    public void registerAtribuition(Atribuition a) {
+        atribuitionList.add(a);
+    }
 }
