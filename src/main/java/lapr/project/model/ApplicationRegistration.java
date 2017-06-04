@@ -30,7 +30,12 @@ public class ApplicationRegistration {
         this.applicationList = new ArrayList<>(otherRegister.getApplicationListElements());
     }
     
+<<<<<<< HEAD
     public List<Application> getApplicationListElements(){
         return this.applicationList;
     }
+=======
+    
+    
+>>>>>>> 84fedfbcae2511fb5bf8d471e90af9680529c262
 }
