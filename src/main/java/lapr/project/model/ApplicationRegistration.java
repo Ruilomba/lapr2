@@ -30,11 +30,6 @@ public class ApplicationRegistration {
         this.applicationList = new ArrayList<>(otherRegister.getApplicationListElements());
     }
     
-
-    public List<Application> getApplicationListElements(){
-        return this.applicationList;
-    }
-    
     public List<Application> getApplicationsFromFAE(FAE FAE, Event e) {
         List<Application> output = new ArrayList<>();
         List<FAE> listaFaes = e.getFaeList().getFaeListElements();
@@ -49,7 +44,7 @@ public class ApplicationRegistration {
         return output;
     }
 
-    public List<Application> getApplicationList() {
+    public List<Application> getApplicationListElements() {
         return new ArrayList<>(this.applicationList);
     }
 
