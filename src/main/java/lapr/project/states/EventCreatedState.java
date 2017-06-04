@@ -9,7 +9,13 @@ package lapr.project.states;
  *
  * @author RuiSL
  */
-public interface EventState {
-    void setCriada();
+public class EventCreatedState implements EventState {
+
+    @Override
+    public void setCriada() {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
     
 }

@@ -5,6 +5,7 @@
  */
 package lapr.project.controller;
 
+import lapr.project.model.Event;
 import lapr.project.model.EventCenter;
 import lapr.project.model.Stand;
 import lapr.project.model.StandRegistration;
@@ -18,11 +19,8 @@ import lapr.project.model.Event;
 public class CreateStandController {
 
     private Stand std;
-
     private StandRegistration rstand;
-
     private Event event;
-
     private EventCenter eventCenter;
 
     /**
@@ -31,13 +29,9 @@ public class CreateStandController {
      * @param eventCenter
      */
     public CreateStandController(Stand std, EventCenter eventCenter) {
-
         this.std = std;
-
         this.eventCenter = eventCenter;
-
         this.event = eventCenter.getEventRegistration().getEventList().get(0);
-
     }
 
     public CreateStandController(Stand std, Event event) {
@@ -62,27 +56,20 @@ public class CreateStandController {
     }
 
     /**
-     * Retorna uma lista de Eventos
-     */
-    /**
-     * Retorna uma lista de Eventos
+     * Returns a list of events
      *
      * @param name
      * @param area
      */
     public void newStand(String name, double area) {
-
         std.setName(name);
         std.setArea(area);
 
     }
 
     public boolean RegistStand() {
-
         boolean st = rstand.RegistStand(std);
-
         return st;
-
     }
 
 }

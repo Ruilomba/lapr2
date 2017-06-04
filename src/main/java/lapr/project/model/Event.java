@@ -5,38 +5,102 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
+import lapr.project.states.EventCreatedState;
 import lapr.project.states.EventState;
+import lapr.project.states.EventStateClosedApplications;
+import lapr.project.states.EventStateDefinedFAE;
+import lapr.project.states.EventStateReceivingApplications;
+import lapr.project.states.SetEventStateToClosedApplications;
+import lapr.project.states.SetEventStateToReceivingAplications;
+import lapr.project.states.StartingEventState;
+import lapr.project.utils.Data;
 
 
     public class Event implements Serializable {
 
 
-    private String titulo;
-    private String textoDescritivo;
+    private String title;
+    private String eventDescription;
     private String local;
-    private Date dataInicio;
-    private Date dataFim;
-    private FAEList FaeList;
-    private OrganizerRegistration registoOrganizadores;
-    private ApplicationRegistration registoCandidaturas;
-    private AtribuitionList listaAtribuicoes;
-    private Date dataInicioSubCandidatura;
-    private Date dataFimSubCandidatura;
-    private EventType tipoEvento;
+    private Data startDate;
+    private Data endDate;
+    private FAEList faeList;
+    private OrganizerRegistration organizerRegistration;
+    private ApplicationRegistration applicationRegistration;
+    private AtribuitionList atribuitionList;
+    private Data startingSubmissionDate;
+    private Data endingSubmissionDate;
+    private EventType eventType;
     private EventState eventState;
 
-    /**
-     * @return the titulo
-     */
-    public String getTitulo() {
-        return titulo;
+    
+    
+    public Event() {
+        this.organizerRegistration = new OrganizerRegistration();
+        this.faeList = new FAEList();
+        this.applicationRegistration = new ApplicationRegistration();
+        this.atribuitionList = new AtribuitionList();
+        this.endDate = new Data();
+        this.startDate = new Data();
+        this.startingSubmissionDate = new Data();
+        this.eventType=new Exhibition();
+        this.eventState=new StartingEventState();
+    }
+    
+    public Event(EventType eventType,String title,
+            String descricao, String local, Data dataInicio, Data dataFim, Data dataInicioSubmissao,
+            Data dataFimSubmissao, OrganizerRegistration registoOrganizadores, FAEList listaFae) {
+        this.eventType=eventType;
+        this.title = title;
+        this.eventDescription = descricao;
+        this.local = local;
+        this.startDate = dataInicio;
+        this.endDate = dataFim;
+        this.startingSubmissionDate = dataInicioSubmissao;
+        this.endingSubmissionDate = dataFimSubmissao;
+        this.organizerRegistration = new OrganizerRegistration(registoOrganizadores);
+        this.faeList = new FAEList(listaFae);
+
+        this.applicationRegistration = new ApplicationRegistration();
+        this.atribuitionList = new AtribuitionList();
+    }   
+    
+    public void autoSetToClosedApplications(){
+        Timer timer = new Timer();
+        int year=endingSubmissionDate.getAno();
+        int month=endingSubmissionDate.getMes();
+        int day=endingSubmissionDate.getDia();
+        Date aux= new Date(year,month,day);
+        timer.schedule(new SetEventStateToClosedApplications(this), aux);
+    }
+    public void autoSetToReceivingApplications(){
+        Timer timer = new Timer();
+        int year=endingSubmissionDate.getAno();
+        int month=endingSubmissionDate.getMes();
+        int day=endingSubmissionDate.getDia();
+        Date aux= new Date(year,month,day);
+        timer.schedule(new SetEventStateToReceivingAplications(this), aux);
+    }
+    public boolean setCreated(){
+        if(this.eventState instanceof StartingEventState) {
+            this.eventState= new EventCreatedState();
+            return true;
+        }
+        return false;
     }
 
     /**
-     * @return the textoDescritivo
+     * @return the title
      */
-    public String getTextoDescritivo() {
-        return textoDescritivo;
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @return the eventDescription
+     */
+    public String getEventDescription() {
+        return eventDescription;
     }
 
     /**
@@ -47,66 +111,66 @@ import lapr.project.states.EventState;
     }
 
     /**
-     * @return the dataInicio
+     * @return the startDate
      */
-    public Date getDataInicio() {
-        return dataInicio;
+    public Data getStartDate() {
+        return startDate;
     }
 
     /**
-     * @return the dataFim
+     * @return the endDate
      */
-    public Date getDataFim() {
-        return dataFim;
+    public Data getEndDate() {
+        return endDate;
     }
 
     /**
-     * @return the FaeList
+     * @return the faeList
      */
     public FAEList getFaeList() {
-        return FaeList;
+        return faeList;
     }
 
     /**
-     * @return the registoOrganizadores
+     * @return the organizerRegistration
      */
-    public OrganizerRegistration getRegistoOrganizadores() {
-        return registoOrganizadores;
+    public OrganizerRegistration getOrganizerRegistration() {
+        return organizerRegistration;
     }
 
     /**
-     * @return the registoCandidaturas
+     * @return the applicationRegistration
      */
-    public ApplicationRegistration getRegistoCandidaturas() {
-        return registoCandidaturas;
+    public ApplicationRegistration getApplicationRegistration() {
+        return applicationRegistration;
     }
 
     /**
-     * @return the listaAtribuicoes
+     * @return the atribuitionList
      */
-    public AtribuitionList getListaAtribuicoes() {
-        return listaAtribuicoes;
+    public AtribuitionList getAtribuitionList() {
+        return atribuitionList;
     }
 
     /**
-     * @return the dataInicioSubCandidatura
+     * @return the startingSubmissionDate
      */
-    public Date getDataInicioSubCandidatura() {
-        return dataInicioSubCandidatura;
+    public Data getStartingSubmissionDate() {
+        return startingSubmissionDate;
     }
 
     /**
-     * @return the dataFimSubCandidatura
+     * @return the endingSubmissionDate
      */
-    public Date getDataFimSubCandidatura() {
-        return dataFimSubCandidatura;
+    public Data getEndingSubmissionDate() {
+        return endingSubmissionDate;
     }
 
     /**
-     * @return the tipoEvento
+     * @return the eventType
      */
-    public EventType getTipoEvento() {
-        return tipoEvento;
+    public EventType getEventType() {
+        return eventType;
     }
 
     /**
@@ -117,17 +181,17 @@ import lapr.project.states.EventState;
     }
 
     /**
-     * @param titulo the titulo to set
+     * @param title the title to set
      */
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     /**
-     * @param textoDescritivo the textoDescritivo to set
+     * @param eventDescription the eventDescription to set
      */
-    public void setTextoDescritivo(String textoDescritivo) {
-        this.textoDescritivo = textoDescritivo;
+    public void setEventDescription(String eventDescription) {
+        this.eventDescription = eventDescription;
     }
 
     /**
@@ -138,66 +202,66 @@ import lapr.project.states.EventState;
     }
 
     /**
-     * @param dataInicio the dataInicio to set
+     * @param startDate the startDate to set
      */
-    public void setDataInicio(Date dataInicio) {
-        this.dataInicio = dataInicio;
+    public void setStartDate(Data startDate) {
+        this.startDate = startDate;
     }
 
     /**
-     * @param dataFim the dataFim to set
+     * @param endDate the endDate to set
      */
-    public void setDataFim(Date dataFim) {
-        this.dataFim = dataFim;
+    public void setEndDate(Data endDate) {
+        this.endDate = endDate;
     }
 
     /**
-     * @param FaeList the FaeList to set
+     * @param faeList the faeList to set
      */
-    public void setFaeList(FAEList FaeList) {
-        this.FaeList = FaeList;
+    public void setFaeList(FAEList faeList) {
+        this.faeList = faeList;
     }
 
     /**
-     * @param registoOrganizadores the registoOrganizadores to set
+     * @param organizerRegistration the organizerRegistration to set
      */
-    public void setRegistoOrganizadores(OrganizerRegistration registoOrganizadores) {
-        this.registoOrganizadores = registoOrganizadores;
+    public void setOrganizerRegistration(OrganizerRegistration organizerRegistration) {
+        this.organizerRegistration = organizerRegistration;
     }
 
     /**
-     * @param registoCandidaturas the registoCandidaturas to set
+     * @param applicationRegistration the applicationRegistration to set
      */
-    public void setRegistoCandidaturas(ApplicationRegistration registoCandidaturas) {
-        this.registoCandidaturas = registoCandidaturas;
+    public void setApplicationRegistration(ApplicationRegistration applicationRegistration) {
+        this.applicationRegistration = applicationRegistration;
     }
 
     /**
-     * @param listaAtribuicoes the listaAtribuicoes to set
+     * @param atribuitionList the atribuitionList to set
      */
-    public void setListaAtribuicoes(AtribuitionList listaAtribuicoes) {
-        this.listaAtribuicoes = listaAtribuicoes;
+    public void setAtribuitionList(AtribuitionList atribuitionList) {
+        this.atribuitionList = atribuitionList;
     }
 
     /**
-     * @param dataInicioSubCandidatura the dataInicioSubCandidatura to set
+     * @param startingSubmissionDate the startingSubmissionDate to set
      */
-    public void setDataInicioSubCandidatura(Date dataInicioSubCandidatura) {
-        this.dataInicioSubCandidatura = dataInicioSubCandidatura;
+    public void setStartingSubmissionDate(Data startingSubmissionDate) {
+        this.startingSubmissionDate = startingSubmissionDate;
     }
 
     /**
-     * @param dataFimSubCandidatura the dataFimSubCandidatura to set
+     * @param endingSubmissionDate the endingSubmissionDate to set
      */
-    public void setDataFimSubCandidatura(Date dataFimSubCandidatura) {
-        this.dataFimSubCandidatura = dataFimSubCandidatura;
+    public void setEndingSubmissionDate(Data endingSubmissionDate) {
+        this.endingSubmissionDate = endingSubmissionDate;
     }
 
     /**
-     * @param tipoEvento the tipoEvento to set
+     * @param eventType the eventType to set
      */
-    public void setTipoEvento(EventType tipoEvento) {
-        this.tipoEvento = tipoEvento;
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
     }
 
     /**
@@ -206,7 +270,10 @@ import lapr.project.states.EventState;
     public void setEventState(EventState eventState) {
         this.eventState = eventState;
     }
-
+    
+    public boolean belongsToOrganizer(User u){
+        return organizerRegistration.hasOrganizer(u);
+    }
     
     
     

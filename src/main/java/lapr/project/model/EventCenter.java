@@ -3,7 +3,7 @@ package lapr.project.model;
 import java.io.Serializable;
 
 public class EventCenter implements Serializable {
-   
+
     private static final long serialVersionUID = 1L;
     private EventRegistration eventRegistration;
     private UserRegistration userRegistration;
@@ -12,37 +12,37 @@ public class EventCenter implements Serializable {
 
     public EventCenter() {
         eventRegistration = new EventRegistration();
-        userRegistration= new UserRegistration();
+        userRegistration = new UserRegistration();
         //algorithmRegistration = new AlgorithmRegistration();
     }
 
     public EventRegistration getEventRegistration() {
         return eventRegistration;
     }
-    
-    public UserRegistration getUserRegistration(){
+
+    public UserRegistration getUserRegistration() {
         return userRegistration;
     }
 
-     public StandRegistration getStandRegistration(){
+    public StandRegistration getStandRegistration() {
         return standRegistration;
     }
-    
-    /*
-    public AlgorithmRegistration getAlgorithmRegistration(){
-        return algorithmRegistration;
-    }
-
-    public void setEventRegistration(EventRegistration eventRegistration) {
-        this.eventRegistration = eventRegistration;
-    }
-
-    public void setUserRegistration(UserRegistration userRegistration) {
-        this.userRegistration = userRegistration;
-    }
-
-    public void setAlgorithmRegistration(AlgorithmRegistration algorithmRegistration) {
-        this.algorithmRegistration = algorithmRegistration;
-    }
-    */
 }
+
+/*
+ public AlgorithmRegistration getAlgorithmRegistration(){
+ return algorithmRegistration;
+ }
+
+ public void setEventRegistration(EventRegistration eventRegistration) {
+ this.eventRegistration = eventRegistration;
+ }
+
+ public void setUserRegistration(UserRegistration userRegistration) {
+ this.userRegistration = userRegistration;
+ }
+
+ public void setAlgorithmRegistration(AlgorithmRegistration algorithmRegistration) {
+ this.algorithmRegistration = algorithmRegistration;
+ }
+ */

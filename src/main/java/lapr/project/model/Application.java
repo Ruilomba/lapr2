@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author by Nuno Bettencourt [nmb@isep.ipp.pt] on 29/05/16.
  */
-public class Submission implements Importable<Application>, Exportable, Serializable {
+public class Application implements Importable<Application>, Exportable, Serializable {
 
 
     private static final long serialVersionUID = 1L;
@@ -36,7 +36,7 @@ public class Submission implements Importable<Application>, Exportable, Serializ
 	 * @param description Candidatura Description
 	 * @param keywordList Keyword List
 	 */
-	public Submission(FAERating rating, String description, List<Keyword> keywordList) {
+	public Application(FAERating rating, String description, List<Keyword> keywordList) {
 		this.description = description;
 		this.keywordList.addAll(keywordList);
 		this.rating = rating;
@@ -45,21 +45,21 @@ public class Submission implements Importable<Application>, Exportable, Serializ
 	/**
 	 * Default public constructor.
 	 */
-	public Submission() {
+	public Application() {
 
 	}
 
 	/**
-	 * Obtain Submission description.
+	 * Obtain Application description.
 	 *
-	 * @return Submission description
+	 * @return Application description
 	 */
 	String getDescription() {
 		return description;
 	}
 
 	/**
-	 * Add a keyword to Submission.
+	 * Add a keyword to Application.
 	 *
 	 * @param keyword Keyword to be added.
 	 */
@@ -120,7 +120,7 @@ public class Submission implements Importable<Application>, Exportable, Serializ
 		return rootNode;
 	}
 
-	public Submission importContentFromXMLNode(Node node) throws ParserConfigurationException {
+	public Application importContentFromXMLNode(Node node) throws ParserConfigurationException {
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -164,11 +164,11 @@ public class Submission implements Importable<Application>, Exportable, Serializ
 		if (this == o) {
 			return true;
 		}
-		if (!(o instanceof Submission)) {
+		if (!(o instanceof Application)) {
 			return false;
 		}
 
-		Submission that = (Submission) o;
+		Application that = (Application) o;
 
 		if (!getDescription().equals(that.getDescription())) {
 			return false;

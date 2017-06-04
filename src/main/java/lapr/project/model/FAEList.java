@@ -2,15 +2,25 @@ package lapr.project.model;
 
 import java.util.List;
 import java.util.ArrayList;
+
 /**
  * Created by francisco on 30-05-2017.
  */
 public class FAEList {
-    
+
     private List<FAE> faeList;
+
+    public FAEList() {
+        faeList = new ArrayList<>();
+    }
+
+    public FAEList(FAEList outraListaFae) {
+        this.faeList = new ArrayList<>(outraListaFae.getFaeListElements());
+    }
 
     /**
      * Object constructor
+     *
      * @param faeList list of FAE's
      */
     public FAEList(List<FAE> faeList) {
@@ -22,18 +32,18 @@ public class FAEList {
 //     * get List of Fae's
 //     * @return list of fae's
 //     */
-//    public List<FAE> getFaeList() {
-//        return new ArrayList<FAE>(this.faeList);
-//    }
+    public List<FAE> getFaeListElements() {
+        return new ArrayList<FAE>(this.faeList);
+    }
 //
 //    /**
 //     * Adds fae to the list
 //     * @param fae fae member
 //     * @return true if added with success
 //     */
-//    public boolean registerFAEMember(FAE fae) {
-//        return this.faeList.add(fae);
-//    }
+    public boolean registerFAEMember(FAE fae) {
+        return this.faeList.add(fae);
+    }
 //
 //    /**
 //     * Returns the fae that the user belongs to
@@ -61,19 +71,22 @@ public class FAEList {
 //     * @param user User
 //     * @return true if the user exists
 //     */
-//    boolean hasFAE(User user) {
-//        for (FAE fae : faeList) {
-//            if (fae.isUser(user)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+
+    public boolean hasFAE(User user) {
+        for (FAE fae : faeList) {
+            if (fae.isUser(user)) {
+                return true;
+            }
+        }
+        return false;
+    }
 //    /**
 //     * Constructs a new FAW
 //     * @return
 //     */
-//    public static FAE newFAE() {
-//        return new FAE();
-//    }
+
+    public FAE newFAE() {
+        return new FAE();
+    }
+
 }

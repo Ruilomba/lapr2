@@ -2,6 +2,8 @@ package lapr.project.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import lapr.project.states.EventCreatedState;
+import lapr.project.states.EventState;
 
 public class EventRegistration {
 
@@ -18,6 +20,29 @@ public class EventRegistration {
     public void setEventList(List<Event> listaEventos) {
         this.eventList = eventList;
     }
+    public List<Event> getEventsOfState(EventState eventState){
+        List<Event> AuxEventList=new ArrayList<>();
+        for(Event e : eventList){
+            if(e.getEventState().getClass().getSimpleName().equals(eventState.getClass().getSimpleName())){
+                AuxEventList.add(e);
+            }
+        }
+        return AuxEventList;
+    }
+    
+    /**
+     * a ser editado
+//        public List<Event> getAvailableToApplicationEventList() {
+//
+//        List<Event> EventListAvailable = new ArrayList<>();
+//        for (Event e : eventList) {
+//            Data dataAtual = Data.dataAtual();
+//            if ((e.getDataFimSub().isMaior(dataAtual)) == true) {
+//                listaEventosValidos.add(e);
+//            }
+//        }
+//        return listaEventosValidos;
+//    }
 
     /*
     public List<Organizer> getListaOrganizadores() {
@@ -47,30 +72,19 @@ public class EventRegistration {
         return listaFaes;
     }
 
-    public List<Evento> getListaEventosSubmissao() {
 
-        List<Evento> listaEventosValidos = new ArrayList<>();
-        for (Evento e : listaEventos) {
-            Data dataAtual = Data.dataAtual();
-            if ((e.getDataFimSub().isMaior(dataAtual)) == true) {
-                listaEventosValidos.add(e);
+*/
+    public List<Event> getOrganizerEvents(User u,EventState eventState){
+        List<Event> organizerEvents= new ArrayList<>();
+        
+        for(Event e : organizerEvents){
+            if(e.belongsToOrganizer(u)&&e.getEventState().getClass().getSimpleName().equals(eventState.getClass().getSimpleName())){
+                organizerEvents.add(e);
             }
         }
-        return listaEventosValidos;
+        return organizerEvents;
     }
-
-    public List getEventosOrganizador(Utilizador u) {
-        List<Evento> output = new ArrayList<>();
-
-        for (Evento e : listaEventos) {
-            if (e.belongsToOrganizador(u)) {
-                output.add(e);
-            }
-        }
-
-        return output;
-    }
-    */
+    
 
     
     public Event newEvent() {

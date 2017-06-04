@@ -3,16 +3,16 @@ package lapr.project.model;
 import java.util.List;
 
 public class SubmissionAssignment {
-    private final Submission submission;
+    private final Application submission;
     private final List<FAE> faeList;
     private final List<FAERating> faeRatings;
 
     /**
      * Object constructor
-     * @param submission assigned Submission
+     * @param submission assigned Application
      * @param faeList List of FAE for this submission
      */
-    public SubmissionAssignment(Submission submission, List<FAE> faeList, List<FAERating> faeRatings) {
+    public SubmissionAssignment(Application submission, List<FAE> faeList, List<FAERating> faeRatings) {
         this.submission = submission;
         this.faeList = faeList;
         this.faeRatings = faeRatings;
@@ -53,7 +53,7 @@ public class SubmissionAssignment {
      *
      * @return assigned submission
      */
-    public Submission getSubmission() {
+    public Application getSubmission() {
         return submission;
     }
 
@@ -63,7 +63,7 @@ public class SubmissionAssignment {
      * @param submission submission to be validated
      * @return true if the submission is the assigned submission
      */
-    public boolean isForApplication(Submission submission) {
+    public boolean isForApplication(Application submission) {
         return submission.equals(submission);
     }
 

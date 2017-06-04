@@ -5,11 +5,19 @@
  */
 package lapr.project.states;
 
+import lapr.project.model.Event;
+
 /**
  *
  * @author RuiSL
  */
-public interface EventState {
-    void setCriada();
+public class StartingEventState implements EventState{
+    private Event event;
+    @Override
+    public void setCriada() {
+//        event.setEventState(new EventCreatedState());
+    }
+
+   
     
 }
