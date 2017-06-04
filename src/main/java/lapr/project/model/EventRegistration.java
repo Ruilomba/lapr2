@@ -108,6 +108,10 @@ public class EventRegistration {
     }
     */
 
+      public void getEventDecideList(Organizer o) {
+        //Por implementar
+    }
+      
     public Event getEvent(Event e) {
         int index = eventList.indexOf(e);
         if (index < 0) {
