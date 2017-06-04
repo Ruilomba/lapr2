@@ -34,5 +34,54 @@ public class ApplicationRegistration {
     public List<Application> getApplicationListElements(){
         return this.applicationList;
     }
+    
+    public List<Application> getApplicationsFromFAE(FAE FAE, Event e) {
+        List<Application> output = new ArrayList<>();
+        List<FAE> listaFaes = e.getFaeList().getFaeListElements();
+
+        for (Application a : applicationList) {
+
+            if (listaFaes.contains(FAE)) {
+                output.add(a);
+            }
+        }
+
+        return output;
+    }
+
+    public List<Application> getApplicationList() {
+        return new ArrayList<>(this.applicationList);
+    }
+
+    
+    public Application newApplication() {
+        return new Application();
+    }
+
+    
+    public boolean registerApplication(Application a) {
+        if (!applicationList.contains(a)) {
+            return this.applicationList.add(a);
+        }
+        return false;
+    }
+
+    public boolean validateApplication(Application a) {
+        if (applicationList.contains(a)) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isEmpty() {
+        return applicationList.isEmpty();
+    }
+
+    
+    public void addApplication(Application a) {
+        if (validateApplication(a)) {
+            applicationList.add(a);
+        }
+    }
 
 }
