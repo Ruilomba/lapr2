@@ -26,7 +26,7 @@ public class AssingApplicationController {
     }
     
     public List<Event> getValidOrganizerEvents(String username){
-        User u = eventCenter.getUserRegistration().getUser(username);
+        User u = eventCenter.getUserRegistration().getUserWithUsername(username);
         return eventCenter.getEventRegistration().getOrganizerEvents(u, new EventStateClosedApplications());
     }
     

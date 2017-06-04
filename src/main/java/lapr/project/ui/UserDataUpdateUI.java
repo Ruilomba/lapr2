@@ -41,6 +41,7 @@ public class UserDataUpdateUI extends JFrame {
         panel.setLayout(new GridLayout(0, 1));
         this.add(panel);
         createElements();
+        addUserDataToForm();
         addListenersForButtons();
         addElementsToJPanel(panel);
         this.setVisible(true);
@@ -69,17 +70,28 @@ public class UserDataUpdateUI extends JFrame {
         errorMessageLabel.setForeground(Color.red);
     }
 
+    private void addUserDataToForm() {
+        User userData = controller.getCurrentUserData();
+        nameTextField.setText(userData.getName());
+        usernameTextField.setText(userData.getUsername());
+        emailTextField.setText(userData.getEmail());
+    }
+
     private void addListenersForButtons() {
         submitFormButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (formIsValid()) {
                     try {
-                        updateUserData();
+                        if (updateUserData()) {
+                            showSuccessAlert();
+                        }
+                        else {
+                            showErrorAlert();
+                        }
                     } catch (IOException ex) {
                         showErrorAlertWithMessage(ex.getMessage());
                     }
-                    showSuccessAlert();
                 }
             }
         });
@@ -116,14 +128,6 @@ public class UserDataUpdateUI extends JFrame {
         return true;
     }
 
-    private boolean updateUserData() throws IOException {
-        String name = nameTextField.getText();
-        String username = usernameTextField.getText();
-        String email = emailTextField.getText();
-        String password = passwordTextField.getText();
-        return controller.updateUserData(name, username, email, password);
-    }
-
     private void addElementsToJPanel(JPanel panel) {
         panel.add(nameLabel);
         panel.add(nameTextField);
@@ -140,10 +144,22 @@ public class UserDataUpdateUI extends JFrame {
         panel.add(errorMessageLabel);
     }
 
+    private boolean updateUserData() throws IOException {
+        String name = nameTextField.getText();
+        String username = usernameTextField.getText();
+        String email = emailTextField.getText();
+        String password = passwordTextField.getText();
+        return controller.updateUserData(name, username, email, password);
+    }
+    
     private void showSuccessAlert() {
-        JOptionPane.showMessageDialog(this, "User was registrated successfully", "Success", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(this, "User data was updates successfully", "Success", JOptionPane.PLAIN_MESSAGE);
     }
 
+    private void showErrorAlert() {
+        JOptionPane.showMessageDialog(this, "User info could not be updated", "Error", JOptionPane.WARNING_MESSAGE);
+    }
+    
     private void showErrorAlertWithMessage(String message) {
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.WARNING_MESSAGE);
     }

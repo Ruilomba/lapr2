@@ -29,6 +29,10 @@ public class UserRegistrationUI extends JFrame {
     private JLabel errorMessageLabel;
     private JButton goToLoginButton;
 
+    /**
+     * default constructor
+     * @param center 
+     */
     public UserRegistrationUI(EventCenter center) {
         super("User Registration");
         eventCenter = center;
@@ -46,6 +50,9 @@ public class UserRegistrationUI extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * creates all UI elements
+     */
     private void createElements() {
         nameLabel = new JLabel("Enter name");
         nameLabel.setFont(new Font(nameLabel.getFont().getName(), nameLabel.getFont().getStyle(), 18));
@@ -70,6 +77,9 @@ public class UserRegistrationUI extends JFrame {
         goToLoginButton = new JButton("Already registered?");
     }
 
+    /**
+     * adds listeners and actions for each button
+     */
     private void addListenersForButtons() {
         submitFormButton.addActionListener(new ActionListener() {
             @Override
@@ -81,7 +91,6 @@ public class UserRegistrationUI extends JFrame {
                         String email = emailTextField.getText();
                         String password = passwordTextField.getText();
                         if (controller.registerUser(name, username, email, password)) {
-                            saveUserCredentials();
                             goToMenu();                        
                         }
                     } catch (IOException ex) {
@@ -98,6 +107,10 @@ public class UserRegistrationUI extends JFrame {
         });
     }
 
+    /**
+     * 
+     * @return true if user input is valid
+     */
     private boolean formIsValid() {
         String name = nameTextField.getText();
         String username = usernameTextField.getText();
@@ -145,6 +158,10 @@ public class UserRegistrationUI extends JFrame {
         return true;
     }
 
+    /**
+     * adds all ui elements to main panels
+     * @param panel 
+     */
     private void addElementsToJPanel(JPanel panel) {
         panel.add(nameLabel);
         panel.add(nameTextField);
@@ -162,24 +179,33 @@ public class UserRegistrationUI extends JFrame {
         panel.add(goToLoginButton);
     }
     
+    /**
+     * displays window with success message
+     */
     private void showSuccessAlert() {
         JOptionPane.showMessageDialog(this, "User was registrated successfully", "Success", JOptionPane.PLAIN_MESSAGE);
     }
 
+    /**
+     * displays window with error message
+     * @param message 
+     */
     private void showErrorAlertWithMessage(String message) {
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.WARNING_MESSAGE);
     }
     
+    /**
+     * shows login frame, disposes current frame
+     */
     private void goToLogin() {
         UserLoginUI login = new UserLoginUI(eventCenter);
         login.setVisible(true);
         this.dispose();
     }
-    
-    private void saveUserCredentials() {
-        controller.saveUserCredentials(usernameTextField.getText());
-    }
 
+    /**
+     * shows menu frame, disposes current frame
+     */
     private void goToMenu() {
         MenuUI menu = new MenuUI(eventCenter);
         menu.setVisible(true);

@@ -22,21 +22,20 @@ public class AssignmentStandController implements Serializable{
     
     private EventCenter eventCenter;
     private EventRegistration eventRegistration;
-    private ApplicationRegistration appRegistration;
+    //private ApplicationRegistration appRegistration;
     private StandRegistration stdRegistration;
     private Event event;
     
     public AssignmentStandController (EventCenter eventCenter) {
         this.eventCenter = eventCenter;
         this.eventRegistration = eventCenter.getEventRegistration();
-        this.appRegistration = eventCenter.
+//        this.appRegistration = eventCenter.
         this.stdRegistration = eventCenter.getStandRegistration();
-        
     }
         
+    /*
     
     public void getEventList(Organizer o){
-        
         ArrayList<Event> eventlist = new ArrayList();
         
         
@@ -76,9 +75,5 @@ public class AssignmentStandController implements Serializable{
     public void registaDados(){
         exp.registaDados();
     }
-}
-
-                
-        
-    }
+*/
 }

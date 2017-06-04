@@ -32,15 +32,10 @@ public class UserRegistrationController {
         createdUser.setUsername(username);
         createdUser.setEmail(email);
         createdUser.setPassword(password);
-        return userRegistration.addUserRegistration(createdUser);
+        if (userRegistration.addUserRegistration(createdUser)) {
+            AuthenticationService.setAuthenticatedUser(createdUser);
+            return true;
+        }
+        return false;
     }
-    
-    /**
-     * saves username of authenticated user
-     * @param username 
-     */
-    public void saveUserCredentials(String username) {
-        AuthenticationService.setAuthenticatedUser(username);
-    }
-    
 }

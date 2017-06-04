@@ -30,7 +30,7 @@ public class DefineFAEController {
     }
 
     public List<Event> getOrganizerEvents(String username) {
-        User u = eventCenter.getUserRegistration().getUser(username);
+        User u = eventCenter.getUserRegistration().getUserWithUsername(username);
         return eventCenter.getEventRegistration().getOrganizerEvents(u,new EventCreatedState());
     }
 

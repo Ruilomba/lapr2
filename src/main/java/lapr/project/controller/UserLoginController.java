@@ -21,6 +21,7 @@ public class UserLoginController {
             return AuthenticationService.loginUser(usernameOrEmail, password);            
         }
         catch (IOException e) {
+            System.out.println(e.getMessage());
             return false;
         }
     }
