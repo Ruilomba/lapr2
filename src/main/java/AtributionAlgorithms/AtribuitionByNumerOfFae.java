@@ -8,6 +8,7 @@ package AtributionAlgorithms;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import lapr.project.model.Application;
 import lapr.project.model.Atribuition;
 import lapr.project.model.AtribuitionAlgorithm;
@@ -28,19 +29,29 @@ public class AtribuitionByNumerOfFae implements AtribuitionAlgorithm {
      */
     private static int PRETENDED_FAE = 2;
 
+    /**
+     * @param aPRETENDED_FAE the PRETENDED_FAE to set
+     */
+    public static void setPRETENDED_FAE(int aPRETENDED_FAE) {
+        PRETENDED_FAE = aPRETENDED_FAE;
+    }
+
     public AtribuitionByNumerOfFae() {
 
     }
 
     @Override
     public AtribuitionList getAlgorithmAtribuitionList(Event e) {
+        Scanner in= new Scanner(System.in);
         List<Application> applicationsWithoutAtribuition = e.getApplicationsWithoutAtribuition();
         FAEList eventFaeList = e.getFaeList();
 
         if (applicationsWithoutAtribuition.isEmpty() || eventFaeList.isEmpty()) {
             return new AtribuitionList();
         }
-
+        System.out.println("What is the number of Fae you would like in each application?");
+        int n=in.nextInt();
+        setPRETENDED_FAE(n);
         AtribuitionList atribuitionList = new AtribuitionList();
         List<FAE> listaFae = eventFaeList.getFaeListElements();
         int faeTotalNum = listaFae.size();

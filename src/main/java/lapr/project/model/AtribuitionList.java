@@ -42,6 +42,16 @@ public class AtribuitionList {
         }
         return false;
     }
+    
+    public int getAtribuitionsNumberOfFae(FAE fae){
+        int i=0;
+        for(Atribuition a : atribuitionList){
+            if(a.isFromFAE(fae)){
+                i++;
+            }
+        }
+        return i;
+    }
     public void registerAtribuition(Atribuition a) {
         atribuitionList.add(a);
     }

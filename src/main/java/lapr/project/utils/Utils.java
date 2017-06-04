@@ -15,4 +15,14 @@ public class Utils {
         return n;
         
     }
+     
+     public static int getMinorValueIndex ( int[]vetor){
+        int menorIndex=0;
+        for(int i=0;i<vetor.length;i++) {
+            if(vetor[menorIndex]> vetor[i]) {
+                menorIndex=i;
+            }
+        }
+        return menorIndex;
+    }
 }

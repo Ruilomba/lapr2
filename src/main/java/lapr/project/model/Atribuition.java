@@ -23,12 +23,7 @@ public class Atribuition {
     public Atribuition() {
         this.faeList = new ArrayList<>();
     }
-
-    public void setFAE(FAE FAE) {
-
-    }
-
-    
+   
     public List<FAE> getFaeList() {
         return faeList;
     }
