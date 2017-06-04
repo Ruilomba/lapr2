@@ -5,6 +5,8 @@
  */
 package lapr.project.model;
 
+import AtributionAlgorithms.AtribuitionByNumerOfFae;
+import AtributionAlgorithms.AttribuitionAlgorithmEquitativeLoad;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,5 +30,12 @@ public class AlgorithmRegistration {
     
     public void setAlgorithmList(List algorithm) {
         algorithmList = new ArrayList<>(algorithm);
+    }
+    
+    public static List<AtribuitionAlgorithm> initializeAlgorithmRegister (){
+        List<AtribuitionAlgorithm> algorithmList= new ArrayList<>();
+        algorithmList.add(new AtribuitionByNumerOfFae());
+        algorithmList.add(new AttribuitionAlgorithmEquitativeLoad());
+        return algorithmList;
     }
 }

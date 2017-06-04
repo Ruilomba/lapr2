@@ -14,7 +14,7 @@ public class EventCenter implements Serializable {
     public EventCenter() {
         eventRegistration = new EventRegistration();
         userRegistration = new UserRegistration();
-        algorithmRegistration = new AlgorithmRegistration();
+        algorithmRegistration = new AlgorithmRegistration(AlgorithmRegistration.initializeAlgorithmRegister());
     }
 
     public EventRegistration getEventRegistration() {
@@ -27,6 +27,13 @@ public class EventCenter implements Serializable {
 
     public StandRegistration getStandRegistration() {
         return standRegistration;
+    }
+
+    /**
+     * @return the algorithmRegistration
+     */
+    public AlgorithmRegistration getAlgorithmRegistration() {
+        return algorithmRegistration;
     }
 }
 
