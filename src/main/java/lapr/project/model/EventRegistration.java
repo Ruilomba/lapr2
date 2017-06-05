@@ -19,19 +19,17 @@ public class EventRegistration {
         this.eventList = eventList;
     }
     
-    /**
-     * a ser editado
-//        public List<Event> getAvailableToApplicationEventList() {
-//
-//        List<Event> EventListAvailable = new ArrayList<>();
-//        for (Event e : eventList) {
-//            Data dataAtual = Data.dataAtual();
-//            if ((e.getDataFimSub().isMaior(dataAtual)) == true) {
-//                listaEventosValidos.add(e);
-//            }
-//        }
-//        return listaEventosValidos;
-//    }
+
+        public List<Event> getAvailableToApplicationEventList() {
+
+        List<Event> eventListAvailable = new ArrayList<>();
+        for (Event e : eventList) {
+            if(e.getEventState().setCandidaturasExpoAbertas());
+                eventListAvailable.add(e);
+            }
+        
+        return eventListAvailable;
+    }
 
     /*
     public List<Organizer> getListaOrganizadores() {

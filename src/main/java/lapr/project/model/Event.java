@@ -10,9 +10,7 @@ import lapr.project.states.EventStateDefinedFAE;
 import lapr.project.states.EventStateToReceivingApplications;
 import lapr.project.states.StartingEventState;
 
-
-    public class Event implements Serializable {
-
+public class Event implements Serializable {
 
     private String titulo;
     private String textoDescritivo;
@@ -28,8 +26,6 @@ import lapr.project.states.StartingEventState;
     private EventType tipoEvento;
     private EventState eventState;
 
-    
-    
     public Event() {
         this.registoOrganizadores = new OrganizerRegistration();
         this.faeList = new FAEList();
@@ -38,9 +34,10 @@ import lapr.project.states.StartingEventState;
         this.dataFim = new Date();
         this.dataInicio = new Date();
         this.dataInicioSubCandidatura = new Date();
-        this.tipoEvento=new Exhibition();
-        this.eventState=new StartingEventState();
+        this.tipoEvento = new Exhibition();
+        this.eventState = new StartingEventState();
     }
+
     /**
      * @return the titulo
      */
@@ -132,6 +129,9 @@ import lapr.project.states.StartingEventState;
         return eventState;
     }
 
+
+    
+
     /**
      * @param titulo the titulo to set
      */
@@ -222,15 +222,13 @@ import lapr.project.states.StartingEventState;
     public void setEventState(EventState eventState) {
         this.eventState = eventState;
     }
-    public boolean setToReceivingAplications(){
-        if(this.eventState instanceof EventStateDefinedFAE){
-            this.eventState= new EventStateToReceivingApplications();
+
+    public boolean setToReceivingAplications() {
+        if (this.eventState instanceof EventStateDefinedFAE) {
+            this.eventState = new EventStateToReceivingApplications();
             return true;
         }
         return false;
     }
 
-    
-    
-    
 }
