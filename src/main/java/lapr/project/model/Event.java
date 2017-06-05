@@ -17,13 +17,8 @@ import lapr.project.utils.Data;
 
 public class Event implements Serializable {
 
-<<<<<<< HEAD
-    private String titulo;
-    private String textoDescritivo;
-=======
     private String title;
     private String eventDescription;
->>>>>>> e8fa8dcb5f1a815af68a7770c72b5feb5221efc2
     private String local;
     private Data startDate;
     private Data endDate;
@@ -31,6 +26,7 @@ public class Event implements Serializable {
     private OrganizerRegistration organizerRegistration;
     private ApplicationRegistration applicationRegistration;
     private AtribuitionList atribuitionList;
+    private Data startingSubmissionDate;
     private Data endingSubmissionDate;
     private EventType eventType;
     private EventState eventState;
@@ -39,21 +35,11 @@ public class Event implements Serializable {
     public Event() {
         this.organizerRegistration = new OrganizerRegistration();
         this.faeList = new FAEList();
-<<<<<<< HEAD
-        this.registoCandidaturas = new ApplicationRegistration();
-        this.listaAtribuicoes = new AtribuitionList();
-        this.dataFim = new Date();
-        this.dataInicio = new Date();
-        this.dataInicioSubCandidatura = new Date();
-        this.tipoEvento = new Exhibition();
-        this.eventState = new StartingEventState();
-    }
-
-=======
         this.applicationRegistration = new ApplicationRegistration();
         this.atribuitionList = new AtribuitionList();
         this.endDate = new Data();
         this.startDate = new Data();
+        this.startingSubmissionDate = new Data();
         this.eventType = new Exhibition();
         this.eventState = new StartingEventState();
     }
@@ -67,6 +53,7 @@ public class Event implements Serializable {
         this.local = local;
         this.startDate = dataInicio;
         this.endDate = dataFim;
+        this.startingSubmissionDate = dataInicioSubmissao;
         this.endingSubmissionDate = dataFimSubmissao;
         this.organizerRegistration = new OrganizerRegistration(registoOrganizadores);
         this.faeList = new FAEList(listaFae);
@@ -101,12 +88,15 @@ public class Event implements Serializable {
         return false;
     }
 
->>>>>>> e8fa8dcb5f1a815af68a7770c72b5feb5221efc2
     /**
      * @return the title
      */
     public String getTitle() {
         return title;
+    }
+    
+    public boolean isInState(EventState eventState){
+        return this.getEventState().getClass().getSimpleName().equals(eventState.getClass().getSimpleName());
     }
 
     /**
@@ -178,7 +168,9 @@ public class Event implements Serializable {
     /**
      * @return the startingSubmissionDate
      */
-    
+    public Data getStartingSubmissionDate() {
+        return startingSubmissionDate;
+    }
 
     /**
      * @return the endingSubmissionDate
@@ -200,9 +192,6 @@ public class Event implements Serializable {
     public EventState getEventState() {
         return eventState;
     }
-
-
-    
 
     /**
      * @param title the title to set
@@ -279,7 +268,10 @@ public class Event implements Serializable {
     /**
      * @param startingSubmissionDate the startingSubmissionDate to set
      */
-    
+    public void setStartingSubmissionDate(Data startingSubmissionDate) {
+        this.startingSubmissionDate = startingSubmissionDate;
+    }
+
     /**
      * @param endingSubmissionDate the endingSubmissionDate to set
      */
@@ -301,14 +293,6 @@ public class Event implements Serializable {
         this.eventState = eventState;
     }
 
-<<<<<<< HEAD
-    public boolean setToReceivingAplications() {
-        if (this.eventState instanceof EventStateDefinedFAE) {
-            this.eventState = new EventStateToReceivingApplications();
-            return true;
-        }
-        return false;
-=======
     public void registaDados() {
         addList(astdlst);
     }
@@ -319,7 +303,6 @@ public class Event implements Serializable {
 
     public boolean belongsToOrganizer(User u) {
         return organizerRegistration.hasOrganizer(u);
->>>>>>> e8fa8dcb5f1a815af68a7770c72b5feb5221efc2
     }
 
 }
