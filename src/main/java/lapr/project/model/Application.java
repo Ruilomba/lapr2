@@ -27,6 +27,8 @@ public class Application implements Importable<Application>, Exportable, Seriali
 	private final List<Keyword> keywordList = new ArrayList<Keyword>();
 	private List<FAERating> ratings;
 	private String description = "";
+        
+       
 
 	/**
 	 * Constructor for Submission

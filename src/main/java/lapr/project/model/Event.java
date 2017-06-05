@@ -15,9 +15,7 @@ import lapr.project.states.SetEventStateToReceivingAplications;
 import lapr.project.states.StartingEventState;
 import lapr.project.utils.Data;
 
-
-    public class Event implements Serializable {
-
+public class Event implements Serializable {
 
     private String title;
     private String eventDescription;
@@ -32,9 +30,8 @@ import lapr.project.utils.Data;
     private Data endingSubmissionDate;
     private EventType eventType;
     private EventState eventState;
+    private AtribuitionStandList astdlst;
 
-    
-    
     public Event() {
         this.organizerRegistration = new OrganizerRegistration();
         this.faeList = new FAEList();
@@ -43,14 +40,14 @@ import lapr.project.utils.Data;
         this.endDate = new Data();
         this.startDate = new Data();
         this.startingSubmissionDate = new Data();
-        this.eventType=new Exhibition();
-        this.eventState=new StartingEventState();
+        this.eventType = new Exhibition();
+        this.eventState = new StartingEventState();
     }
-    
-    public Event(EventType eventType,String title,
+
+    public Event(EventType eventType, String title,
             String descricao, String local, Data dataInicio, Data dataFim, Data dataInicioSubmissao,
             Data dataFimSubmissao, OrganizerRegistration registoOrganizadores, FAEList listaFae) {
-        this.eventType=eventType;
+        this.eventType = eventType;
         this.title = title;
         this.eventDescription = descricao;
         this.local = local;
@@ -63,27 +60,29 @@ import lapr.project.utils.Data;
 
         this.applicationRegistration = new ApplicationRegistration();
         this.atribuitionList = new AtribuitionList();
-    }   
-    
-    public void autoSetToClosedApplications(){
+    }
+
+    public void autoSetToClosedApplications() {
         Timer timer = new Timer();
-        int year=endingSubmissionDate.getAno();
-        int month=endingSubmissionDate.getMes();
-        int day=endingSubmissionDate.getDia();
-        Date aux= new Date(year,month,day);
+        int year = endingSubmissionDate.getAno();
+        int month = endingSubmissionDate.getMes();
+        int day = endingSubmissionDate.getDia();
+        Date aux = new Date(year, month, day);
         timer.schedule(new SetEventStateToClosedApplications(this), aux);
     }
-    public void autoSetToReceivingApplications(){
+
+    public void autoSetToReceivingApplications() {
         Timer timer = new Timer();
-        int year=endingSubmissionDate.getAno();
-        int month=endingSubmissionDate.getMes();
-        int day=endingSubmissionDate.getDia();
-        Date aux= new Date(year,month,day);
+        int year = endingSubmissionDate.getAno();
+        int month = endingSubmissionDate.getMes();
+        int day = endingSubmissionDate.getDia();
+        Date aux = new Date(year, month, day);
         timer.schedule(new SetEventStateToReceivingAplications(this), aux);
     }
-    public boolean setCreated(){
-        if(this.eventState instanceof StartingEventState) {
-            this.eventState= new EventCreatedState();
+
+    public boolean setCreated() {
+        if (this.eventState instanceof StartingEventState) {
+            this.eventState = new EventCreatedState();
             return true;
         }
         return false;
@@ -94,6 +93,10 @@ import lapr.project.utils.Data;
      */
     public String getTitle() {
         return title;
+    }
+    
+    public boolean isInState(EventState eventState){
+        return this.getEventState().getClass().getSimpleName().equals(eventState.getClass().getSimpleName());
     }
 
     /**
@@ -109,15 +112,17 @@ import lapr.project.utils.Data;
     public String getLocal() {
         return local;
     }
-    public List<Application> getApplicationsWithoutAtribuition(){
-        List<Application> applicationList= new ArrayList<>();
-        for(Application a : applicationRegistration.getApplicationListElements()){
-            if(!atribuitionList.hasApplication(a)){
+
+    public List<Application> getApplicationsWithoutAtribuition() {
+        List<Application> applicationList = new ArrayList<>();
+        for (Application a : applicationRegistration.getApplicationListElements()) {
+            if (!atribuitionList.hasApplication(a)) {
                 applicationList.add(a);
             }
         }
         return applicationList;
     }
+
     /**
      * @return the startDate
      */
@@ -203,6 +208,15 @@ import lapr.project.utils.Data;
     }
 
     /**
+     *
+     * @param event
+     * @param s
+     */
+    public void novaAtribuicao(Event event, Stand s) {
+        astdlst.newAtribuition(event, s);
+    }
+
+    /**
      * @param local the local to set
      */
     public void setLocal(String local) {
@@ -278,11 +292,17 @@ import lapr.project.utils.Data;
     public void setEventState(EventState eventState) {
         this.eventState = eventState;
     }
-    
-    public boolean belongsToOrganizer(User u){
+
+    public void registaDados() {
+        addList(astdlst);
+    }
+
+    private void addList(AtribuitionStandList astdlist) {
+        this.astdlst = astdlist;
+    }
+
+    public boolean belongsToOrganizer(User u) {
         return organizerRegistration.hasOrganizer(u);
     }
-    
-    
-    
+
 }

@@ -13,6 +13,7 @@ import java.util.List;
  * @author RuiSL
  */
 public class ApplicationRegistration {
+    
     private List<Application> applicationList;
 
     /**
@@ -61,6 +62,10 @@ public class ApplicationRegistration {
             return false;
         }
         return true;
+    }
+
+    public List<Application> getApplicationList() {
+        return applicationList;
     }
 
     public boolean isEmpty() {

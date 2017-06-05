@@ -49,7 +49,6 @@ public class CreateEventController {
         event.setEventDescription(descricao);
         event.setStartDate(dataInicio);
         event.setEndDate(dataFimEvento);
-        event.setStartingSubmissionDate(dataInicioSubmissao);
         event.setEndingSubmissionDate(dataFimSubmissao);
         event.setLocal(local);
     }
@@ -81,8 +80,6 @@ public class CreateEventController {
             eventCenter.getEventRegistration().registerEvento(e);
             return true;
         }
-        e.autoSetToClosedApplications();
-        e.autoSetToReceivingApplications();
         return false;
     }
     

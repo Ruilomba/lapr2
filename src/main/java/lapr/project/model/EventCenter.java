@@ -9,7 +9,8 @@ public class EventCenter implements Serializable {
     private UserRegistration userRegistration;
     private StandRegistration standRegistration;
     private AlgorithmRegistration algorithmRegistration;
-//    private AlgorithmRegistration algorithmRegistration;
+    private ApplicationRegistration appRegistration;
+    //    private AlgorithmRegistration algorithmRegistration;
 
     public EventCenter() {
         eventRegistration = new EventRegistration();
@@ -27,6 +28,12 @@ public class EventCenter implements Serializable {
 
     public StandRegistration getStandRegistration() {
         return standRegistration;
+    }
+
+    public ApplicationRegistration getApplicationRegistration() {
+
+        return appRegistration;
+
     }
 
     /**
