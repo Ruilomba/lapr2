@@ -13,7 +13,57 @@ import java.util.List;
  * @author RuiSL
  */
 public class ApplicationRegistration {
+
+    private List<Application> applicationList;
+
+    public ApplicationRegistration() {
+        applicationList = new ArrayList<Application>();
+    }
+
+    /**
+     * return an application list
+     *
+     * @return
+     */
+    public List<Application> getApplicationList() {
+        return new ArrayList<>(this.applicationList);
+    }
+
+    public Application newApplication() {
+        return new Application();
+    }
+
+
+    /**
+     * check if application alredy axists
+     * 
+     * @param a
+     * @return - true if there is
+     */
+    public boolean checkIfApplicationExists(Application a) {
+        if (applicationList.contains(a)) {
+            return true;
+        }
+        return false;
+    }
     
+    public boolean addApplication(Application a){
+        if(!checkIfApplicationExists(a)){
+            
+        }
+    }
+    
+<<<<<<< HEAD
+    /**
+     * submit application
+     *
+     * @param a
+     * @return
+     */
+    public boolean submitApplication(Application a) {
+        if (!checkIfApplicationExists(a)) {
+
+=======
     private List<Application> applicationList;
 
     /**
@@ -57,11 +107,14 @@ public class ApplicationRegistration {
     
     public boolean registerApplication(Application a) {
         if (!applicationList.contains(a)) {
+>>>>>>> e8fa8dcb5f1a815af68a7770c72b5feb5221efc2
             return this.applicationList.add(a);
         }
         return false;
     }
 
+<<<<<<< HEAD
+=======
     public boolean validateApplication(Application a) {
         if (applicationList.contains(a)) {
             return false;
@@ -84,4 +137,5 @@ public class ApplicationRegistration {
         }
     }
 
+>>>>>>> e8fa8dcb5f1a815af68a7770c72b5feb5221efc2
 }

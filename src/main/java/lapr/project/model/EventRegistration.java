@@ -21,6 +21,21 @@ public class EventRegistration {
     public void setEventList(List<Event> listaEventos) {
         this.eventList = eventList;
     }
+<<<<<<< HEAD
+    
+
+        public List<Event> getAvailableToApplicationEventList() {
+
+        List<Event> eventListAvailable = new ArrayList<>();
+        for (Event e : eventList) {
+            if(e.getEventState().setCandidaturasExpoAbertas());
+                eventListAvailable.add(e);
+            }
+        
+        return eventListAvailable;
+    }
+=======
+>>>>>>> e8fa8dcb5f1a815af68a7770c72b5feb5221efc2
 
     public List<Event> getEventsOfState(EventState eventState) {
         List<Event> AuxEventList = new ArrayList<>();

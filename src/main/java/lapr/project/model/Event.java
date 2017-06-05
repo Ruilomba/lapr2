@@ -17,8 +17,13 @@ import lapr.project.utils.Data;
 
 public class Event implements Serializable {
 
+<<<<<<< HEAD
+    private String titulo;
+    private String textoDescritivo;
+=======
     private String title;
     private String eventDescription;
+>>>>>>> e8fa8dcb5f1a815af68a7770c72b5feb5221efc2
     private String local;
     private Data startDate;
     private Data endDate;
@@ -34,6 +39,17 @@ public class Event implements Serializable {
     public Event() {
         this.organizerRegistration = new OrganizerRegistration();
         this.faeList = new FAEList();
+<<<<<<< HEAD
+        this.registoCandidaturas = new ApplicationRegistration();
+        this.listaAtribuicoes = new AtribuitionList();
+        this.dataFim = new Date();
+        this.dataInicio = new Date();
+        this.dataInicioSubCandidatura = new Date();
+        this.tipoEvento = new Exhibition();
+        this.eventState = new StartingEventState();
+    }
+
+=======
         this.applicationRegistration = new ApplicationRegistration();
         this.atribuitionList = new AtribuitionList();
         this.endDate = new Data();
@@ -85,6 +101,7 @@ public class Event implements Serializable {
         return false;
     }
 
+>>>>>>> e8fa8dcb5f1a815af68a7770c72b5feb5221efc2
     /**
      * @return the title
      */
@@ -188,6 +205,9 @@ public class Event implements Serializable {
         return eventState;
     }
 
+
+    
+
     /**
      * @param title the title to set
      */
@@ -285,6 +305,14 @@ public class Event implements Serializable {
         this.eventState = eventState;
     }
 
+<<<<<<< HEAD
+    public boolean setToReceivingAplications() {
+        if (this.eventState instanceof EventStateDefinedFAE) {
+            this.eventState = new EventStateToReceivingApplications();
+            return true;
+        }
+        return false;
+=======
     public void registaDados() {
         addList(astdlst);
     }
@@ -295,6 +323,7 @@ public class Event implements Serializable {
 
     public boolean belongsToOrganizer(User u) {
         return organizerRegistration.hasOrganizer(u);
+>>>>>>> e8fa8dcb5f1a815af68a7770c72b5feb5221efc2
     }
 
 }
