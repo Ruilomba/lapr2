@@ -20,14 +20,12 @@ import java.util.List;
  * @author by Nuno Bettencourt [nmb@isep.ipp.pt] on 29/05/16.
  */
 public class Application implements Importable<Application>, Exportable, Serializable {
-
-
     private static final long serialVersionUID = 1L;
     private static final String ROOT_ELEMENT_NAME = "application";
 	private static final String DESCRIPTION_ELEMENT_NAME = "description";
 	private static final String KEYWORDS_ELEMENT_NAME = "keywords";
 	private final List<Keyword> keywordList = new ArrayList<Keyword>();
-	private FAERating rating;
+	private List<FAERating> ratings;
 	private String description = "";
 
 	/**
@@ -36,17 +34,18 @@ public class Application implements Importable<Application>, Exportable, Seriali
 	 * @param description Candidatura Description
 	 * @param keywordList Keyword List
 	 */
-	public Application(FAERating rating, String description, List<Keyword> keywordList) {
+	public Application(List<FAERating> ratings, String description, List<Keyword> keywordList) {
 		this.description = description;
 		this.keywordList.addAll(keywordList);
-		this.rating = rating;
+		this.ratings = ratings;
 	}
 
 	/**
-	 * Default public constructor.
-	 */
-	public Application() {
-
+	 * Get Rating
+	 * @return FAERating
+     */
+	public List<FAERating> getRatings() {
+		return ratings;
 	}
 
 	/**
