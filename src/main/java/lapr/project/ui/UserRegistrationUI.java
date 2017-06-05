@@ -1,21 +1,19 @@
 package lapr.project.ui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.IOException;
 import javax.swing.*;
-import lapr.project.model.EventCenter;
-import lapr.project.model.User;
+import lapr.project.controller.*;
+import lapr.project.model.*;
+import lapr.project.utils.*;
 
-public class UserRegistrationFrame extends JFrame {
+public class UserRegistrationUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private final EventCenter eventCenter;
-    private JLabel mainLabel;
+    private final UserRegistrationController controller;
+    
     private JLabel nameLabel;
     private JTextField nameTextField;
     private JLabel usernameLabel;
@@ -31,9 +29,14 @@ public class UserRegistrationFrame extends JFrame {
     private JLabel errorMessageLabel;
     private JButton goToLoginButton;
 
-    public UserRegistrationFrame(EventCenter center) {
+    /**
+     * default constructor
+     * @param center 
+     */
+    public UserRegistrationUI(EventCenter center) {
         super("User Registration");
         eventCenter = center;
+        controller = new UserRegistrationController(eventCenter);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(screenSize.width, screenSize.height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,24 +45,31 @@ public class UserRegistrationFrame extends JFrame {
         panel.setLayout(new GridLayout(0,1));
         this.add(panel);
         createElements();
-        addListenerForSubmitButton();
+        addListenersForButtons();
         addElementsToJPanel(panel);
         this.setVisible(true);
     }
 
+    /**
+     * creates all UI elements
+     */
     private void createElements() {
-        mainLabel = new JLabel("User Registration");
         nameLabel = new JLabel("Enter name");
+        nameLabel.setFont(new Font(nameLabel.getFont().getName(), nameLabel.getFont().getStyle(), 18));
         nameTextField = new JTextField(30);
         usernameLabel = new JLabel("Enter username");
+        usernameLabel.setFont(new Font(usernameLabel.getFont().getName(), usernameLabel.getFont().getStyle(), 18));
         usernameTextField = new JTextField(20);
         emailLabel = new JLabel("Enter email");
+        emailLabel.setFont(new Font(emailLabel.getFont().getName(), emailLabel.getFont().getStyle(), 18));
         emailTextField = new JTextField(50);
         passwordLabel = new JLabel("Enter password");
+        passwordLabel.setFont(new Font(passwordLabel.getFont().getName(), passwordLabel.getFont().getStyle(), 18));
         passwordFormatLabel = new JLabel("The user password must include at least a number, " +
             "both upper and lower case characters and a punctuation mark (“,”, “.”, “;”, “:” or “-“)");
         passwordTextField = new JTextField(25);
         confirmPasswordLabel = new JLabel("Confirm password");
+        confirmPasswordLabel.setFont(new Font(confirmPasswordLabel.getFont().getName(), confirmPasswordLabel.getFont().getStyle(), 18));
         confirmPasswordTextField = new JTextField(25);
         errorMessageLabel = new JLabel();
         errorMessageLabel.setForeground(Color.red);
@@ -67,35 +77,46 @@ public class UserRegistrationFrame extends JFrame {
         goToLoginButton = new JButton("Already registered?");
     }
 
-    private void addListenerForSubmitButton() {
+    /**
+     * adds listeners and actions for each button
+     */
+    private void addListenersForButtons() {
         submitFormButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (formIsValid()) {
-                    registerUser();
-                    showSuccessAlert();
+                    try {
+                        String name = nameTextField.getText();
+                        String username = usernameTextField.getText();
+                        String email = emailTextField.getText();
+                        String password = passwordTextField.getText();
+                        if (controller.registerUser(name, username, email, password)) {
+                            goToMenu();                        
+                        }
+                    } catch (IOException ex) {
+                        showErrorAlertWithMessage(ex.getMessage());
+                    }
                 }
             }
         });
-        
         goToLoginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // todo: GO TO LOGIN PAGE
+                goToLogin();
             }
         });
     }
 
+    /**
+     * 
+     * @return true if user input is valid
+     */
     private boolean formIsValid() {
         String name = nameTextField.getText();
         String username = usernameTextField.getText();
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
         String confirmPassword = confirmPasswordTextField.getText();
-        
-        CharSequence numberSequence = "1234567890";
-        CharSequence punctuationMarksSequence;
-        punctuationMarksSequence = ".,;:-";
         
         if (name == null || name.isEmpty()) {
             errorMessageLabel.setText("Name is invalid");
@@ -105,7 +126,7 @@ public class UserRegistrationFrame extends JFrame {
             errorMessageLabel.setText("Username is invalid");
             return false;
         }
-        else if (email == null || email.isEmpty()) {
+        else if (email == null || email.isEmpty() || !DataValidationService.emailIsValid(email)) {
             errorMessageLabel.setText("Email is invalid");
             return false;
         }
@@ -118,7 +139,7 @@ public class UserRegistrationFrame extends JFrame {
             return false;
         }
         // TODO: not working
-        else if (!password.contains(numberSequence)) {
+        else if (!password.matches(".*\\d+.*")) {
             errorMessageLabel.setText("The user password must include a number");
             return false;
         }
@@ -126,7 +147,7 @@ public class UserRegistrationFrame extends JFrame {
             errorMessageLabel.setText("The password must include upper and lowercase characters");
             return false;
         }
-        else if (!password.contains(punctuationMarksSequence)) {
+        else if (!password.matches(".*\\p{Punct}.*")) {
             errorMessageLabel.setText("The user password must include a punctuation mark (“,”, “.”, “;”, “:” or “-“)");
             return false;
         }
@@ -137,21 +158,11 @@ public class UserRegistrationFrame extends JFrame {
         return true;
     }
 
-    private boolean registerUser() {
-        String name = nameTextField.getText();
-        String username = usernameTextField.getText();
-        String email = emailTextField.getText();
-        String password = passwordTextField.getText();
-        User createdUser = eventCenter.getUserRegistration().createUser();
-        createdUser.setName(name);
-        createdUser.setUsername(username);
-        createdUser.setEmail(email);
-        createdUser.setPassword(password);
-        return true;
-    }
-
+    /**
+     * adds all ui elements to main panels
+     * @param panel 
+     */
     private void addElementsToJPanel(JPanel panel) {
-        panel.add(mainLabel);
         panel.add(nameLabel);
         panel.add(nameTextField);
         panel.add(usernameLabel);
@@ -168,11 +179,36 @@ public class UserRegistrationFrame extends JFrame {
         panel.add(goToLoginButton);
     }
     
+    /**
+     * displays window with success message
+     */
     private void showSuccessAlert() {
-        JOptionPane.showMessageDialog(this, "Success", "User was registrated successfully", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(this, "User was registrated successfully", "Success", JOptionPane.PLAIN_MESSAGE);
+    }
+
+    /**
+     * displays window with error message
+     * @param message 
+     */
+    private void showErrorAlertWithMessage(String message) {
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.WARNING_MESSAGE);
     }
     
-    private void showErrorAlert() {
-        JOptionPane.showMessageDialog(this, "Error", "Login is invalid", JOptionPane.WARNING_MESSAGE);
+    /**
+     * shows login frame, disposes current frame
+     */
+    private void goToLogin() {
+        UserLoginUI login = new UserLoginUI(eventCenter);
+        login.setVisible(true);
+        this.dispose();
+    }
+
+    /**
+     * shows menu frame, disposes current frame
+     */
+    private void goToMenu() {
+        MenuUI menu = new MenuUI(eventCenter);
+        menu.setVisible(true);
+        this.dispose();
     }
 }

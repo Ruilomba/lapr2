@@ -1,55 +1,44 @@
 package lapr.project.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Properties;
+import java.io.*;
 import java.util.concurrent.ThreadLocalRandom;
+import lapr.project.model.User;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  *
- * @author softwareadapttech
+ * @author inesmartins
  */
 public class AuthenticationService {
+
+    private final static String USER_DATA_FILE_PATH = "userData.txt";
+    private static User authenticatedUser;
 
     /**
      * registers new user
      *
-     * @param username
-     * @param password
+     * @param user
      * @return
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public static boolean registerUser(String username, String password)
+    public static boolean registerUser(User user)
             throws FileNotFoundException, IOException {
 
         int userShift = generateRandomShift();
-        String encryptedPassword = encryptWithCeaserCypher(password, userShift);
+        String encryptedPassword = encryptWithCeaserCypher(user.getPassword(), userShift);
+        user.setPassword(encryptedPassword);
+        String userdata;
+        userdata = buildUserDataString(user, userShift);
 
-        Properties properties = new Properties();
-        properties.setProperty("Username", username);
-        properties.setProperty("Password", encryptedPassword);
-        properties.setProperty("Shift", String.valueOf(userShift));
-
-        try {
-            File file = new File(username + ".properties");
-            if ((file.exists() && !file.isDirectory()) || (!file.exists() && file.createNewFile())) {
-                OutputStream out = new FileOutputStream(file);
-                properties.store(out, null);
+        File file = new File(USER_DATA_FILE_PATH);
+        if ((file.exists() && !file.isDirectory()) || (!file.exists() && file.createNewFile())) {
+            try (FileWriter fw = new FileWriter(USER_DATA_FILE_PATH, true)) {
+                fw.write(userdata);
+                fw.close();
+            } catch (Exception e) {
+                System.out.println("Unable to write user info to file");
+                return false;
             }
-        } catch (Exception e) {
-            System.out.println("Unable to save properties in file");
-            return false;
         }
         return true;
     }
@@ -57,67 +46,162 @@ public class AuthenticationService {
     /**
      * authenticates user
      *
-     * @param username
+     * @param usernameOrEmail
      * @param password
      * @return
      * @throws java.io.IOException
      */
-    public static boolean loginUser(String username, String password) throws IOException {
-        if (passwordIsValid(username, password)) {
-            saveUsernameAsGlobalVariable();
-            return true;
-        }
-        return false;
-    }
-    
-    private static void saveUsernameAsGlobalVariable() {
-        // TODO: COMPLETE
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * checks if password entered by user is valid
-     * @param username
-     * @param userPassword
-     * @return
-     * @throws FileNotFoundException
-     * @throws IOException 
-     */
-    private static boolean passwordIsValid(String username, String password) throws FileNotFoundException, IOException {
-        String filename = username + ".properties";
-        try {
-            File file = new File(filename);
-            if ((file.exists() && !file.isDirectory())) {
-                Properties properties = new Properties();
-                InputStream input = new FileInputStream(filename);
-                properties.load(input);
-                String storedPassword = properties.getProperty("Password");
-                String storedShift = properties.getProperty("Shift");
-                int intShift = 0;
+    public static boolean loginUser(String usernameOrEmail, String password) throws IOException {
+        try (BufferedReader file = new BufferedReader(new FileReader(USER_DATA_FILE_PATH))) {
+            String line;
+            StringBuilder sb = new StringBuilder();
+            while((line = file.readLine()) != null) {
+                sb.append(line);
+                sb.append("\n");
+            }
+            String[] lines = sb.toString().split("\n");
+            for (String userData : lines) {
+                String[] fields = userData.split(";");
+                String storedUsernameField = fields[0];
+                String storedNameField = fields[1];
+                String storedEmailField = fields[2];
+                String storedPasswordField = fields[3];
+                String storedShiftValue = fields[4];
+                String storedUsername = storedUsernameField.split("=")[1];
+                String storedName = storedNameField.split("=")[1];
+                String storedEmail = storedEmailField.split("=")[1];
+                String storedPassword = storedPasswordField.split("=")[1];
+                String storedShift = storedShiftValue.split("=")[1];
+                int intShift;
                 try {
                     intShift = Integer.parseInt(storedShift);
                 } catch (NumberFormatException e) {
-                    System.out.println("\"Unable to parse user shift");
+                    System.out.println("Unable to parse user shift");
                     return false;
                 }
                 if (intShift > 0) {
                     String decryptedPassword = decryptWithCeaserCypher(storedPassword, intShift);
-                    return decryptedPassword.equals(password);                    
+                    if (storedUsername.equals(usernameOrEmail) || storedEmail.equals(usernameOrEmail)) {
+                        if (decryptedPassword.equals(password)) {
+                            User registeredUser = new User();
+                            registeredUser.setName(storedName);
+                            registeredUser.setUsername(storedUsername);
+                            registeredUser.setEmail(storedEmail);
+                            registeredUser.setPassword(decryptedPassword);
+                            setAuthenticatedUser(registeredUser);
+                            file.close();
+                            return true;
+                        }
+                    }
                 }
             }
+            file.close();
+            return false;
+        } catch (IOException e) {
+            System.out.println("Unable to read " + USER_DATA_FILE_PATH + " file");
             return false;
         }
-        catch (FileNotFoundException e) {
-            System.out.println("Unable to read from file " + filename + ": " + e.getMessage());            
-        }
-        catch (IOException e) {
-            System.out.println("Unable to read user data from properties file: " + e.getMessage());
-        }
-        return false;
     }
- 
+
     /**
-     * generates random shift < 26
+     * updates current user data in userData file
+     *
+     * @param currentUser
+     * @return true if user data is successfully updated
+     * @throws java.io.IOException
+     */
+    public static boolean updateUserDataInFile(User currentUser) throws IOException {
+        try (BufferedReader file = new BufferedReader(new FileReader(USER_DATA_FILE_PATH))) {
+            String line;
+            StringBuilder inputString = new StringBuilder();
+            while((line = file.readLine()) != null) {
+                inputString.append(line);
+                inputString.append("\n");
+            }
+            String[] lines = inputString.toString().split("\n");
+            for (String userData : lines) {
+                String[] fields = userData.split(";");
+                String storedUsernameField = fields[0];
+                String storedNameField = fields[1];
+                String storedEmailField = fields[2];
+                String storedPasswordField = fields[3];
+                String storedShiftValue = fields[4];
+                String storedUsername = storedUsernameField.split("=")[1];
+                String storedName = storedNameField.split("=")[1];
+                String storedEmail = storedEmailField.split("=")[1];
+                String storedPassword = storedPasswordField.split("=")[1];
+                String storedShift = storedShiftValue.split("=")[1];
+                int intShift;
+                try {
+                    intShift = Integer.parseInt(storedShift);
+                } catch (NumberFormatException e) {
+                    System.out.println("Unable to parse user shift");
+                    return false;
+                }
+                if (intShift > 0) {
+                    if (storedUsername.equals(currentUser.getUsername()) || storedEmail.equals(currentUser.getEmail())) {
+                        User newUserData = new User();
+                        // updates username
+                        if (currentUser.getUsername() != null && !currentUser.getUsername().isEmpty()) {
+                            newUserData.setUsername(currentUser.getUsername());
+                        }
+                        else {
+                            newUserData.setUsername(storedUsername);
+                        }
+                        // updates name
+                        if (currentUser.getName() != null && !currentUser.getName().isEmpty()) {
+                            newUserData.setName(currentUser.getName());
+                        }
+                        else {
+                            newUserData.setName(storedName);
+                        }
+                        // updates email
+                        if (currentUser.getEmail() != null && !currentUser.getEmail().isEmpty()) {
+                            newUserData.setEmail(currentUser.getEmail());
+                        }
+                        else {
+                            newUserData.setEmail(storedEmail);
+                        }
+                        // updates password
+                        if (currentUser.getPassword() != null && !currentUser.getPassword().isEmpty()) {
+                            newUserData.setPassword(encryptWithCeaserCypher(currentUser.getPassword(), intShift));
+                        }
+                        else {
+                            newUserData.setPassword(storedPassword);
+                        }
+                        String newUserDataString = buildUserDataString(newUserData, intShift);
+                        // TODO: COMPLETE
+                    }
+                }
+            }
+            file.close();
+            return false;
+        } catch (IOException e) {
+            System.out.println("Unable to read " + USER_DATA_FILE_PATH + " file");
+            return false;
+        }
+    }
+
+    /**
+     * returns authenticated user data
+     *
+     * @return
+     */
+    public static User getAuthenticatedUser() {
+        return authenticatedUser;
+    }
+
+    /**
+     * sets authenticated user
+     *
+     * @param user
+     */
+    public static void setAuthenticatedUser(User user) {
+        authenticatedUser = user;
+    }
+
+    /**
+     * generates random shift
      *
      * @return
      */
@@ -135,16 +219,10 @@ public class AuthenticationService {
      * @param shift
      * @return
      */
-    private static String encryptWithCeaserCypher(String originalMessage, int shift) {
+    private static String encryptWithCeaserCypher(String password, int shift) {
         String cypher = "";
-        int messageLength = originalMessage.length();
-        for (int x = 0; x < messageLength; x++) {
-            char charWithShift = (char) (originalMessage.charAt(x) + shift);
-            if (charWithShift < 'z') {
-                cypher += (char) (originalMessage.charAt(x) + shift);
-            } else {
-                cypher += (char) (originalMessage.charAt(x) - (26 - shift));
-            }
+        for (int x = 0; x < password.length(); x++) {
+            cypher += (char) (password.charAt(x) - shift);
         }
         return cypher;
     }
@@ -158,15 +236,17 @@ public class AuthenticationService {
      */
     private static String decryptWithCeaserCypher(String password, int shift) {
         String cypher = "";
-        int messageLength = password.length();
-        for (int x = 0; x < messageLength; x++) {
-            char charWithShift = (char) (password.charAt(x) - shift);
-            if (charWithShift > 'a') {
-                cypher += (char) (password.charAt(x) - shift);
-            } else {
-                cypher += (char) (password.charAt(x) + (26 - shift));
-            }
+        for (int x = 0; x < password.length(); x++) {
+            cypher += (char) (password.charAt(x) + shift);
         }
         return cypher;
+    }
+    
+    private static String buildUserDataString(User user, int shift) {
+        return "username=" + user.getUsername()
+                + ";name=" + user.getName()
+                + ";email=" + user.getEmail()
+                + ";password=" + user.getPassword()
+                + ";shift=" + String.valueOf(shift) + "\n";
     }
 }

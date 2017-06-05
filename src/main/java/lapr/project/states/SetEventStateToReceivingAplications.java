@@ -22,9 +22,7 @@ public class SetEventStateToReceivingAplications extends TimerTask {
 
     @Override
     public void run() {
-        if(this.event.getEventState() instanceof EventStateDefinedFAE){
-            this.event.setToReceivingAplications();
-        }
+        this.event.setEventState(new EventStateReceivingApplications());
     }
 
 }

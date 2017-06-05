@@ -53,6 +53,7 @@ public class ApplicationRegistration {
         }
     }
     
+<<<<<<< HEAD
     /**
      * submit application
      *
@@ -62,9 +63,79 @@ public class ApplicationRegistration {
     public boolean submitApplication(Application a) {
         if (!checkIfApplicationExists(a)) {
 
+=======
+    private List<Application> applicationList;
+
+    /**
+     * cria uma lista de candidaturas
+     */
+    public ApplicationRegistration() {
+        this.applicationList = new ArrayList<>();
+    }
+
+    /**
+     * cria uma nova cópia de lista de candidaturas
+     * @param outroRegisto 
+     */
+    public ApplicationRegistration(ApplicationRegistration otherRegister) {
+        this.applicationList = new ArrayList<>(otherRegister.getApplicationListElements());
+    }
+    
+    public List<Application> getApplicationsFromFAE(FAE FAE, Event e) {
+        List<Application> output = new ArrayList<>();
+        List<FAE> listaFaes = e.getFaeList().getFaeListElements();
+
+        for (Application a : applicationList) {
+
+            if (listaFaes.contains(FAE)) {
+                output.add(a);
+            }
+        }
+
+        return output;
+    }
+
+    public List<Application> getApplicationListElements() {
+        return new ArrayList<>(this.applicationList);
+    }
+
+    
+    public Application newApplication() {
+        return new Application();
+    }
+
+    
+    public boolean registerApplication(Application a) {
+        if (!applicationList.contains(a)) {
+>>>>>>> e8fa8dcb5f1a815af68a7770c72b5feb5221efc2
             return this.applicationList.add(a);
         }
         return false;
     }
 
+<<<<<<< HEAD
+=======
+    public boolean validateApplication(Application a) {
+        if (applicationList.contains(a)) {
+            return false;
+        }
+        return true;
+    }
+
+    public List<Application> getApplicationList() {
+        return applicationList;
+    }
+
+    public boolean isEmpty() {
+        return applicationList.isEmpty();
+    }
+
+    
+    public void addApplication(Application a) {
+        if (validateApplication(a)) {
+            applicationList.add(a);
+        }
+    }
+
+>>>>>>> e8fa8dcb5f1a815af68a7770c72b5feb5221efc2
 }

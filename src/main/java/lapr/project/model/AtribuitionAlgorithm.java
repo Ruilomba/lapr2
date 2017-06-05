@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lapr.project.states;
+package lapr.project.model;
 
 /**
  *
  * @author RuiSL
  */
-public interface EventState {
-    void setCriada();
-    
+public interface AtribuitionAlgorithm {
+    public AtribuitionList getAlgorithmAtribuitionList(Event e);    
 }

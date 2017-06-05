@@ -5,30 +5,42 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
+import lapr.project.states.EventCreatedState;
 import lapr.project.states.EventState;
+import lapr.project.states.EventStateClosedApplications;
 import lapr.project.states.EventStateDefinedFAE;
-import lapr.project.states.EventStateToReceivingApplications;
+import lapr.project.states.EventStateReceivingApplications;
+import lapr.project.states.SetEventStateToClosedApplications;
+import lapr.project.states.SetEventStateToReceivingAplications;
 import lapr.project.states.StartingEventState;
+import lapr.project.utils.Data;
 
 public class Event implements Serializable {
 
+<<<<<<< HEAD
     private String titulo;
     private String textoDescritivo;
+=======
+    private String title;
+    private String eventDescription;
+>>>>>>> e8fa8dcb5f1a815af68a7770c72b5feb5221efc2
     private String local;
-    private Date dataInicio;
-    private Date dataFim;
+    private Data startDate;
+    private Data endDate;
     private FAEList faeList;
-    private OrganizerRegistration registoOrganizadores;
-    private ApplicationRegistration registoCandidaturas;
-    private AtribuitionList listaAtribuicoes;
-    private Date dataInicioSubCandidatura;
-    private Date dataFimSubCandidatura;
-    private EventType tipoEvento;
+    private OrganizerRegistration organizerRegistration;
+    private ApplicationRegistration applicationRegistration;
+    private AtribuitionList atribuitionList;
+    private Data startingSubmissionDate;
+    private Data endingSubmissionDate;
+    private EventType eventType;
     private EventState eventState;
+    private AtribuitionStandList astdlst;
 
     public Event() {
-        this.registoOrganizadores = new OrganizerRegistration();
+        this.organizerRegistration = new OrganizerRegistration();
         this.faeList = new FAEList();
+<<<<<<< HEAD
         this.registoCandidaturas = new ApplicationRegistration();
         this.listaAtribuicoes = new AtribuitionList();
         this.dataFim = new Date();
@@ -38,18 +50,77 @@ public class Event implements Serializable {
         this.eventState = new StartingEventState();
     }
 
+=======
+        this.applicationRegistration = new ApplicationRegistration();
+        this.atribuitionList = new AtribuitionList();
+        this.endDate = new Data();
+        this.startDate = new Data();
+        this.startingSubmissionDate = new Data();
+        this.eventType = new Exhibition();
+        this.eventState = new StartingEventState();
+    }
+
+    public Event(EventType eventType, String title,
+            String descricao, String local, Data dataInicio, Data dataFim, Data dataInicioSubmissao,
+            Data dataFimSubmissao, OrganizerRegistration registoOrganizadores, FAEList listaFae) {
+        this.eventType = eventType;
+        this.title = title;
+        this.eventDescription = descricao;
+        this.local = local;
+        this.startDate = dataInicio;
+        this.endDate = dataFim;
+        this.startingSubmissionDate = dataInicioSubmissao;
+        this.endingSubmissionDate = dataFimSubmissao;
+        this.organizerRegistration = new OrganizerRegistration(registoOrganizadores);
+        this.faeList = new FAEList(listaFae);
+
+        this.applicationRegistration = new ApplicationRegistration();
+        this.atribuitionList = new AtribuitionList();
+    }
+
+    public void autoSetToClosedApplications() {
+        Timer timer = new Timer();
+        int year = endingSubmissionDate.getAno();
+        int month = endingSubmissionDate.getMes();
+        int day = endingSubmissionDate.getDia();
+        Date aux = new Date(year, month, day);
+        timer.schedule(new SetEventStateToClosedApplications(this), aux);
+    }
+
+    public void autoSetToReceivingApplications() {
+        Timer timer = new Timer();
+        int year = endingSubmissionDate.getAno();
+        int month = endingSubmissionDate.getMes();
+        int day = endingSubmissionDate.getDia();
+        Date aux = new Date(year, month, day);
+        timer.schedule(new SetEventStateToReceivingAplications(this), aux);
+    }
+
+    public boolean setCreated() {
+        if (this.eventState instanceof StartingEventState) {
+            this.eventState = new EventCreatedState();
+            return true;
+        }
+        return false;
+    }
+
+>>>>>>> e8fa8dcb5f1a815af68a7770c72b5feb5221efc2
     /**
-     * @return the titulo
+     * @return the title
      */
-    public String getTitulo() {
-        return titulo;
+    public String getTitle() {
+        return title;
+    }
+    
+    public boolean isInState(EventState eventState){
+        return this.getEventState().getClass().getSimpleName().equals(eventState.getClass().getSimpleName());
     }
 
     /**
-     * @return the textoDescritivo
+     * @return the eventDescription
      */
-    public String getTextoDescritivo() {
-        return textoDescritivo;
+    public String getEventDescription() {
+        return eventDescription;
     }
 
     /**
@@ -59,67 +130,77 @@ public class Event implements Serializable {
         return local;
     }
 
-    /**
-     * @return the dataInicio
-     */
-    public Date getDataInicio() {
-        return dataInicio;
+    public List<Application> getApplicationsWithoutAtribuition() {
+        List<Application> applicationList = new ArrayList<>();
+        for (Application a : applicationRegistration.getApplicationListElements()) {
+            if (!atribuitionList.hasApplication(a)) {
+                applicationList.add(a);
+            }
+        }
+        return applicationList;
     }
 
     /**
-     * @return the dataFim
+     * @return the startDate
      */
-    public Date getDataFim() {
-        return dataFim;
+    public Data getStartDate() {
+        return startDate;
     }
 
     /**
-     * @return the FaeList
+     * @return the endDate
+     */
+    public Data getEndDate() {
+        return endDate;
+    }
+
+    /**
+     * @return the faeList
      */
     public FAEList getFaeList() {
         return faeList;
     }
 
     /**
-     * @return the registoOrganizadores
+     * @return the organizerRegistration
      */
-    public OrganizerRegistration getRegistoOrganizadores() {
-        return registoOrganizadores;
+    public OrganizerRegistration getOrganizerRegistration() {
+        return organizerRegistration;
     }
 
     /**
-     * @return the registoCandidaturas
+     * @return the applicationRegistration
      */
-    public ApplicationRegistration getRegistoCandidaturas() {
-        return registoCandidaturas;
+    public ApplicationRegistration getApplicationRegistration() {
+        return applicationRegistration;
     }
 
     /**
-     * @return the listaAtribuicoes
+     * @return the atribuitionList
      */
-    public AtribuitionList getListaAtribuicoes() {
-        return listaAtribuicoes;
+    public AtribuitionList getAtribuitionList() {
+        return atribuitionList;
     }
 
     /**
-     * @return the dataInicioSubCandidatura
+     * @return the startingSubmissionDate
      */
-    public Date getDataInicioSubCandidatura() {
-        return dataInicioSubCandidatura;
+    public Data getStartingSubmissionDate() {
+        return startingSubmissionDate;
     }
 
     /**
-     * @return the dataFimSubCandidatura
+     * @return the endingSubmissionDate
      */
-    public Date getDataFimSubCandidatura() {
-        return dataFimSubCandidatura;
+    public Data getEndingSubmissionDate() {
+        return endingSubmissionDate;
     }
 
     /**
-     * @return the tipoEvento
+     * @return the eventType
      */
-    public EventType getTipoEvento() {
-        return tipoEvento;
+    public EventType getEventType() {
+        return eventType;
     }
 
     /**
@@ -133,17 +214,26 @@ public class Event implements Serializable {
     
 
     /**
-     * @param titulo the titulo to set
+     * @param title the title to set
      */
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     /**
-     * @param textoDescritivo the textoDescritivo to set
+     * @param eventDescription the eventDescription to set
      */
-    public void setTextoDescritivo(String textoDescritivo) {
-        this.textoDescritivo = textoDescritivo;
+    public void setEventDescription(String eventDescription) {
+        this.eventDescription = eventDescription;
+    }
+
+    /**
+     *
+     * @param event
+     * @param s
+     */
+    public void novaAtribuicao(Event event, Stand s) {
+        astdlst.newAtribuition(event, s);
     }
 
     /**
@@ -154,66 +244,66 @@ public class Event implements Serializable {
     }
 
     /**
-     * @param dataInicio the dataInicio to set
+     * @param startDate the startDate to set
      */
-    public void setDataInicio(Date dataInicio) {
-        this.dataInicio = dataInicio;
+    public void setStartDate(Data startDate) {
+        this.startDate = startDate;
     }
 
     /**
-     * @param dataFim the dataFim to set
+     * @param endDate the endDate to set
      */
-    public void setDataFim(Date dataFim) {
-        this.dataFim = dataFim;
+    public void setEndDate(Data endDate) {
+        this.endDate = endDate;
     }
 
     /**
-     * @param FaeList the FaeList to set
+     * @param faeList the faeList to set
      */
-    public void setFaeList(FAEList FaeList) {
-        this.faeList = FaeList;
+    public void setFaeList(FAEList faeList) {
+        this.faeList = faeList;
     }
 
     /**
-     * @param registoOrganizadores the registoOrganizadores to set
+     * @param organizerRegistration the organizerRegistration to set
      */
-    public void setRegistoOrganizadores(OrganizerRegistration registoOrganizadores) {
-        this.registoOrganizadores = registoOrganizadores;
+    public void setOrganizerRegistration(OrganizerRegistration organizerRegistration) {
+        this.organizerRegistration = organizerRegistration;
     }
 
     /**
-     * @param registoCandidaturas the registoCandidaturas to set
+     * @param applicationRegistration the applicationRegistration to set
      */
-    public void setRegistoCandidaturas(ApplicationRegistration registoCandidaturas) {
-        this.registoCandidaturas = registoCandidaturas;
+    public void setApplicationRegistration(ApplicationRegistration applicationRegistration) {
+        this.applicationRegistration = applicationRegistration;
     }
 
     /**
-     * @param listaAtribuicoes the listaAtribuicoes to set
+     * @param atribuitionList the atribuitionList to set
      */
-    public void setListaAtribuicoes(AtribuitionList listaAtribuicoes) {
-        this.listaAtribuicoes = listaAtribuicoes;
+    public void setAtribuitionList(AtribuitionList atribuitionList) {
+        this.atribuitionList = atribuitionList;
     }
 
     /**
-     * @param dataInicioSubCandidatura the dataInicioSubCandidatura to set
+     * @param startingSubmissionDate the startingSubmissionDate to set
      */
-    public void setDataInicioSubCandidatura(Date dataInicioSubCandidatura) {
-        this.dataInicioSubCandidatura = dataInicioSubCandidatura;
+    public void setStartingSubmissionDate(Data startingSubmissionDate) {
+        this.startingSubmissionDate = startingSubmissionDate;
     }
 
     /**
-     * @param dataFimSubCandidatura the dataFimSubCandidatura to set
+     * @param endingSubmissionDate the endingSubmissionDate to set
      */
-    public void setDataFimSubCandidatura(Date dataFimSubCandidatura) {
-        this.dataFimSubCandidatura = dataFimSubCandidatura;
+    public void setEndingSubmissionDate(Data endingSubmissionDate) {
+        this.endingSubmissionDate = endingSubmissionDate;
     }
 
     /**
-     * @param tipoEvento the tipoEvento to set
+     * @param eventType the eventType to set
      */
-    public void setTipoEvento(EventType tipoEvento) {
-        this.tipoEvento = tipoEvento;
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
     }
 
     /**
@@ -223,12 +313,25 @@ public class Event implements Serializable {
         this.eventState = eventState;
     }
 
+<<<<<<< HEAD
     public boolean setToReceivingAplications() {
         if (this.eventState instanceof EventStateDefinedFAE) {
             this.eventState = new EventStateToReceivingApplications();
             return true;
         }
         return false;
+=======
+    public void registaDados() {
+        addList(astdlst);
+    }
+
+    private void addList(AtribuitionStandList astdlist) {
+        this.astdlst = astdlist;
+    }
+
+    public boolean belongsToOrganizer(User u) {
+        return organizerRegistration.hasOrganizer(u);
+>>>>>>> e8fa8dcb5f1a815af68a7770c72b5feb5221efc2
     }
 
 }
