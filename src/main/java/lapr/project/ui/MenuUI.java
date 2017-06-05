@@ -1,8 +1,7 @@
 package lapr.project.ui;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import javax.swing.*;
 import lapr.project.model.*;
 import lapr.project.controller.*;
@@ -12,6 +11,9 @@ public class MenuUI extends JFrame {
     private static final long serialVersionUID = 1L;
     private final EventCenter eventCenter;
     private final MenuController controller;
+    
+    private JMenuItem userNameItem;
+    private JMenuItem userUpdateItem;
 
     public MenuUI(EventCenter center) {
         super("User Authentication");
@@ -22,44 +24,27 @@ public class MenuUI extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new FlowLayout());
         createMenuBar();
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(0,1));
-        this.add(panel);
-        createElements();
-        addElementsToJPanel(panel);
+        addListenersToButtons();
         this.setVisible(true);
     }
     
     private void createMenuBar() {
         JMenuBar menubar = new JMenuBar();
-
         String userName;
         userName = controller.getAuthenticatedUserName();
-        JMenuItem userNameItem = new JMenuItem(userName);
+        userNameItem = new JMenuItem(userName);
         menubar.add(userNameItem);
-        
-        JMenuItem userUpdateItem = new JMenuItem("Update user data");
-        userUpdateItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                goToUpdateUserData();
-            }
-            
-        });
+        userUpdateItem = new JMenuItem("Update user data");
         menubar.add(userUpdateItem);
-
         setJMenuBar(menubar);
     }
 
-    private void createElements() {
-    }
-
     private void addListenersToButtons() {
+        userUpdateItem.addActionListener((ActionEvent e) -> {
+            goToUpdateUserData();
+        });
     }
 
-    private void addElementsToJPanel(JPanel panel) {
-    }
-    
     private void goToUpdateUserData() {
         UserDataUpdateUI userUpdate = new UserDataUpdateUI(eventCenter);
         userUpdate.setVisible(true);
