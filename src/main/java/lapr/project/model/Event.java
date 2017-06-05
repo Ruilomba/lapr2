@@ -94,6 +94,10 @@ public class Event implements Serializable {
     public String getTitle() {
         return title;
     }
+    
+    public boolean isInState(EventState eventState){
+        return this.getEventState().getClass().getSimpleName().equals(eventState.getClass().getSimpleName());
+    }
 
     /**
      * @return the eventDescription
