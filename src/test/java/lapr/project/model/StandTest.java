@@ -5,7 +5,12 @@
  */
 package lapr.project.model;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  *
@@ -13,22 +18,28 @@ import static org.junit.Assert.assertEquals;
  */
 public class StandTest {
 
+    
     public StandTest() {
 
     }
 
-    public static void setUpClass() {
+   @BeforeClass
+   
+   public static void setUpClass() {
 
     }
 
+   @AfterClass
     public static void tearDownClass() {
 
     }
 
+   @Before
     public static void setUp() {
 
     }
 
+    @After
     public static void tearDown() {
 
     }
@@ -36,6 +47,7 @@ public class StandTest {
     /**
      * test setNome method of class Stand.
      */
+    @Test
     public void testSetName() {
 
         Stand stand = new Stand("hello", 25.2);
@@ -49,6 +61,7 @@ public class StandTest {
     /**
      * test setArea method of class stand 
      */
+    @Test
     public void testSetArea() {
 
         Stand stand = new Stand("hello", 25.2);
@@ -62,6 +75,7 @@ public class StandTest {
     /**
      * test toString method of class stand 
      */
+     @Test
     public void testToString() {
         Stand stand = new Stand("hello", 25.2);
         String expected = "Stand Name: " + "hello" + 25.2 + ".";
@@ -71,6 +85,7 @@ public class StandTest {
 
     /** test valid method of class stand 
      */
+    @Test
     public void testValid() {
         Stand stand = new Stand("", 25.2);
         boolean expected = false;
