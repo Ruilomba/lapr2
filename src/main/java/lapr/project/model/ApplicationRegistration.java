@@ -84,5 +84,20 @@ public class ApplicationRegistration {
             applicationList.add(a);
         }
     }
+    
+        public Application setData(List<FAERating> ratings, String description, 
+                List<Keyword> keywordList, String adress, String companyName, 
+                int intendedBoothArea, int inviatation,String phone){
+        Application ap= new Application();
+        ap.setRatings(ratings);
+        ap.setDescription(description);
+        ap.setKeywordList(keywordList);
+        ap.setAddress(adress);
+        ap.setCompanyName(companyName);
+        ap.setIntendedBoothArea(intendedBoothArea);
+        ap.setInvitation(intendedBoothArea);
+        ap.setPhone(phone);
+        return ap;
+    }
 
 }

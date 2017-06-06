@@ -24,7 +24,7 @@ public class Application implements Importable<Application>, Exportable, Seriali
     private static final String ROOT_ELEMENT_NAME = "application";
     private static final String DESCRIPTION_ELEMENT_NAME = "description";
     private static final String KEYWORDS_ELEMENT_NAME = "keywords";
-    private final List<Keyword> keywordList = new ArrayList<Keyword>();
+    private List<Keyword> keywordList = new ArrayList<Keyword>();
     private List<FAERating> ratings;
     private String description = "";
     private String companyName;
@@ -50,7 +50,7 @@ public class Application implements Importable<Application>, Exportable, Seriali
         this.ratings = ratings;
         this.companyName = companyName;
         this.phone = phone;
-        //this.intendedBoothArea = area;
+        this.intendedBoothArea = area;
         this.invitation = invitation;
     }
 
@@ -229,7 +229,7 @@ public class Application implements Importable<Application>, Exportable, Seriali
         Node elementCandidatura = elementsCandidatura.item(0);
 
         //Get description
-        this.description = elementCandidatura.getFirstChild().getFirstChild().getNodeValue();
+        this.setDescription(elementCandidatura.getFirstChild().getFirstChild().getNodeValue());
 
         NodeList elementsKeywords = document.getElementsByTagName(KEYWORDS_ELEMENT_NAME);
 
@@ -266,5 +266,26 @@ public class Application implements Importable<Application>, Exportable, Seriali
             return false;
         }
         return getKeywordList().equals(that.getKeywordList());
+    }
+
+    /**
+     * @param keywordList the keywordList to set
+     */
+    public void setKeywordList(List<Keyword> keywordList) {
+        this.keywordList = keywordList;
+    }
+
+    /**
+     * @param ratings the ratings to set
+     */
+    public void setRatings(List<FAERating> ratings) {
+        this.ratings = ratings;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
