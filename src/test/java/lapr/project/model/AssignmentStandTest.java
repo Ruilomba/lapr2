@@ -24,22 +24,22 @@ public class AssignmentStandTest {
     }
 
     @BeforeClass
-    public void setUpClass() {
+    public  static void setUpClass() {
 
     }
 
     @AfterClass
-    public void tearDownClass() {
+    public static void tearDownClass() {
 
     }
 
     @Before
-    public void setUp() {
+    public  void setUp() {
 
     }
 
     @After
-    public void tearDown() {
+    public  void tearDown() {
 
     }
 
