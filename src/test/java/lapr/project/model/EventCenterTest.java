@@ -39,23 +39,23 @@ public class EventCenterTest {
         Event e1 = new Event(new Congress(), "evento1", "evento teste", "Porto", new Data(2017,02,1),
                 new Data(2017,12, 31), new Data(2017,10,12), new Data(2017,10,19), organizerRegistration, faeList);
 
-        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>()));
-        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>()));
-        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>()));
+        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>(), "lol", "123", 1, 1));
 
         Event e2 = new Event(new Congress(), "evento2", "evento teste", "Porto", new Data(2017,02,1),
                 new Data(2017,12, 31), new Data(2017,10,12), new Data(2017,10,19), organizerRegistration, faeList);
 
-        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>()));
-        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>()));
-        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>()));
+        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>(), "lol", "123", 1, 1));
 
         Event e3 = new Event(new Congress(), "evento3", "evento teste", "Porto", new Data(2017,02,1),
                 new Data(2017,12, 31), new Data(2017,10,12), new Data(2017,10,19), organizerRegistration, faeList);
 
-        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>()));
-        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>()));
-        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>()));
+        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>(), "lol", "123", 1, 1));
 
         EventCenter c = new EventCenter();
         c.getEventRegistration().registerEvento(e1);
@@ -92,23 +92,23 @@ public class EventCenterTest {
         Event e1 = new Event(new Congress(), "evento1", "evento teste", "Porto", new Data(2017,02,1),
                 new Data(2017,12, 31), new Data(2017,10,12), new Data(2017,10,19), organizerRegistration, faeList);
 
-        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>()));
-        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>()));
-        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>()));
+        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>(), "lol", "123", 1, 1));
 
         Event e2 = new Event(new Congress(), "evento2", "evento teste", "Porto", new Data(2017,02,1),
                 new Data(2017,12, 31), new Data(2017,10,12), new Data(2017,10,19), organizerRegistration, faeList);
 
-        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>()));
-        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>()));
-        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>()));
+        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>(), "lol", "123", 1, 1));
 
         Event e3 = new Event(new Congress(), "evento3", "evento teste", "Porto", new Data(2017,02,1),
                 new Data(2017,12, 31), new Data(2017,10,12), new Data(2017,10,19), organizerRegistration, faeList);
 
-        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>()));
-        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>()));
-        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>()));
+        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>(), "lol", "123", 1, 1));
 
         EventCenter c = new EventCenter();
         c.getEventRegistration().registerEvento(e1);
@@ -145,23 +145,23 @@ public class EventCenterTest {
         Event e1 = new Event(new Congress(), "evento1", "evento teste", "Porto", new Data(2017,02,1),
                 new Data(2017,12, 31), new Data(2017,10,12), new Data(2017,10,19), organizerRegistration, faeList);
 
-        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>()));
-        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>()));
-        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>()));
+        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>(), "lol", "123", 1, 1));
 
         Event e2 = new Event(new Congress(), "evento2", "evento teste", "Porto", new Data(2017,02,1),
                 new Data(2017,12, 31), new Data(2017,10,12), new Data(2017,10,19), organizerRegistration, faeList);
 
-        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>()));
-        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>()));
-        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>()));
+        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>(), "lol", "123", 1, 1));
 
         Event e3 = new Event(new Congress(), "evento3", "evento teste", "Porto", new Data(2017,02,1),
                 new Data(2017,12, 31), new Data(2017,10,12), new Data(2017,10,19), organizerRegistration, faeList);
 
-        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>()));
-        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>()));
-        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>()));
+        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>(), "lol", "123", 1, 1));
 
         EventCenter c = new EventCenter();
         c.getEventRegistration().registerEvento(e1);
@@ -198,23 +198,23 @@ public class EventCenterTest {
         Event e1 = new Event(new Congress(), "evento1", "evento teste", "Porto", new Data(2017,02,1),
                 new Data(2017,12, 31), new Data(2017,10,12), new Data(2017,10,19), organizerRegistration, faeList);
 
-        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>()));
-        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>()));
-        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>()));
+        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>(), "lol", "123", 1, 1));
 
         Event e2 = new Event(new Congress(), "evento2", "evento teste", "Porto", new Data(2017,02,1),
                 new Data(2017,12, 31), new Data(2017,10,12), new Data(2017,10,19), organizerRegistration, faeList);
 
-        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>()));
-        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>()));
-        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>()));
+        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>(), "lol", "123", 1, 1));
 
         Event e3 = new Event(new Congress(), "evento3", "evento teste", "Porto", new Data(2017,02,1),
                 new Data(2017,12, 31), new Data(2017,10,12), new Data(2017,10,19), organizerRegistration, faeList);
 
-        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>()));
-        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>()));
-        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>()));
+        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>(), "lol", "123", 1, 1));
 
         EventCenter c = new EventCenter();
         c.getEventRegistration().registerEvento(e1);
@@ -251,23 +251,23 @@ public class EventCenterTest {
         Event e1 = new Event(new Congress(), "evento1", "evento teste", "Porto", new Data(2017,02,1),
                 new Data(2017,12, 31), new Data(2017,10,12), new Data(2017,10,19), organizerRegistration, faeList);
 
-        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>()));
-        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>()));
-        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>()));
+        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e1.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>(), "lol", "123", 1, 1));
 
         Event e2 = new Event(new Congress(), "evento2", "evento teste", "Porto", new Data(2017,02,1),
                 new Data(2017,12, 31), new Data(2017,10,12), new Data(2017,10,19), organizerRegistration, faeList);
 
-        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>()));
-        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>()));
-        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>()));
+        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e2.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>(), "lol", "123", 1, 1));
 
         Event e3 = new Event(new Congress(), "evento3", "evento teste", "Porto", new Data(2017,02,1),
                 new Data(2017,12, 31), new Data(2017,10,12), new Data(2017,10,19), organizerRegistration, faeList);
 
-        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>()));
-        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>()));
-        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>()));
+        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc1", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc2", new ArrayList<Keyword>(), "lol", "123", 1, 1));
+        e3.getApplicationRegistration().registerApplication(new Application(rating, "desc3", new ArrayList<Keyword>(), "lol", "123", 1, 1));
 
         EventCenter c = new EventCenter();
         c.getEventRegistration().registerEvento(e1);

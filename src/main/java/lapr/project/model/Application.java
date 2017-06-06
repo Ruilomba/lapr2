@@ -25,19 +25,12 @@ public class Application implements Importable<Application>, Exportable, Seriali
     private static final String DESCRIPTION_ELEMENT_NAME = "description";
     private static final String KEYWORDS_ELEMENT_NAME = "keywords";
     private final List<Keyword> keywordList = new ArrayList<Keyword>();
-<<<<<<< HEAD
-    private FAERating rating;
-=======
     private List<FAERating> ratings;
->>>>>>> 49c7c181370859d91ccb088db70cebab9f7f4cab
     private String description = "";
     private String companyName;
     private String address;
     private String phone;
-<<<<<<< HEAD
-=======
     private User companyRepresentative;
->>>>>>> 49c7c181370859d91ccb088db70cebab9f7f4cab
     private int intendedBoothArea;
     private int invitation;
 
@@ -47,35 +40,24 @@ public class Application implements Importable<Application>, Exportable, Seriali
      * @param description Candidatura Description
      * @param keywordList Keyword List
      */
-<<<<<<< HEAD
-    public Application(FAERating rating, String description, List<Keyword> keywordList,
+
+    public Application(List<FAERating> ratings, String description, List<Keyword> keywordList,
             String companyName, String phone, int area, int invitation) {
         this.description = description;
         this.keywordList.addAll(keywordList);
-        this.rating = rating;
-=======
-    public Application(List<FAERating> ratings, String description, List<Keyword> keywordList) {
         this.description = description;
         this.keywordList.addAll(keywordList);
         this.ratings = ratings;
->>>>>>> 49c7c181370859d91ccb088db70cebab9f7f4cab
         this.companyName = companyName;
         this.phone = phone;
         //this.intendedBoothArea = area;
         this.invitation = invitation;
-<<<<<<< HEAD
-
     }
 
     /**
      * Default public constructor.
      */
     public Application() {
-
-=======
-    }
-    public Application(){
-        
     }
 
     /**
@@ -85,7 +67,6 @@ public class Application implements Importable<Application>, Exportable, Seriali
      */
     public List<FAERating> getRatings() {
         return ratings;
->>>>>>> 49c7c181370859d91ccb088db70cebab9f7f4cab
     }
 
     /**
@@ -110,12 +91,10 @@ public class Application implements Importable<Application>, Exportable, Seriali
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
-<<<<<<< HEAD
-=======
+
     public boolean hasRepresentative(User u){
         return this.companyRepresentative.getUsername().equals(u.getUsername());
     }
->>>>>>> 49c7c181370859d91ccb088db70cebab9f7f4cab
 
     /**
      * @return the Address
@@ -251,7 +230,6 @@ public class Application implements Importable<Application>, Exportable, Seriali
 
         //Get description
         this.description = elementCandidatura.getFirstChild().getFirstChild().getNodeValue();
-<<<<<<< HEAD
 
         NodeList elementsKeywords = document.getElementsByTagName(KEYWORDS_ELEMENT_NAME);
 
@@ -263,141 +241,6 @@ public class Application implements Importable<Application>, Exportable, Seriali
             keywordExample = keywordExample.importContentFromXMLNode(keyword);
             addKeyword(keywordExample);
         }
-
-    private static final long serialVersionUID = 1L;
-    private static final String ROOT_ELEMENT_NAME = "application";
-    private static final String DESCRIPTION_ELEMENT_NAME = "description";
-    private static final String KEYWORDS_ELEMENT_NAME = "keywords";
-    private final List<Keyword> keywordList = new ArrayList<Keyword>();
-    private List<FAERating> ratings;
-    private String description = "";
-
-    /**
-     * Constructor for Submission
-     *
-     * @param description Candidatura Description
-     * @param keywordList Keyword List
-     */
-    public Application(List<FAERating> ratings, String description, List<Keyword> keywordList) {
-        this.description = description;
-        this.keywordList.addAll(keywordList);
-        this.ratings = ratings;
-    }
-
-    /**
-     * Get Rating
-     *
-     * @return FAERating
-     */
-    public List<FAERating> getRatings() {
-        return ratings;
-    }
-
-    /**
-     * Obtain Application description.
-     *
-     * @return Application description
-     */
-    String getDescription() {
-        return description;
-    }
-
-    /**
-     * Add a keyword to Application.
-     *
-     * @param keyword Keyword to be added.
-     */
-    public void addKeyword(Keyword keyword) {
-        getKeywordList().add(keyword);
-    }
-
-    /**
-     * Obtain the list of existing keywords.
-     *
-     * @return A list of existing keywords.
-     */
-    public List<Keyword> getKeywordList() {
-        return keywordList;
-
-    }
-
-    public Node exportContentToXMLNode() throws ParserConfigurationException {
-        Node rootNode = null;
-
-        DocumentBuilderFactory factory
-                = DocumentBuilderFactory.newInstance();
-        //Create document builder
-        DocumentBuilder builder = factory.newDocumentBuilder();
-
-        //Obtain a new document
-        Document document = builder.newDocument();
-
-        //Create root element
-        Element elementCandidatura = document.createElement(ROOT_ELEMENT_NAME);
-
-        //Create a sub-element
-        Element elementDescription = document.createElement(DESCRIPTION_ELEMENT_NAME);
-
-        //Set the sub-element value
-        elementDescription.setTextContent(getDescription());
-
-        //Add sub-element to root element
-        elementCandidatura.appendChild(elementDescription);
-
-        //Create a sub-element
-        Element elementKeywords = document.createElement(KEYWORDS_ELEMENT_NAME);
-        elementCandidatura.appendChild(elementKeywords);
-
-        //iterate over keywords
-        for (Keyword keyword : getKeywordList()) {
-            Node keywordNode = keyword.exportContentToXMLNode();
-            elementKeywords.appendChild(document.importNode(keywordNode, true));
-        }
-
-        //Add root element to document
-        document.appendChild(elementCandidatura);
-
-        //It exports only the element representation to XMÇ, ommiting the XML header
-        rootNode = elementCandidatura;
-
-        return rootNode;
-    }
-
-    public Application importContentFromXMLNode(Node node) throws ParserConfigurationException {
-
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-
-        //Create document builder
-        DocumentBuilder builder = factory.newDocumentBuilder();
-
-        //Obtain a new document
-        Document document = builder.newDocument();
-        document.appendChild(document.importNode(node, true));
-
-        NodeList elementsCandidatura = document.getElementsByTagName(ROOT_ELEMENT_NAME);
-
-        Node elementCandidatura = elementsCandidatura.item(0);
-
-        //Get description
-        this.description = elementCandidatura.getFirstChild().getFirstChild().getNodeValue();
-=======
->>>>>>> 49c7c181370859d91ccb088db70cebab9f7f4cab
-
-        NodeList elementsKeywords = document.getElementsByTagName(KEYWORDS_ELEMENT_NAME);
-
-        NodeList keywords = elementsKeywords.item(0).getChildNodes();
-        for (int position = 0; position < keywords.getLength(); position++) {
-            Node keyword = keywords.item(position);
-            Keyword keywordExample = new Keyword();
-
-            keywordExample = keywordExample.importContentFromXMLNode(keyword);
-            addKeyword(keywordExample);
-        }
-<<<<<<< HEAD
-         >>> >>> > ad9bc3d09bd1b2948b7f1d94300df8da68454ba8
-=======
->>>>>>> 49c7c181370859d91ccb088db70cebab9f7f4cab
-
         return this;
     }
 
@@ -423,6 +266,5 @@ public class Application implements Importable<Application>, Exportable, Seriali
             return false;
         }
         return getKeywordList().equals(that.getKeywordList());
-
     }
 }
