@@ -13,7 +13,6 @@ public class Congress implements EventType {
 
     private WorkshopList workshopList;
 
-    @Override
     public void fala() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

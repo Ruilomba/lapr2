@@ -11,6 +11,5 @@ package lapr.project.model;
  * @author RuiSL
  */
 public interface EventType {
-   public void fala();
-//   public void marco();
+
 }

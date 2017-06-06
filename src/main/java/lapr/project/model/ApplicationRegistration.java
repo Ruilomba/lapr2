@@ -50,11 +50,6 @@ public class ApplicationRegistration {
     }
 
     
-    public Application newApplication() {
-        return new Application();
-    }
-
-    
     public boolean registerApplication(Application a) {
         if (!applicationList.contains(a)) {
             return this.applicationList.add(a);

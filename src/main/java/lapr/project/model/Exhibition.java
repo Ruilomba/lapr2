@@ -11,7 +11,6 @@ package lapr.project.model;
  */
 public class Exhibition implements EventType {
 
-    @Override
     public void fala() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
