@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lapr.project.states.EventCreatedState;
 import lapr.project.states.EventState;
+import lapr.project.states.EventStateDefinedFAE;
 import lapr.project.states.EventStateReceivingApplications;
 
 public class EventRegistration {
@@ -66,8 +67,8 @@ public class EventRegistration {
         return organizerEvents;
     }
 
-    public List<Application> getApplicationsInSubmission() {
-        List<Event> eventList =getEventListInState(new EventStateReceivingApplications());
+    public List<Application> getApplicationsVaidForSubmission() {
+        List<Event> eventList =getEventListInState(new EventStateDefinedFAE());
         List<Application> applicationList=new ArrayList<>();
         for(Event e:eventList){
             for(Application a:e.getApplicationRegistration().getApplicationListElements()){

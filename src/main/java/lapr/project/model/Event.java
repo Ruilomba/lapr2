@@ -26,7 +26,6 @@ public class Event implements Serializable {
     private OrganizerRegistration organizerRegistration;
     private ApplicationRegistration applicationRegistration;
     private AtribuitionList atribuitionList;
-    private Data startingSubmissionDate;
     private Data endingSubmissionDate;
     private EventType eventType;
     private EventState eventState;
@@ -39,7 +38,6 @@ public class Event implements Serializable {
         this.atribuitionList = new AtribuitionList();
         this.endDate = new Data();
         this.startDate = new Data();
-        this.startingSubmissionDate = new Data();
         this.eventType = new Exhibition();
         this.eventState = new StartingEventState();
     }
@@ -53,7 +51,6 @@ public class Event implements Serializable {
         this.local = local;
         this.startDate = dataInicio;
         this.endDate = dataFim;
-        this.startingSubmissionDate = dataInicioSubmissao;
         this.endingSubmissionDate = dataFimSubmissao;
         this.organizerRegistration = new OrganizerRegistration(registoOrganizadores);
         this.faeList = new FAEList(listaFae);
@@ -168,9 +165,7 @@ public class Event implements Serializable {
     /**
      * @return the startingSubmissionDate
      */
-    public Data getStartingSubmissionDate() {
-        return startingSubmissionDate;
-    }
+    
 
     /**
      * @return the endingSubmissionDate
@@ -268,9 +263,7 @@ public class Event implements Serializable {
     /**
      * @param startingSubmissionDate the startingSubmissionDate to set
      */
-    public void setStartingSubmissionDate(Data startingSubmissionDate) {
-        this.startingSubmissionDate = startingSubmissionDate;
-    }
+    
 
     /**
      * @param endingSubmissionDate the endingSubmissionDate to set
