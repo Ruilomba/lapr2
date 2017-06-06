@@ -10,15 +10,17 @@ import lapr.project.utils.*;
  */
 public class UserLoginController {
     
-    public final EventCenter eventCenter;
+    private final EventCenter eventCenter;
+    private final AuthenticationService authentication;
 
     public UserLoginController(EventCenter center) {
         eventCenter = center;
+        authentication = new AuthenticationService();
     }
 
     public boolean loginUser(String usernameOrEmail, String password) throws IOException {
         try {
-            return AuthenticationService.loginUser(usernameOrEmail, password);            
+            return authentication.loginUser(usernameOrEmail, password);            
         }
         catch (IOException e) {
             System.out.println(e.getMessage());

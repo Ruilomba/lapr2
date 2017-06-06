@@ -1,7 +1,6 @@
 package lapr.project.utils;
 
 import java.io.*;
-import java.util.concurrent.ThreadLocalRandom;
 import lapr.project.model.User;
 
 /**
@@ -12,37 +11,86 @@ public class AuthenticationService {
 
     private final static String USER_DATA_FILE_PATH = "userData.txt";
     private static User authenticatedUser;
+    private EncryptionService encryption;
+    
+    /**
+     * returns authenticated user data
+     *
+     * @return
+     */
+    public User getAuthenticatedUser() {
+        return authenticatedUser;
+    }
 
+    /**
+     * sets authenticated user
+     *
+     * @param user
+     */
+    public void setAuthenticatedUser(User user) {
+        authenticatedUser = user;
+    }
+    
     /**
      * registers new user
      *
      * @param user
      * @return
-     * @throws FileNotFoundException
-     * @throws IOException
+     * @throws java.io.IOException
      */
-    public static boolean registerUser(User user)
-            throws FileNotFoundException, IOException {
-
-        int userShift = generateRandomShift();
-        String encryptedPassword = encryptWithCeaserCypher(user.getPassword(), userShift);
+    public boolean registerUser(User user) throws IOException {
+        int userShift = encryption.generateRandomShift();
+        String encryptedPassword = encryption.encryptWithCeaserCipher(user.getPassword(), userShift);
         user.setPassword(encryptedPassword);
         String userdata;
         userdata = buildUserDataString(user, userShift);
-
-        File file = new File(USER_DATA_FILE_PATH);
-        if ((file.exists() && !file.isDirectory()) || (!file.exists() && file.createNewFile())) {
-            try (FileWriter fw = new FileWriter(USER_DATA_FILE_PATH, true)) {
-                fw.write(userdata);
-                fw.close();
-            } catch (Exception e) {
-                System.out.println("Unable to write user info to file");
-                return false;
-            }
+        return addUserInfoToUserDataFile(userdata);
+    }
+    
+    /**
+     * adds user info to user data file
+     * 
+     * @param userData
+     * @return
+     */
+    private boolean addUserInfoToUserDataFile(String userData) throws IOException {
+        String[] savedUserData = getDecryptedUserData();
+        if (savedUserData != null) {
+            savedUserData[savedUserData.length] = userData;
+            return encryption.writeEncryptedDataToUserDataFile(savedUserData);
         }
-        return true;
+        return false;
     }
 
+    /**
+     * @return  decrypted data divided by user
+     * @throws IOException 
+     */
+    private String[] getDecryptedUserData() throws IOException {
+        File userDataFile = new File(USER_DATA_FILE_PATH);
+        if (userDataFile.exists() || userDataFile.createNewFile()) {
+            try (BufferedReader file = new BufferedReader(new FileReader(USER_DATA_FILE_PATH))) {
+                String line;
+                StringBuilder inputString = new StringBuilder();
+                while ((line = file.readLine()) != null) {
+                    inputString.append(line);
+                    inputString.append("\n");
+                }
+                String[] encryptedLines = inputString.toString().split("\n");
+                String[] decryptedLines = new String[encryptedLines.length];
+                for (String l : encryptedLines) {
+                    String decryptedLine = encryption.decryptLineWithRailFenceTranspositionCipher(l);
+                    decryptedLines[decryptedLines.length] = decryptedLine;
+                }
+            }
+            catch (IOException e) {
+                System.out.println("Unable to write decrypted data to tmp file: " + e.getMessage());
+                return null;
+            }
+        }
+        return null;
+    }
+    
     /**
      * authenticates user
      *
@@ -51,16 +99,10 @@ public class AuthenticationService {
      * @return
      * @throws java.io.IOException
      */
-    public static boolean loginUser(String usernameOrEmail, String password) throws IOException {
-        try (BufferedReader file = new BufferedReader(new FileReader(USER_DATA_FILE_PATH))) {
-            String line;
-            StringBuilder sb = new StringBuilder();
-            while((line = file.readLine()) != null) {
-                sb.append(line);
-                sb.append("\n");
-            }
-            String[] lines = sb.toString().split("\n");
-            for (String userData : lines) {
+    public boolean loginUser(String usernameOrEmail, String password) throws IOException {
+        String[] savedUserData = getDecryptedUserData();
+        if (savedUserData != null) {
+            for (String userData : savedUserData) {
                 String[] fields = userData.split(";");
                 String storedUsernameField = fields[0];
                 String storedNameField = fields[1];
@@ -80,7 +122,7 @@ public class AuthenticationService {
                     return false;
                 }
                 if (intShift > 0) {
-                    String decryptedPassword = decryptWithCeaserCypher(storedPassword, intShift);
+                    String decryptedPassword = encryption.decryptWithCeaserCipher(storedPassword, intShift);
                     if (storedUsername.equals(usernameOrEmail) || storedEmail.equals(usernameOrEmail)) {
                         if (decryptedPassword.equals(password)) {
                             User registeredUser = new User();
@@ -89,20 +131,16 @@ public class AuthenticationService {
                             registeredUser.setEmail(storedEmail);
                             registeredUser.setPassword(decryptedPassword);
                             setAuthenticatedUser(registeredUser);
-                            file.close();
                             return true;
                         }
                     }
                 }
             }
-            file.close();
-            return false;
-        } catch (IOException e) {
-            System.out.println("Unable to read " + USER_DATA_FILE_PATH + " file");
-            return false;
         }
+        return false;
     }
 
+    
     /**
      * updates current user data in userData file
      *
@@ -110,17 +148,11 @@ public class AuthenticationService {
      * @return true if user data is successfully updated
      * @throws java.io.IOException
      */
-    public static boolean updateUserDataInFile(User currentUser) throws IOException {
-        try (BufferedReader file = new BufferedReader(new FileReader(USER_DATA_FILE_PATH))) {
-            String line;
-            StringBuilder inputString = new StringBuilder();
-            while((line = file.readLine()) != null) {
-                inputString.append(line);
-                inputString.append("\n");
-            }
-            String[] lines = inputString.toString().split("\n");
-            for (String userData : lines) {
-                String[] fields = userData.split(";");
+    public boolean updateUserDataInFile(User currentUser) throws IOException {
+        String[] savedUserData = getDecryptedUserData();
+        if (savedUserData != null) {
+            for (int i = 0; i < savedUserData.length; i++) {
+                String[] fields = savedUserData[i].split(";");
                 String storedUsernameField = fields[0];
                 String storedNameField = fields[1];
                 String storedEmailField = fields[2];
@@ -144,109 +176,43 @@ public class AuthenticationService {
                         // updates username
                         if (currentUser.getUsername() != null && !currentUser.getUsername().isEmpty()) {
                             newUserData.setUsername(currentUser.getUsername());
-                        }
-                        else {
+                        } else {
                             newUserData.setUsername(storedUsername);
                         }
                         // updates name
                         if (currentUser.getName() != null && !currentUser.getName().isEmpty()) {
                             newUserData.setName(currentUser.getName());
-                        }
-                        else {
+                        } else {
                             newUserData.setName(storedName);
                         }
                         // updates email
                         if (currentUser.getEmail() != null && !currentUser.getEmail().isEmpty()) {
                             newUserData.setEmail(currentUser.getEmail());
-                        }
-                        else {
+                        } else {
                             newUserData.setEmail(storedEmail);
                         }
                         // updates password
                         if (currentUser.getPassword() != null && !currentUser.getPassword().isEmpty()) {
-                            newUserData.setPassword(encryptWithCeaserCypher(currentUser.getPassword(), intShift));
-                        }
-                        else {
+                            newUserData.setPassword(encryption.encryptWithCeaserCipher(currentUser.getPassword(), intShift));
+                        } else {
                             newUserData.setPassword(storedPassword);
                         }
                         String newUserDataString = buildUserDataString(newUserData, intShift);
-                        // TODO: COMPLETE
+                        savedUserData[i] = newUserDataString;
+                        return encryption.writeEncryptedDataToUserDataFile(savedUserData);
                     }
                 }
             }
-            file.close();
-            return false;
-        } catch (IOException e) {
-            System.out.println("Unable to read " + USER_DATA_FILE_PATH + " file");
-            return false;
         }
-    }
-
-    /**
-     * returns authenticated user data
-     *
-     * @return
-     */
-    public static User getAuthenticatedUser() {
-        return authenticatedUser;
-    }
-
-    /**
-     * sets authenticated user
-     *
-     * @param user
-     */
-    public static void setAuthenticatedUser(User user) {
-        authenticatedUser = user;
-    }
-
-    /**
-     * generates random shift
-     *
-     * @return
-     */
-    private static int generateRandomShift() {
-        int min = 1;
-        int max = 25;
-        int randomNumber = ThreadLocalRandom.current().nextInt(min, max + 1);
-        return randomNumber;
-    }
-
-    /**
-     * encrypt password with "Ceaser cypher"
-     *
-     * @param originalMessage
-     * @param shift
-     * @return
-     */
-    private static String encryptWithCeaserCypher(String password, int shift) {
-        String cypher = "";
-        for (int x = 0; x < password.length(); x++) {
-            cypher += (char) (password.charAt(x) - shift);
-        }
-        return cypher;
-    }
-
-    /**
-     * decrypts password with "Ceaser cypher"
-     *
-     * @param password
-     * @param shift
-     * @return
-     */
-    private static String decryptWithCeaserCypher(String password, int shift) {
-        String cypher = "";
-        for (int x = 0; x < password.length(); x++) {
-            cypher += (char) (password.charAt(x) + shift);
-        }
-        return cypher;
+        return false;
     }
     
-    private static String buildUserDataString(User user, int shift) {
+    public String buildUserDataString(User user, int shift) {
         return "username=" + user.getUsername()
                 + ";name=" + user.getName()
                 + ";email=" + user.getEmail()
                 + ";password=" + user.getPassword()
                 + ";shift=" + String.valueOf(shift) + "\n";
     }
+
 }

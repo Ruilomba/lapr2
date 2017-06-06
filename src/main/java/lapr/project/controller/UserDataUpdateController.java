@@ -10,14 +10,16 @@ import lapr.project.utils.*;
  */
 public class UserDataUpdateController {
     
-    public final EventCenter eventCenter;
-    
+    private final EventCenter eventCenter;
+    private final AuthenticationService authentication;
+
     /**
      * default constructor
      * @param center 
      */
     public UserDataUpdateController(EventCenter center) {
         eventCenter = center;
+        authentication = new AuthenticationService();
     }
     
     /**
@@ -25,7 +27,7 @@ public class UserDataUpdateController {
      * @return data for authenticated user
      */
     public User getCurrentUserData() {
-        return AuthenticationService.getAuthenticatedUser();
+        return authentication.getAuthenticatedUser();
     }
     
     /**
