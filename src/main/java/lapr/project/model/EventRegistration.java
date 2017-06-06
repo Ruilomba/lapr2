@@ -32,6 +32,16 @@ public class EventRegistration {
         }
         return AuxEventList;
     }
+    
+    public Event getEventOfApplication(Application a){
+        for(Event e: eventList){
+            ApplicationRegistration registrationApp=e.getApplicationRegistration();
+            if(registrationApp.hasApplication(a)){
+                return e;                
+            }
+        }
+        return null;
+    }
 
     /**
      * a ser editado // public List<Event> getAvailableToApplicationEventList()
@@ -67,21 +77,23 @@ public class EventRegistration {
         return organizerEvents;
     }
 
-    public List<Application> getApplicationsVaidForSubmission() {
-        List<Event> eventList =getEventListInState(new EventStateDefinedFAE());
-        List<Application> applicationList=new ArrayList<>();
-        for(Event e:eventList){
-            for(Application a:e.getApplicationRegistration().getApplicationListElements()){
-                applicationList.add(a);
+    public List<Application> getApplicationsVaidForSubmission(User u) {
+        List<Event> eventList = getEventListInState(new EventStateDefinedFAE());
+        List<Application> applicationList = new ArrayList<>();
+        for (Event e : eventList) {
+            for (Application a : e.getApplicationRegistration().getApplicationListElements()) {
+                if (a.hasRepresentative(u)) {
+                    applicationList.add(a);
+                }
             }
         }
         return applicationList;
     }
 
     public List<Event> getEventListInState(EventState eventState) {
-        List<Event> eventListAux= new ArrayList<>();
-        for(Event e : this.getEventList()){
-            if(e.isInState(eventState)){
+        List<Event> eventListAux = new ArrayList<>();
+        for (Event e : this.getEventList()) {
+            if (e.isInState(eventState)) {
                 eventListAux.add(e);
             }
         }

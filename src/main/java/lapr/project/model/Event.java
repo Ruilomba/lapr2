@@ -66,7 +66,7 @@ public class Event implements Serializable {
         int day = endingSubmissionDate.getDia();
         Date aux = new Date(year, month, day);
         timer.schedule(new SetEventStateToClosedApplications(this), aux);
-    }
+    } 
 
     public void autoSetToReceivingApplications() {
         Timer timer = new Timer();

@@ -31,6 +31,7 @@ public class Application implements Importable<Application>, Exportable, Seriali
     private String companyName;
     private String address;
     private String phone;
+    private User companyRepresentative;
     private int intendedBoothArea;
     private int invitation;
 
@@ -80,6 +81,9 @@ public class Application implements Importable<Application>, Exportable, Seriali
      */
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+    public boolean hasRepresentative(User u){
+        return this.companyRepresentative.getUsername().equals(u.getUsername());
     }
 
     /**

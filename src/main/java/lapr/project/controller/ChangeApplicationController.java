@@ -8,6 +8,7 @@ package lapr.project.controller;
 import java.util.List;
 import lapr.project.model.Application;
 import lapr.project.model.EventCenter;
+import lapr.project.model.User;
 
 /**
  *
@@ -15,6 +16,7 @@ import lapr.project.model.EventCenter;
  */
 public class ChangeApplicationController {
     private final EventCenter eventCenter;
+    private Application application;
     
     
     public ChangeApplicationController(EventCenter eventCenter){
@@ -22,9 +24,13 @@ public class ChangeApplicationController {
     }
     
     
-    public List<Application> getApplicationsValidForSubmission(){
-        return eventCenter.getEventRegistration().getApplicationsVaidForSubmission();
+    public List<Application> getApplicationsValidForSubmission(String username){
+        User u= eventCenter.getUserRegistration().getUserWithUsername(username);
+        return eventCenter.getEventRegistration().getApplicationsVaidForSubmission(u);
+    }
+    public void selectApplication(Application a){
+        this.application=a;
     }
     
-    
+    public void setDados
 }
