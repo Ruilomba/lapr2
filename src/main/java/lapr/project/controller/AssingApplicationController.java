@@ -52,4 +52,9 @@ public class AssingApplicationController {
     public void registerAtribuitions(AtribuitionList list) {
         event.setAtribuitionList(list);
     }
+    
+    public void registerApplicatin(Application a){
+        this.application = a;
+    }
+    
 }
