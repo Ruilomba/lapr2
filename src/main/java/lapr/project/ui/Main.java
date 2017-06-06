@@ -7,6 +7,9 @@ import lapr.project.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import lapr.project.controller.CreateEventController;
+import lapr.project.states.EventCreatedState;
+import lapr.project.states.EventStateDefinedFAE;
 
 class Main {
 
@@ -20,6 +23,8 @@ class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        
         JWindow window = new JWindow();
         EventCenter center = new EventCenter();
         RatingController controller = new RatingController();

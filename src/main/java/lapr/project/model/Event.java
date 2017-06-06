@@ -291,5 +291,23 @@ public class Event implements Serializable {
     public boolean belongsToOrganizer(User u) {
         return organizerRegistration.hasOrganizer(u);
     }
+    
+    @Override
+    public boolean equals(Object otherObject){
+        if(this==otherObject){
+            return true;
+        }
+        if (otherObject == null || getClass() != otherObject.getClass()) {
+            return false;
+        }
+        Event e = (Event) otherObject;
+        return this.eventDescription.equals(e.eventDescription)&& this.eventState.getClass().getSimpleName().equals(e.eventState.getClass().getSimpleName());
+    }
+    @Override
+    public int hashCode() {
+        int result = eventDescription.hashCode();
+        result = 31 * result + eventState.getClass().getSimpleName().hashCode();
+        return result;
+    }
 
 }
