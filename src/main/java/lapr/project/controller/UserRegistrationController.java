@@ -11,9 +11,11 @@ import lapr.project.utils.*;
 public class UserRegistrationController {
     
     private final EventCenter eventCenter;
+    private final AuthenticationService authentication;
     
     public UserRegistrationController(EventCenter center) {
         eventCenter = center;
+        authentication = new AuthenticationService();
     }
     
     /**
@@ -33,7 +35,7 @@ public class UserRegistrationController {
         createdUser.setEmail(email);
         createdUser.setPassword(password);
         if (userRegistration.addUserRegistration(createdUser)) {
-            AuthenticationService.setAuthenticatedUser(createdUser);
+            authentication.setAuthenticatedUser(createdUser);
             return true;
         }
         return false;

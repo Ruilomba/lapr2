@@ -10,13 +10,15 @@ import lapr.project.utils.*;
 public class MenuController {
     
     private final EventCenter eventCenter;
+    private final AuthenticationService authentication;
     
     public MenuController(EventCenter center) {
         eventCenter = center;
+        authentication = new AuthenticationService();
     }
     
     public String getAuthenticatedUserName() {
-        User authenticatedUser = AuthenticationService.getAuthenticatedUser();
+        User authenticatedUser = authentication.getAuthenticatedUser();
         if (authenticatedUser.getName() != null) {
             return authenticatedUser.getName();
         }

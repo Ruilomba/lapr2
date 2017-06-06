@@ -26,11 +26,19 @@ public class Application implements Importable<Application>, Exportable, Seriali
     private static final String DESCRIPTION_ELEMENT_NAME = "description";
     private static final String KEYWORDS_ELEMENT_NAME = "keywords";
     private final List<Keyword> keywordList = new ArrayList<Keyword>();
+<<<<<<< HEAD
     private FAERating rating;
+=======
+    private List<FAERating> ratings;
+>>>>>>> 49c7c181370859d91ccb088db70cebab9f7f4cab
     private String description = "";
     private String companyName;
     private String address;
     private String phone;
+<<<<<<< HEAD
+=======
+    private User companyRepresentative;
+>>>>>>> 49c7c181370859d91ccb088db70cebab9f7f4cab
     private int intendedBoothArea;
     private int invitation;
 
@@ -40,15 +48,23 @@ public class Application implements Importable<Application>, Exportable, Seriali
      * @param description Candidatura Description
      * @param keywordList Keyword List
      */
+<<<<<<< HEAD
     public Application(FAERating rating, String description, List<Keyword> keywordList,
             String companyName, String phone, int area, int invitation) {
         this.description = description;
         this.keywordList.addAll(keywordList);
         this.rating = rating;
+=======
+    public Application(List<FAERating> ratings, String description, List<Keyword> keywordList) {
+        this.description = description;
+        this.keywordList.addAll(keywordList);
+        this.ratings = ratings;
+>>>>>>> 49c7c181370859d91ccb088db70cebab9f7f4cab
         this.companyName = companyName;
         this.phone = phone;
         this.intendedBoothArea = area;
         this.invitation = invitation;
+<<<<<<< HEAD
 
     }
 
@@ -57,6 +73,17 @@ public class Application implements Importable<Application>, Exportable, Seriali
      */
     public Application() {
 
+=======
+    }
+
+    /**
+     * Get Rating
+     *
+     * @return FAERating
+     */
+    public List<FAERating> getRatings() {
+        return ratings;
+>>>>>>> 49c7c181370859d91ccb088db70cebab9f7f4cab
     }
 
     /**
@@ -81,6 +108,12 @@ public class Application implements Importable<Application>, Exportable, Seriali
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
+<<<<<<< HEAD
+=======
+    public boolean hasRepresentative(User u){
+        return this.companyRepresentative.getUsername().equals(u.getUsername());
+    }
+>>>>>>> 49c7c181370859d91ccb088db70cebab9f7f4cab
 
     /**
      * @return the Address
@@ -216,6 +249,7 @@ public class Application implements Importable<Application>, Exportable, Seriali
 
         //Get description
         this.description = elementCandidatura.getFirstChild().getFirstChild().getNodeValue();
+<<<<<<< HEAD
 
         NodeList elementsKeywords = document.getElementsByTagName(KEYWORDS_ELEMENT_NAME);
 
@@ -344,6 +378,8 @@ public class Application implements Importable<Application>, Exportable, Seriali
 
         //Get description
         this.description = elementCandidatura.getFirstChild().getFirstChild().getNodeValue();
+=======
+>>>>>>> 49c7c181370859d91ccb088db70cebab9f7f4cab
 
         NodeList elementsKeywords = document.getElementsByTagName(KEYWORDS_ELEMENT_NAME);
 
@@ -355,7 +391,10 @@ public class Application implements Importable<Application>, Exportable, Seriali
             keywordExample = keywordExample.importContentFromXMLNode(keyword);
             addKeyword(keywordExample);
         }
+<<<<<<< HEAD
          >>> >>> > ad9bc3d09bd1b2948b7f1d94300df8da68454ba8
+=======
+>>>>>>> 49c7c181370859d91ccb088db70cebab9f7f4cab
 
         return this;
     }

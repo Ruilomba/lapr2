@@ -8,6 +8,7 @@ public class UserRegistration implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private static final String USER_DATA_FILE_PATH = "userData.txt";
+    private final AuthenticationService authentication;
     private List<User> userList;
 
     /**
@@ -15,6 +16,7 @@ public class UserRegistration implements Serializable {
      */
     public UserRegistration() {
         userList = new ArrayList<>();
+        authentication = new AuthenticationService();
     }
 
     /**
@@ -23,7 +25,8 @@ public class UserRegistration implements Serializable {
      * @param userList
      */
     public UserRegistration(List<User> userList) {
-        this.userList = userList;
+        userList = userList;
+        authentication = new AuthenticationService();
     }
 
     /**
@@ -61,7 +64,7 @@ public class UserRegistration implements Serializable {
      * @throws IOException
      */
     public boolean addUserRegistration(User u) throws IOException {
-        if (validateUser(u) && AuthenticationService.registerUser(u)) {
+        if (validateUser(u) && authentication.registerUser(u)) {
             return addUser(u);
         }
         return false;
@@ -78,7 +81,7 @@ public class UserRegistration implements Serializable {
      * @throws IOException
      */
     public boolean updateUserRegistration(String name, String username, String email, String password) throws IOException {
-        User currentUser = AuthenticationService.getAuthenticatedUser();
+        User currentUser = authentication.getAuthenticatedUser();
         for (User u : userList) {
             if (!u.equals(currentUser)) {
                 if (username != null && !username.isEmpty()) {
@@ -94,7 +97,7 @@ public class UserRegistration implements Serializable {
             }
         }
         try {
-            if (AuthenticationService.updateUserDataInFile(currentUser)) {
+            if (authentication.updateUserDataInFile(currentUser)) {
                 if (name != null && !name.isEmpty()) {
                     currentUser.setName(name);
                 }

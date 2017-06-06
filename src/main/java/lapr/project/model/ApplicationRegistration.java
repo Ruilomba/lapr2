@@ -67,6 +67,12 @@ public class ApplicationRegistration {
     public List<Application> getApplicationList() {
         return applicationList;
     }
+    public boolean hasApplication(Application a){
+        if(applicationList.contains(a)){
+            return true;
+        }
+        return false;
+    }
 
     public boolean isEmpty() {
         return applicationList.isEmpty();
