@@ -23,7 +23,7 @@ import lapr.project.utils.Utils;
  * @author RuiSL
  */
 public class AttribuitionAlgorithmEquitativeLoad implements AtribuitionAlgorithm,Serializable {
-
+private static final long serialVersionUID =1L;
     public AttribuitionAlgorithmEquitativeLoad() {
 
     }

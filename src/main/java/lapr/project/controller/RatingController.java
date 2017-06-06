@@ -11,6 +11,7 @@ import javax.swing.*;
 public class RatingController {
 
     public JFrame showGlobalAverageRating(EventCenter center){
+        System.out.println("asas");
         return new RatingUI(center, this);
     }
 }

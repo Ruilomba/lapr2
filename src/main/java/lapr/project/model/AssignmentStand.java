@@ -12,7 +12,6 @@ import java.io.Serializable;
  * @author Miguel Barros
  */
 public class AssignmentStand implements Serializable {
-
     private static final long serialVersionUID = 1L;
     private Event event;
     private Stand std;

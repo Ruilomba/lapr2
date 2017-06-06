@@ -2,21 +2,15 @@ package lapr.project.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import lapr.project.states.EventCreatedState;
 import lapr.project.states.EventState;
-import lapr.project.states.EventStateClosedApplications;
-import lapr.project.states.EventStateDefinedFAE;
-import lapr.project.states.EventStateReceivingApplications;
-import lapr.project.states.SetEventStateToClosedApplications;
-import lapr.project.states.SetEventStateToReceivingAplications;
 import lapr.project.states.StartingEventState;
 import lapr.project.utils.Data;
 
 public class Event implements Serializable {
-
+    private static final long serialVersionUID = 2L;
     private String title;
     private String eventDescription;
     private String local;
@@ -64,8 +58,8 @@ public class Event implements Serializable {
         int year = endingSubmissionDate.getAno();
         int month = endingSubmissionDate.getMes();
         int day = endingSubmissionDate.getDia();
-        Date aux = new Date(year, month, day);
-        timer.schedule(new SetEventStateToClosedApplications(this), aux);
+        //Date aux = new Date(year, month, day);
+        //timer.schedule(new SetEventStateToClosedApplications(this), aux);
     } 
 
     public void autoSetToReceivingApplications() {
@@ -73,8 +67,8 @@ public class Event implements Serializable {
         int year = endingSubmissionDate.getAno();
         int month = endingSubmissionDate.getMes();
         int day = endingSubmissionDate.getDia();
-        Date aux = new Date(year, month, day);
-        timer.schedule(new SetEventStateToReceivingAplications(this), aux);
+        //Date aux = new Date(year, month, day);
+        //timer.schedule(new SetEventStateToReceivingAplications(this), aux);
     }
 
     public boolean setCreated() {

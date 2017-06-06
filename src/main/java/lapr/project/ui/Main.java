@@ -33,7 +33,7 @@ class Main {
         User user = new User("Gastão", "gastao@fdv.com", "ogastao", "gaston");
         FAE fae = new FAE(user);
         FAERating faeRating = new FAERating(fae, list);
-
+        System.out.println("corrid");
         window.setContentPane(controller.showGlobalAverageRating(center));
         window.setAlwaysOnTop(true);
         window.setVisible(true);

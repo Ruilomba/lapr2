@@ -11,6 +11,7 @@ import java.awt.*;
  * Created by francisco on 04-06-2017.
  */
 public class RatingUI extends JFrame {
+    private final static long serialVersionUID =1L;
     private final RatingController ratingController;
     private final EventCenter eventCenter;
 

@@ -5,7 +5,6 @@
  */
 package lapr.project.utils;
 
-
 import java.io.Serializable;
 import java.util.Calendar;
 
@@ -14,7 +13,8 @@ import java.util.Calendar;
  * @author RuiSL
  */
 public class Data implements Comparable<Data>, Serializable {
-    
+    private static final long serialVersionUID = 3L;
+
     /**
      * O ano da data.
      */
@@ -205,7 +205,16 @@ public class Data implements Comparable<Data>, Serializable {
         return ano == outraData.ano && mes == outraData.mes
                 && dia == outraData.dia;
     }
+    @Override
+    public int hashCode() {
+        int result = 17;
 
+        result += dia;
+        result += ano;
+        result += mes;
+
+        return result;
+    }
     /**
      * Compara a data com a outra data recebida por parâmetro.
      *
@@ -240,7 +249,7 @@ public class Data implements Comparable<Data>, Serializable {
      * @return true se a data for maior do que a data recebida por parâmetro,
      *         caso contrário devolve false.
      */
-    public boolean isMaior(Data outraData) {
+    private boolean isMaior(Data outraData) {
         int totalDias = contaDias();
         int totalDias1 = outraData.contaDias();
 

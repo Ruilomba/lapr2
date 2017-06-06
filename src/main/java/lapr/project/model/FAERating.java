@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FAERating {
+    private static final long serialVersionUID = 2L;
     private final FAE ratingFae;
     private final List<RatingParameter> ratingParameters;
     private float topicKnowledge;

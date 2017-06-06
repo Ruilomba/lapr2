@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @author RuiSL
  */
 public class DataInvalidaException extends IllegalArgumentException{
-
+    private static final long serialVersionUID =1L;
     /**
      * Creates a new instance of <code>DataInvalidaException</code> without
      * detail message.

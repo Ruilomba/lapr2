@@ -80,4 +80,12 @@ public class RatingParameter {
 
         return getName().equals(apr.getName());
     }
+
+    @Override
+    public int hashCode() {
+        int result = 18;
+        result = 25 * result + name.hashCode();
+
+        return result;
+    }
 }

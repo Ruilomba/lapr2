@@ -69,7 +69,7 @@ public class EncryptionService {
                 for (String encryptedLine : encryptedData) {
                     fw.write(encryptedLine);
                 }
-                fw.close();
+                //fw.close();
                 return true;
             } catch (Exception e) {
                 System.out.println("Unable to write user info to " + USER_DATA_FILE_PATH + " file");

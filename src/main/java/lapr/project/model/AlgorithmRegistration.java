@@ -28,8 +28,8 @@ public class AlgorithmRegistration {
         return new ArrayList<>(this.algorithmList);
     }
     
-    public void setAlgorithmList(List algorithm) {
-        algorithmList = new ArrayList<>(algorithm);
+    public void setAlgorithmList(List<AtribuitionAlgorithm> algorithm) {
+        algorithmList = new ArrayList<AtribuitionAlgorithm>(algorithm);
     }
     
     public static List<AtribuitionAlgorithm> initializeAlgorithmRegister (){

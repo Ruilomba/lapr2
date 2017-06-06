@@ -115,7 +115,7 @@ public class EventCenterTest {
         c.getEventRegistration().registerEvento(e2);
         c.getEventRegistration().registerEvento(e3);
 
-        assertEquals(c.getGlobalSubmissionAverageInvitationQuantityRating(), 2.3000002f);
+        assertEquals(c.getGlobalSubmissionAverageInvitationQuantityRating(), 2.8333333f);
     }
     @Test
     public void testGlobalAverageOverallRating(){

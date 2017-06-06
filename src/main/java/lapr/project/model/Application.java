@@ -20,7 +20,6 @@ import java.util.List;
  * @author by Nuno Bettencourt [nmb@isep.ipp.pt] on 29/05/16.
  */
 public class Application implements Importable<Application>, Exportable, Serializable {
-
     private static final long serialVersionUID = 1L;
     private static final String ROOT_ELEMENT_NAME = "application";
     private static final String DESCRIPTION_ELEMENT_NAME = "description";
@@ -47,7 +46,7 @@ public class Application implements Importable<Application>, Exportable, Seriali
         this.ratings = ratings;
         this.companyName = companyName;
         this.phone = phone;
-        this.intendedBoothArea = area;
+        //this.intendedBoothArea = area;
         this.invitation = invitation;
     }
 
@@ -77,7 +76,7 @@ public class Application implements Importable<Application>, Exportable, Seriali
     }
 
     /**
-     * @param CompanyName the CompanyName to set
+     * @param companyName the CompanyName to set
      */
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
@@ -94,7 +93,7 @@ public class Application implements Importable<Application>, Exportable, Seriali
     }
 
     /**
-     * @param Address the Address to set
+     * @param address the Address to set
      */
     public void setAddress(String address) {
         this.address = address;
