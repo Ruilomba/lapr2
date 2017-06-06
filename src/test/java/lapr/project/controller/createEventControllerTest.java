@@ -14,12 +14,12 @@ import org.junit.Test;
  * @author RuiSL
  */
 public class createEventControllerTest {
-    /*@Test
-    public boolean newEventAux(){
+    @Test
+    public void newEventAux(){
         EventCenter eventCenter = new EventCenter();
         CreateEventController createEventController = new CreateEventController(eventCenter);
         Event event = new Event();
         createEventController.startNewEvent();
         return createEventController.getControllerEvent().equals(event);
-    }*/
+    }
 }
