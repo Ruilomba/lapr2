@@ -12,7 +12,7 @@ public class EventRegistration {
     private List<Event> eventList;
 
     public EventRegistration() {
-        eventList = new ArrayList<Event>();
+        eventList = new ArrayList<>();
     }
 
     public List<Event> getEventList() {

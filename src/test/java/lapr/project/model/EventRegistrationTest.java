@@ -34,8 +34,11 @@ public class EventRegistrationTest {
         List<Event> eventList=eventCenter.getEventRegistration().getEventListInState(new EventStateDefinedFAE());
         List<Event> eventListExpected= new ArrayList<>();
         eventListExpected.add(e1);
-        eventListExpected.add(e3);
-        
+        eventListExpected.add(e3);        
         assertEquals(eventListExpected, eventList);
     }
+    
+    
+    
+    
 }

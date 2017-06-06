@@ -24,7 +24,6 @@ class Main {
      */
     public static void main(String[] args) {
         
-        
         JWindow window = new JWindow();
         EventCenter center = new EventCenter();
         RatingController controller = new RatingController();
