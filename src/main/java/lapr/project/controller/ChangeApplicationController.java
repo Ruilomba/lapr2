@@ -7,6 +7,7 @@ package lapr.project.controller;
 
 import java.util.List;
 import lapr.project.model.Application;
+import lapr.project.model.Event;
 import lapr.project.model.EventCenter;
 import lapr.project.model.User;
 
@@ -17,6 +18,7 @@ import lapr.project.model.User;
 public class ChangeApplicationController {
     private final EventCenter eventCenter;
     private Application application;
+    private Event event;
     
     
     public ChangeApplicationController(EventCenter eventCenter){
@@ -30,7 +32,21 @@ public class ChangeApplicationController {
     }
     public void selectApplication(Application a){
         this.application=a;
+        this.event=eventCenter.getEventRegistration().getEventOfApplication(a);
     }
     
-    public void setDados
+    
+    public Application setDados(String adress, String companyName, int intendedBoothArea, int inviatation,String phone){
+        Application ap= new Application();
+        ap.setAddress(adress);
+        ap.setCompanyName(companyName);
+        ap.setIntendedBoothArea(intendedBoothArea);
+        ap.setInvitation(intendedBoothArea);
+        ap.setPhone(phone);
+        return ap;
+    }
+    
+    public void registerChange(Application ap){
+        this.application=ap;
+    }
 }

@@ -50,6 +50,9 @@ public class Application implements Importable<Application>, Exportable, Seriali
         this.intendedBoothArea = area;
         this.invitation = invitation;
     }
+    public Application(){
+        
+    }
 
     /**
      * Get Rating
