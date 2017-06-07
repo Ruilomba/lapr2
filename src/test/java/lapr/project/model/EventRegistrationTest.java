@@ -58,6 +58,7 @@ public class EventRegistrationTest {
         e.setEventDescription("EventoDoRui");
         Organizer o=e.getOrganizerRegistration().newOrganizer();
         o.setUser(u);
+        //tenho que tentar isto de novo qando tiver a instanciaçao dos utilizadores correta
         List<Event> organizerEventList=eventCenter.getEventRegistration().getOrganizerEvents(u, new StartingEventState());
     }
     @Test
@@ -65,7 +66,9 @@ public class EventRegistrationTest {
         EventCenter eventCenter= new EventCenter();
         Event e=eventCenter.getEventRegistration().newEvent();
         Event e1=eventCenter.getEventRegistration().newEvent();
+        e1.setEventDescription("Bananas");
         Event e2=eventCenter.getEventRegistration().newEvent();
+        e2.setEventDescription("Cenouras");
         Event e3=eventCenter.getEventRegistration().newEvent();
         Event e4=eventCenter.getEventRegistration().newEvent();
         Event e5=eventCenter.getEventRegistration().newEvent();
@@ -77,13 +80,26 @@ public class EventRegistrationTest {
         eventCenter.getEventRegistration().registerEvento(e4);
         eventCenter.getEventRegistration().registerEvento(e5);
         eventCenter.getEventRegistration().registerEvento(e6);
-        e.getApplicationRegistration().addApplication(new Application());
-        e1.getApplicationRegistration().addApplication(new Application());
-        e2.getApplicationRegistration().addApplication(new Application());
+        Application a=new Application();
+        a.setAddress("eventoNulo");
+        Application a1=new Application();
+        a1.setAddress("eventoDasBananas");
+        Application a2=new Application();
+        a2.setAddress("eventoDasCenouras");
+        e.getApplicationRegistration().addApplication(a);
+        e1.getApplicationRegistration().addApplication(a1);
+        e2.getApplicationRegistration().addApplication(a2);
         e3.getApplicationRegistration().addApplication(new Application());
+        e4.getApplicationRegistration().addApplication(new Application());
+        e5.getApplicationRegistration().addApplication(new Application());
         ListApplicationsController cont= new ListApplicationsController(eventCenter);
-        List<Application> applicationList=cont.getGlobalApplicationList();
-        System.out.println("asdasd");
+        List<Application> applicationList=new ArrayList<>();
+        applicationList=cont.getGlobalApplicationList();
+        List<Application> expectedApplicationList= new ArrayList<>();
+        expectedApplicationList.add(a);
+        expectedApplicationList.add(a1);
+        expectedApplicationList.add(a2);
+        assertEquals(expectedApplicationList, applicationList);
     }
     
 }

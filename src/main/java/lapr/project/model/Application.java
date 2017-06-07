@@ -288,4 +288,5 @@ public class Application implements Importable<Application>, Exportable, Seriali
     public void setDescription(String description) {
         this.description = description;
     }
+    
 }

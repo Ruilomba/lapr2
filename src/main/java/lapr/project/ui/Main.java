@@ -25,10 +25,7 @@ class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-
-       
-        
-        
+                
         JWindow window = new JWindow();
         EventCenter center = new EventCenter();
         RatingController controller = new RatingController();
