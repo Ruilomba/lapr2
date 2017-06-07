@@ -51,8 +51,9 @@ public class MenuUI extends JFrame {
     private void createMenuBar() {
         JMenuBar menubar = new JMenuBar();
         String userName;
-        userName = controller.getAuthenticatedUserName();
-        userNameItem = new JMenuItem(userName);
+        
+        //userName = controller.getAuthenticatedUserName();
+        userNameItem = new JMenuItem("authenticated user");
         menubar.add(userNameItem);
         
         eventsMenu = new JMenu("Events");
@@ -86,7 +87,7 @@ public class MenuUI extends JFrame {
         importDataMenuItem = new JMenuItem("Import data");
         exportDataMenuItem = new JMenuItem("Export data");
         importExportMenu.add(importDataMenuItem);
-        exportDataMenuItem.add(exportDataMenuItem);
+        importExportMenu.add(exportDataMenuItem);
         menubar.add(importExportMenu);
         
         statisticsMenuItem = new JMenuItem("Statistics");
@@ -104,6 +105,8 @@ public class MenuUI extends JFrame {
     private void createContentPanel() {
         contentPanel = new JPanel();
         contentPanel.setLayout(new FlowLayout());
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        contentPanel.setSize(screenSize);
         this.add(contentPanel);
     }
 
