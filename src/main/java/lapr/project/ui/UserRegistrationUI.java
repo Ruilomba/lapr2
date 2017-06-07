@@ -12,7 +12,7 @@ public class UserRegistrationUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private final EventCenter eventCenter;
-    private final UserRegistrationController controller;
+    private final UserRegistrationController registrationController;
     
     private JLabel nameLabel;
     private JTextField nameTextField;
@@ -33,10 +33,10 @@ public class UserRegistrationUI extends JFrame {
      * default constructor
      * @param center 
      */
-    public UserRegistrationUI(EventCenter center) {
+    public UserRegistrationUI(EventCenter center, UserRegistrationController controller) {
         super("User Registration");
         eventCenter = center;
-        controller = new UserRegistrationController(eventCenter);
+        registrationController = controller;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(screenSize.width, screenSize.height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,7 +90,7 @@ public class UserRegistrationUI extends JFrame {
                         String username = usernameTextField.getText();
                         String email = emailTextField.getText();
                         String password = passwordTextField.getText();
-                        if (controller.registerUser(name, username, email, password)) {
+                        if (registrationController.registerUser(name, username, email, password)) {
                             goToMenu();                        
                         }
                     } catch (IOException ex) {

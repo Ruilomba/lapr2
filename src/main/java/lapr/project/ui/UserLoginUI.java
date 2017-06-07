@@ -105,7 +105,8 @@ public class UserLoginUI extends JFrame {
     
     private void goToRegistration() {
         UserRegistrationUI registration;
-        registration = new UserRegistrationUI(eventCenter);
+        UserRegistrationController registrationController = new UserRegistrationController(eventCenter);
+        registration = new UserRegistrationUI(eventCenter, registrationController);
         registration.setVisible(true);
         this.dispose();
     }

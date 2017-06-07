@@ -67,10 +67,10 @@ public class UserDataUpdateUI extends JPanel {
     }
 
     private void addUserDataToForm() {
-        //User userData = userUpdateController.getCurrentUserData();
-        //nameTextField.setText(userData.getName());
-        //usernameTextField.setText(userData.getUsername());
-        //emailTextField.setText(userData.getEmail());
+        User userData = userUpdateController.getCurrentUserData();
+        nameTextField.setText(userData.getName());
+        usernameTextField.setText(userData.getUsername());
+        emailTextField.setText(userData.getEmail());
     }
 
     private void addListenersForButtons() {
