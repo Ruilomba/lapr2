@@ -57,9 +57,7 @@ public class Product {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 29 * hash + Objects.hashCode(this.productName);
-        return hash;
+        return 31 * Objects.hashCode(this.productName);
     }
 
 

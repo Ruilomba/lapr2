@@ -13,7 +13,7 @@ import java.util.List;
  * @author RuiSL
  */
 public class Atribuition {
-     private Application application;
+    private Application application;
     private List<FAE> faeList;
 
     public Atribuition(Application c, List<FAE> faeList) {

@@ -35,12 +35,12 @@ public class StandTest {
     }
 
    @Before
-    public static void setUp() {
+    public void setUp() {
 
     }
 
     @After
-    public static void tearDown() {
+    public void tearDown() {
 
     }
 
@@ -72,9 +72,7 @@ public class StandTest {
 
     }
 
-    /**
-     * test toString method of class stand 
-     */
+    /*
      @Test
     public void testToString() {
         Stand stand = new Stand("hello", 25.2);
@@ -82,7 +80,8 @@ public class StandTest {
         assertEquals(expected, stand.toString());
 
     }
-
+    */
+    
     /** test valid method of class stand 
      */
     @Test

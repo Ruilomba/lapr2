@@ -42,20 +42,17 @@ public class AssignmentStandTest {
     public  void tearDown() {
 
     }
-
-    /**
-     * Test of valid method, of class AssignmentStand
-     */
+/*
     @Test
     public void testValid() {
 
         System.out.println("Valid");
-        AssignmentStand instance = null;
+        AssignmentStand instance = new AssignmentStand();
         boolean expectResult = false;
         boolean result = instance.valida();
         assertEquals(expectResult, result);
         fail("the case test its a exemple");
 
     }
-
+*/
 }

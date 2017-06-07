@@ -13,30 +13,26 @@ public class MenuUI extends JFrame {
     private final MenuController controller;
 
     private JMenuItem userNameItem;
-    
     private JMenu eventsMenu;
     private JMenuItem createEventMenuItem;
     private JMenuItem showEventKeywordsMenuItem;
-    
     private JMenu applicationsMenu;
     private JMenuItem listApplications;
     private JMenuItem decideApplicationMenuItem;
     private JMenuItem assingApplicationMenuItem;
     private JMenuItem changeRemoveApplicationMenuItem;
-
     private JMenu standsMenu;
     private JMenuItem showStandsMenuItem;
     private JMenuItem createStandMenuItem;
     private JMenuItem assignStandMenuItem;
-
     private JMenu importExportMenu;
     private JMenuItem importDataMenuItem;
     private JMenuItem exportDataMenuItem;
-
     private JMenuItem statisticsMenuItem;
-    
     private JMenuItem userUpdateMenuItem;
     private JMenuItem logoutMenuItem;
+    
+    private JPanel contentPanel;
 
     public MenuUI(EventCenter center) {
         super("User Authentication");
@@ -47,6 +43,7 @@ public class MenuUI extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new FlowLayout());
         createMenuBar();
+        createContentPanel();
         addListenersToButtons();
         this.setVisible(true);
     }
@@ -103,20 +100,37 @@ public class MenuUI extends JFrame {
 
         setJMenuBar(menubar);
     }
+    
+    private void createContentPanel() {
+        contentPanel = new JPanel();
+        contentPanel.setLayout(new FlowLayout());
+        this.add(contentPanel);
+    }
 
     private void addListenersToButtons() {
+        statisticsMenuItem.addActionListener((ActionEvent e) -> {
+            showStatistics();
+        });
         userUpdateMenuItem.addActionListener((ActionEvent e) -> {
-            goToUpdateUserData();
+            showUserUpdatePanel();
         });
         logoutMenuItem.addActionListener((ActionEvent e) -> {
             goToLogin();
         });
     }
 
-    private void goToUpdateUserData() {
-        UserDataUpdateUI userUpdate = new UserDataUpdateUI(eventCenter);
-        userUpdate.setVisible(true);
-        this.dispose();
+    private void showUserUpdatePanel() {
+        UserDataUpdateController userUpdateController = new UserDataUpdateController(eventCenter);
+        UserDataUpdateUI userUpdateUI = new UserDataUpdateUI(eventCenter, userUpdateController);
+        contentPanel.removeAll();
+        contentPanel.add(userUpdateUI);
+    }
+    
+    private void showStatistics() {
+        RatingController ratingController = new RatingController(eventCenter);
+        RatingUI ratingUI = new RatingUI(eventCenter, ratingController);
+        contentPanel.removeAll();
+        contentPanel.add(ratingUI);
     }
     
     private void goToLogin() {
