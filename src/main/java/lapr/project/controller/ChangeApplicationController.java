@@ -36,15 +36,7 @@ public class ChangeApplicationController {
     }
     
 
-    public Application setDados(String adress, String companyName, int intendedBoothArea, int inviatation,String phone){
-        Application ap= new Application();
-        ap.setAddress(adress);
-        ap.setCompanyName(companyName);
-        ap.setIntendedBoothArea(intendedBoothArea);
-        ap.setInvitation(intendedBoothArea);
-        ap.setPhone(phone);
-        return ap;
-    }
+
 
     public void registerChange(Application ap){
         this.application=ap;

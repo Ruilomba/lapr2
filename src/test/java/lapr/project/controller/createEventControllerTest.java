@@ -5,8 +5,13 @@
  */
 package lapr.project.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import lapr.project.model.Event;
 import lapr.project.model.EventCenter;
+import lapr.project.states.EventCreatedState;
+import lapr.project.states.EventStateDefinedFAE;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -14,12 +19,5 @@ import org.junit.Test;
  * @author RuiSL
  */
 public class createEventControllerTest {
-    /*@Test
-    public boolean newEventAux(){
-        EventCenter eventCenter = new EventCenter();
-        CreateEventController createEventController = new CreateEventController(eventCenter);
-        Event event = new Event();
-        createEventController.startNewEvent();
-        return createEventController.getControllerEvent().equals(event);
-    }*/
+    
 }
