@@ -11,5 +11,4 @@ package lapr.project.states;
  */
 public interface EventState {
     void setCriada();
-    
 }

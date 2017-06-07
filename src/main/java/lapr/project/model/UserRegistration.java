@@ -24,8 +24,8 @@ public class UserRegistration implements Serializable {
      *
      * @param userList
      */
-    public UserRegistration(List<User> userList) {
-        userList = userList;
+    public UserRegistration(List<User> list) {
+        userList = list;
         authentication = new AuthenticationService();
     }
 

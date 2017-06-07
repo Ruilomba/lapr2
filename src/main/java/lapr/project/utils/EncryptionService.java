@@ -12,6 +12,10 @@ public class EncryptionService {
 
     private final static String USER_DATA_FILE_PATH = "userData.txt";
 
+    public EncryptionService() {
+        
+    }
+
     /**
      * generates random shift
      *
