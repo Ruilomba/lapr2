@@ -3,6 +3,7 @@ package lapr.project.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Timer;
 import lapr.project.states.EventCreatedState;
 import lapr.project.states.EventState;
@@ -292,22 +293,22 @@ public class Event implements Serializable {
         return organizerRegistration.hasOrganizer(u);
     }
     
-//    @Override
-//    public boolean equals(Object otherObject){
-//        if(this==otherObject){
-//            return true;
-//        }
-//        if (otherObject == null || getClass() != otherObject.getClass()) {
-//            return false;
-//        }
-//        Event e = (Event) otherObject;
-//        return this.eventDescription.equals(e.eventDescription)&& this.eventState.getClass().getSimpleName().equals(e.eventState.getClass().getSimpleName());
-//    }
-//    @Override
-//    public int hashCode() {
-//        int result = eventDescription.hashCode();
-//        result = 31 * result + eventState.getClass().getSimpleName().hashCode();
-//        return result;
-//    }
+    @Override
+    public boolean equals(Object otherObject){
+        if(this==otherObject){
+            return true;
+        }
+        if (otherObject == null || getClass() != otherObject.getClass()) {
+            return false;
+        }
+        Event e = (Event) otherObject;
+        return Objects.equals(eventDescription, e.eventDescription)&&Objects.equals(eventState.getClass().getSimpleName(), e.eventState.getClass().getSimpleName());
+    }
+    @Override
+    public int hashCode() {
+        int result = eventDescription.hashCode();
+        result = 31 * result + eventState.getClass().getSimpleName().hashCode();
+        return result;
+    }
 
 }

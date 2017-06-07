@@ -5,10 +5,12 @@
  */
 package lapr.project.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import lapr.project.states.EventCreatedState;
 import lapr.project.states.EventStateDefinedFAE;
+import lapr.project.states.StartingEventState;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -27,6 +29,10 @@ public class EventRegistrationTest {
         e2.setEventState(new EventCreatedState());
         e3.setEventState(new EventStateDefinedFAE());
         e4.setEventState(new EventCreatedState());
+        e1.setEventDescription("Ruizinho");
+        e2.setEventDescription("Luisinho");
+        e3.setEventDescription("Tiaguinho");
+        e4.setEventDescription("Joaozinho");
         eventCenter.getEventRegistration().registerEvento(e1);
         eventCenter.getEventRegistration().registerEvento(e2);
         eventCenter.getEventRegistration().registerEvento(e3);
@@ -34,11 +40,24 @@ public class EventRegistrationTest {
         List<Event> eventList=eventCenter.getEventRegistration().getEventListInState(new EventStateDefinedFAE());
         List<Event> eventListExpected= new ArrayList<>();
         eventListExpected.add(e1);
-        eventListExpected.add(e3);        
+        eventListExpected.add(e3);       
         assertEquals(eventListExpected, eventList);
     }
-    
-    
-    
+    @Test
+    public void getOrganizerEventsTest() throws IOException{
+        EventCenter eventCenter=new EventCenter();
+        User u = new User("Rui", "asdsad", "Ruilomba", "1234");
+        eventCenter.getUserRegistration().addUserRegistration(u);
+        Event e= new Event();
+        e.setEventState(new StartingEventState());
+        Event e1= new Event();
+        e1.setEventState(new StartingEventState());
+        eventCenter.getEventRegistration().registerEvento(e);
+        eventCenter.getEventRegistration().registerEvento(e1);
+        e.setEventDescription("EventoDoRui");
+        Organizer o=e.getOrganizerRegistration().newOrganizer();
+        o.setUser(u);
+        List<Event> organizerEventList=eventCenter.getEventRegistration().getOrganizerEvents(u, new StartingEventState());
+    }
     
 }
