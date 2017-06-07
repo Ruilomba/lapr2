@@ -6,6 +6,11 @@ import lapr.project.model.*;
 import lapr.project.controller.*;
 import java.util.ArrayList;
 import java.util.List;
+import lapr.project.controller.CreateEventController;
+import lapr.project.controller.ListApplicationsController;
+import lapr.project.states.EventCreatedState;
+import lapr.project.states.EventStateDefinedFAE;
+import lapr.project.states.StartingEventState;
 import lapr.project.states.*;
 
 class Main {
@@ -20,22 +25,8 @@ class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-        
-        EventCenter eventCenter = new EventCenter();
-        User u = new User("Rui", "ruilomba@hotmail.com", "Ruilomba", "1234");
-        eventCenter.getUserRegistration().addUserRegistration(u);
-        Event e= new Event();
-        e.setEventDescription("EventoDoRui");
-        e.setEventState(new StartingEventState());
-        Event e1= new Event();
-        e1.setEventState(new StartingEventState());
-        eventCenter.getEventRegistration().registerEvento(e);
-        eventCenter.getEventRegistration().registerEvento(e1);
-        Organizer o=e.getOrganizerRegistration().newOrganizer();
-        o.setUser(u);
-        List<Event> organizerEventList = eventCenter.getEventRegistration().getOrganizerEvents(u, new StartingEventState());
-        System.out.println("asdsad");
-        
+
+       
         
         
         JWindow window = new JWindow();
