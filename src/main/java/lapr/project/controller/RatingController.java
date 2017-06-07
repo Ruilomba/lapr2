@@ -9,9 +9,10 @@ import javax.swing.*;
   * Rating Controller
   */
 public class RatingController {
+    
+    public static EventCenter eventCenter;
 
-    public JFrame showGlobalAverageRating(EventCenter center){
-        System.out.println("asas");
-        return new RatingUI(center, this);
+    public RatingController(EventCenter center) {
+        eventCenter = center;
     }
 }

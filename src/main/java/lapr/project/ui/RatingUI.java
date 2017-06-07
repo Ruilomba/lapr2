@@ -10,14 +10,13 @@ import java.awt.*;
 /**
  * Created by francisco on 04-06-2017.
  */
-public class RatingUI extends JFrame {
+public class RatingUI extends JPanel {
     
     private final static long serialVersionUID =1L;
     private final RatingController ratingController;
     private final EventCenter eventCenter;
 
     public RatingUI(EventCenter center, RatingController ratingController) {
-        super("Submission Rating");
         this.ratingController = ratingController;
         this.eventCenter = center;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -42,7 +41,6 @@ public class RatingUI extends JFrame {
         this.add(new JLabel(String.format("%f",center.getGlobalSubmissionAverageOverallRating())));
 
         this.setSize(screenSize.width, screenSize.height);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new FlowLayout());
         this.setVisible(true);
     }

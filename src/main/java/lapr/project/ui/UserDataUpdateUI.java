@@ -12,7 +12,7 @@ public class UserDataUpdateUI extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private final EventCenter eventCenter;
-    private final UserDataUpdateController controller;
+    private final UserDataUpdateController userUpdateController;
 
     private JLabel nameLabel;
     private JTextField nameTextField;
@@ -29,9 +29,9 @@ public class UserDataUpdateUI extends JPanel {
     private JButton submitFormButton;
     private JLabel errorMessageLabel;
 
-    public UserDataUpdateUI(EventCenter center) {
+    public UserDataUpdateUI(EventCenter center, UserDataUpdateController controller) {
         eventCenter = center;
-        controller = new UserDataUpdateController(eventCenter);
+        userUpdateController = controller;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(screenSize.width, screenSize.height);
         this.setLayout(new GridLayout(0, 1));
@@ -66,7 +66,7 @@ public class UserDataUpdateUI extends JPanel {
     }
 
     private void addUserDataToForm() {
-        User userData = controller.getCurrentUserData();
+        User userData = userUpdateController.getCurrentUserData();
         nameTextField.setText(userData.getName());
         usernameTextField.setText(userData.getUsername());
         emailTextField.setText(userData.getEmail());
@@ -144,7 +144,7 @@ public class UserDataUpdateUI extends JPanel {
         String username = usernameTextField.getText();
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
-        return controller.updateUserData(name, username, email, password);
+        return userUpdateController.updateUserData(name, username, email, password);
     }
     
     private void showSuccessAlert() {
