@@ -7,14 +7,22 @@ package lapr.project.ui;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import lapr.project.controller.SubmitApplicationController;
+import lapr.project.model.Event;
 import lapr.project.model.EventCenter;
 
 /**
@@ -27,7 +35,8 @@ public class SubmitApplicationUI extends JDialog {
 
     private JPanel firstPanel;
     private CardLayout cardLayout;
-    
+    private JList eventList;
+
     JTextArea informationLbl;
 
     private static final int WINDOW_WIDTH = 500;
@@ -66,14 +75,16 @@ public class SubmitApplicationUI extends JDialog {
         title.setBorder(BorderFactory.createEmptyBorder(TOP_MARGIN,
                 LEFT_MARGIN, INFERIOR_MARGIN, RIGHT_MARGIN));
 
-        JPanel pInformation = new JPanel();
-        informationLbl = new JTextArea();
-        informationLbl.setEditable(false);
-        pInformation.add(informationLbl);
+        JPanel list = createEventListPanel();
+        list.setBorder(BorderFactory.createEmptyBorder(0,
+                LEFT_MARGIN, 0, RIGHT_MARGIN));
+        p.add(list, BorderLayout.CENTER);
+
+        JPanel btn = createBtnPanelPageOne();
+        btn.setBorder(BorderFactory.createEmptyBorder(TOP_MARGIN, LEFT_MARGIN, INFERIOR_MARGIN, RIGHT_MARGIN));
 
         p.add(title, BorderLayout.NORTH);
-        p.add(pInformation);
-//        p.add(btn, BorderLayout.SOUTH);
+        p.add(btn, BorderLayout.SOUTH);
 
         return p;
 
@@ -83,5 +94,60 @@ public class SubmitApplicationUI extends JDialog {
         JPanel p = new JPanel(new BorderLayout());
         p.add(new JLabel(text), BorderLayout.WEST);
         return p;
+    }
+
+    private JPanel createEventListPanel() {
+        eventList = new JList();
+        eventList.setVisibleRowCount(10);
+        eventList.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus
+            ) {
+                Component renderer = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+                if (renderer instanceof JLabel) {
+                    ((JLabel) renderer).setText(((Event) value).getTitle());
+                }
+                return renderer;
+            }
+        });
+        JPanel p = new JPanel(new BorderLayout());
+        p.add(eventList, BorderLayout.CENTER);
+        return p;
+
+    }
+
+    private JPanel createBtnPanelPageOne() {
+        JPanel p = new JPanel();
+
+        JButton btnNext = CreateBtnNext();
+        JButton btnCancel = CreateBtnCancel();
+
+        p.add(btnCancel);
+        p.add(btnNext);
+        return p;
+    }
+
+    private JButton CreateBtnCancel() {
+              JButton btn = new JButton("Cancel");
+        btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                dispose();
+            }
+        });
+
+        return btn;
+    }
+
+    private JButton CreateBtnNext() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    public void run(){
+        List<Event> el = submitApplicationController.getEventListInSubmissionPeriod();
+        eventList.setListData(el.toArray());
+        setVisible(true);
     }
 }
