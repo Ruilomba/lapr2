@@ -44,23 +44,23 @@ public class EventRegistrationTest {
         eventListExpected.add(e3);       
         assertEquals(eventListExpected, eventList);
     }
-    @Test
-    public void getOrganizerEventsTest() throws IOException{
-        EventCenter eventCenter=new EventCenter();
-        User u = new User("Rui", "rui.s.lomba@hotmail.com", "Ruilomba", "1234");
-        eventCenter.getUserRegistration().addUserRegistration(u);
-        Event e= new Event();
-        e.setEventState(new StartingEventState());
-        Event e1= new Event();
-        e1.setEventState(new StartingEventState());
-        eventCenter.getEventRegistration().registerEvento(e);
-        eventCenter.getEventRegistration().registerEvento(e1);
-        e.setEventDescription("EventoDoRui");
-        Organizer o=e.getOrganizerRegistration().newOrganizer();
-        o.setUser(u);
-        //tenho que tentar isto de novo qando tiver a instanciaçao dos utilizadores correta
-        List<Event> organizerEventList=eventCenter.getEventRegistration().getOrganizerEvents(u, new StartingEventState());
-    }
+//    @Test
+//    public void getOrganizerEventsTest() throws IOException{
+//        EventCenter eventCenter=new EventCenter();
+//        User u = new User("Rui", "rui.s.lomba@hotmail.com", "Ruilomba", "1234");
+//        eventCenter.getUserRegistration().addUserRegistration(u);
+//        Event e= new Event();
+//        e.setEventState(new StartingEventState());
+//        Event e1= new Event();
+//        e1.setEventState(new StartingEventState());
+//        eventCenter.getEventRegistration().registerEvento(e);
+//        eventCenter.getEventRegistration().registerEvento(e1);
+//        e.setEventDescription("EventoDoRui");
+//        Organizer o=e.getOrganizerRegistration().newOrganizer();
+//        o.setUser(u);
+//        //tenho que tentar isto de novo qando tiver a instanciaçao dos utilizadores correta
+//        List<Event> organizerEventList=eventCenter.getEventRegistration().getOrganizerEvents(u, new StartingEventState());
+//    }
     @Test
     public void getGlobalApplicationListTest(){
         EventCenter eventCenter= new EventCenter();
@@ -102,4 +102,85 @@ public class EventRegistrationTest {
         assertEquals(expectedApplicationList, applicationList);
     }
     
+    @Test
+    public void getEventOfApplicationTest(){
+        EventCenter eventCenter= new EventCenter();
+        Event e=eventCenter.getEventRegistration().newEvent();
+        Event e1=eventCenter.getEventRegistration().newEvent();
+        e1.setEventDescription("Bananas");
+        Event e2=eventCenter.getEventRegistration().newEvent();
+        e2.setEventDescription("Cenouras");
+        Event e3=eventCenter.getEventRegistration().newEvent();
+        Event e4=eventCenter.getEventRegistration().newEvent();
+        Event e5=eventCenter.getEventRegistration().newEvent();
+        Event e6=eventCenter.getEventRegistration().newEvent();
+        eventCenter.getEventRegistration().registerEvento(e);
+        eventCenter.getEventRegistration().registerEvento(e1);
+        eventCenter.getEventRegistration().registerEvento(e2);
+        eventCenter.getEventRegistration().registerEvento(e3);
+        eventCenter.getEventRegistration().registerEvento(e4);
+        eventCenter.getEventRegistration().registerEvento(e5);
+        eventCenter.getEventRegistration().registerEvento(e6);
+        Application a=new Application();
+        a.setDescription("eventoNulo");
+        Application a1=new Application();
+        a1.setDescription("eventoDasBananas");
+        Application a2=new Application();
+        a2.setDescription("eventoDasCenouras");
+        e.getApplicationRegistration().addApplication(a);
+        e1.getApplicationRegistration().addApplication(a1);
+        e2.getApplicationRegistration().addApplication(a2);
+        e3.getApplicationRegistration().addApplication(new Application());
+        e4.getApplicationRegistration().addApplication(new Application());
+        e5.getApplicationRegistration().addApplication(new Application());
+        Event ev=eventCenter.getEventRegistration().getEventOfApplication(a1);
+        Event expectedEvent=e1;
+        assertEquals(expectedEvent, ev);
+    }
+    @Test
+    public void getEventTest(){
+        EventCenter eventCenter= new EventCenter();
+        Event e=eventCenter.getEventRegistration().newEvent();
+        Event e1=eventCenter.getEventRegistration().newEvent();
+        e1.setEventDescription("Bananas");
+        Event e2=eventCenter.getEventRegistration().newEvent();
+        e2.setEventDescription("Cenouras");
+        Event e3=eventCenter.getEventRegistration().newEvent();
+        Event e4=eventCenter.getEventRegistration().newEvent();
+        Event e5=eventCenter.getEventRegistration().newEvent();
+        Event e6=eventCenter.getEventRegistration().newEvent();
+        eventCenter.getEventRegistration().registerEvento(e);
+        eventCenter.getEventRegistration().registerEvento(e1);
+        eventCenter.getEventRegistration().registerEvento(e2);
+        eventCenter.getEventRegistration().registerEvento(e3);
+        eventCenter.getEventRegistration().registerEvento(e4);
+        eventCenter.getEventRegistration().registerEvento(e5);
+        eventCenter.getEventRegistration().registerEvento(e6);
+        Event ev=eventCenter.getEventRegistration().getEvent(e1);
+        Event expected=e1;
+        assertEquals(expected,ev);
+    }
+    @Test
+    public void validatesEventTest(){
+        EventCenter eventCenter= new EventCenter();
+        Event e=eventCenter.getEventRegistration().newEvent();
+        Event e1=eventCenter.getEventRegistration().newEvent();
+        e1.setEventDescription("Bananas");
+        Event e2=eventCenter.getEventRegistration().newEvent();
+        e2.setEventDescription("Cenouras");
+        Event e3=eventCenter.getEventRegistration().newEvent();
+        Event e4=eventCenter.getEventRegistration().newEvent();
+        Event e5=eventCenter.getEventRegistration().newEvent();
+        Event e6=eventCenter.getEventRegistration().newEvent();
+        eventCenter.getEventRegistration().registerEvento(e);
+        eventCenter.getEventRegistration().registerEvento(e1);
+        eventCenter.getEventRegistration().registerEvento(e2);
+        eventCenter.getEventRegistration().registerEvento(e3);
+        eventCenter.getEventRegistration().registerEvento(e4);
+        eventCenter.getEventRegistration().registerEvento(e5);
+        eventCenter.getEventRegistration().registerEvento(e6);
+        boolean answer;
+        answer = eventCenter.getEventRegistration().validatesEvent(e1);
+        assertEquals(false, answer);
+    }
 }

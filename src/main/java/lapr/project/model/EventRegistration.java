@@ -23,21 +23,11 @@ public class EventRegistration {
         this.eventList = eventList;
     }
 
-    public List<Event> getEventsOfState(EventState eventState) {
-        List<Event> AuxEventList = new ArrayList<>();
+    public Event getEventOfApplication(Application a) {
         for (Event e : eventList) {
-            if (e.getEventState().getClass().getSimpleName().equals(eventState.getClass().getSimpleName())) {
-                AuxEventList.add(e);
-            }
-        }
-        return AuxEventList;
-    }
-    
-    public Event getEventOfApplication(Application a){
-        for(Event e: eventList){
-            ApplicationRegistration registrationApp=e.getApplicationRegistration();
-            if(registrationApp.hasApplication(a)){
-                return e;                
+            ApplicationRegistration registrationApp = e.getApplicationRegistration();
+            if (registrationApp.hasApplication(a)) {
+                return e;
             }
         }
         return null;
@@ -138,11 +128,11 @@ public class EventRegistration {
         }
         return true;
     }
-    
-    public List<Application> getGlobalApplicationList(){
-        List<Application> applicationList= new ArrayList<>();
-        for(Event e : eventList){
-            for(Application a : e.getApplicationRegistration().getApplicationListElements()){
+
+    public List<Application> getGlobalApplicationList() {
+        List<Application> applicationList = new ArrayList<>();
+        for (Event e : eventList) {
+            for (Application a : e.getApplicationRegistration().getApplicationListElements()) {
                 applicationList.add(a);
             }
         }
