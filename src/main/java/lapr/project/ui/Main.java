@@ -16,14 +16,8 @@ class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-<<<<<<< HEAD
-        
-=======
-        JWindow window = new JWindow();
->>>>>>> b87b0a4b70364feb775373e9ea81a301de4ac08f
         EventCenter center;
         center = new EventCenter();
-
         JWindow window = new JWindow();
         window.setAlwaysOnTop(true);
         MenuUI menu = new MenuUI(center);

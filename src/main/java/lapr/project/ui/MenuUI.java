@@ -101,6 +101,10 @@ public class MenuUI extends JFrame {
     }
     
     private void addListenersToButtons() {
+        listApplications.addActionListener((ActionEvent e) -> {
+            showGlobalApplicationsList();
+        });
+        
         statisticsMenuItem.addActionListener((ActionEvent e) -> {
             showStatistics();
         });
@@ -110,6 +114,12 @@ public class MenuUI extends JFrame {
         logoutMenuItem.addActionListener((ActionEvent e) -> {
             goToLogin();
         });
+    }
+
+    private void showGlobalApplicationsList() {
+        ListGlobalApplicationsController applicationsController = new ListGlobalApplicationsController(eventCenter);
+        ListGlobalApplicationsUI applicationsUI = new ListGlobalApplicationsUI(eventCenter, applicationsController);
+        setContentPane(applicationsUI);
     }
 
     private void showUserUpdatePanel() {

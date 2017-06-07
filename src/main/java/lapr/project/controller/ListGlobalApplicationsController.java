@@ -13,14 +13,23 @@ import lapr.project.model.EventCenter;
  *
  * @author RuiSL
  */
-public class ListApplicationsController {
+public class ListGlobalApplicationsController {
     private final EventCenter eventCenter;
     
-    public ListApplicationsController(EventCenter eventCenter){
+    public ListGlobalApplicationsController(EventCenter eventCenter){
         this.eventCenter=eventCenter;
     }
     
     public List<Application> getGlobalApplicationList(){
         return eventCenter.getEventRegistration().getGlobalApplicationList();
+    }
+    
+    public String[] getApplicationsAsStrings() {
+        List<Application> applications = getGlobalApplicationList();
+        String[] data = new String[applications.size()];
+        for (Application application : applications) {
+            data[data.length] = application.getCompanyName() + " " + application.getAddress();
+        }
+        return data;
     }
 }
