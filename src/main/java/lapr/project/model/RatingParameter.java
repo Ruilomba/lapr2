@@ -83,9 +83,6 @@ public class RatingParameter {
 
     @Override
     public int hashCode() {
-        int result = 18;
-        result = 25 * result + name.hashCode();
-
-        return result;
+        return 31 * name.hashCode();
     }
 }

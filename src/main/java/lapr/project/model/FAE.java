@@ -73,8 +73,6 @@ public class FAE implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 89 * hash + this.user.hashCode();
-        return hash;
+        return 31 * this.user.hashCode();
     }
 }

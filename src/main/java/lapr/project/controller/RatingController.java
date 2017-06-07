@@ -11,7 +11,6 @@ import javax.swing.*;
 public class RatingController {
     
     public static EventCenter eventCenter;
-
     public RatingController(EventCenter center) {
         eventCenter = center;
     }

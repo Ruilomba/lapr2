@@ -59,7 +59,7 @@ public class KeywordTest {
 	public void ensureHashCodeIsCorrect() {
 		Keyword firstKeyword = new Keyword("Doors");
 
-		int expected = 66216549;
+		int expected = 2052713019;
 		int result = firstKeyword.hashCode();
 		assertEquals(expected, result);
 	}
