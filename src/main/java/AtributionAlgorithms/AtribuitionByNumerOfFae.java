@@ -24,6 +24,8 @@ import lapr.project.utils.Utils;
  */
 public class AtribuitionByNumerOfFae implements AtribuitionAlgorithm {
 
+    private static final long serialVersionUID = 1L;
+    
     /**
      * Número de FAE pretendidos para avaliar cada candidatura
      */

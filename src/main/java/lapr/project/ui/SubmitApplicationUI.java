@@ -2,7 +2,6 @@ package lapr.project.ui;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.List;
@@ -22,7 +21,7 @@ public class SubmitApplicationUI extends JPanel {
     private final SubmitApplicationController submitApplicationController;
     private final JPanel firstPanel;
     private CardLayout cardLayout;
-    private JList eventList;
+    //private JList eventList;
     private JTextArea informationLbl;
     private static int TOP_MARGIN = 20, INFERIOR_MARGIN = 20;
     private static int LEFT_MARGIN = 20, RIGHT_MARGIN = 20;
@@ -67,6 +66,7 @@ public class SubmitApplicationUI extends JPanel {
     }
 
     private JPanel createEventListPanel() {
+        /*
         eventList = new JList();
         eventList.setVisibleRowCount(10);
         eventList.setCellRenderer(new DefaultListCellRenderer() {
@@ -81,9 +81,9 @@ public class SubmitApplicationUI extends JPanel {
                 return renderer;
             }
         });
-
+        */
         JPanel p = new JPanel(new BorderLayout());
-        p.add(eventList, BorderLayout.CENTER);
+        //p.add(eventList, BorderLayout.CENTER);
         return p;
     }
 
@@ -100,7 +100,7 @@ public class SubmitApplicationUI extends JPanel {
         
     public void run(){
         List<Event> el = submitApplicationController.getEventListInSubmissionPeriod();
-        eventList.setListData(el.toArray());
+        //eventList.setListData(el.toArray());
         setVisible(true);
     }
 }

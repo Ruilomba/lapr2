@@ -46,7 +46,7 @@ public class AssignmentStand implements Serializable {
 
     public boolean valida() {
 
-        return true;
+        return false;
 
     }
 
