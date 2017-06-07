@@ -23,4 +23,13 @@ public class ListGlobalApplicationsController {
     public List<Application> getGlobalApplicationList(){
         return eventCenter.getEventRegistration().getGlobalApplicationList();
     }
+    
+    public String[] getApplicationsAsStrings() {
+        List<Application> applications = getGlobalApplicationList();
+        String[] data = new String[applications.size()];
+        for (Application application : applications) {
+            data[data.length] = application.getCompanyName() + " " + application.getAddress();
+        }
+        return data;
+    }
 }
