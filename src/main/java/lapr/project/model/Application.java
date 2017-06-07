@@ -45,6 +45,7 @@ public class Application implements Importable<Application>, Exportable, Seriali
             String companyName, String phone, int area, int invitation) {
         this.description = description;
         this.keywordList.addAll(keywordList);
+
         this.keywordList.addAll(keywordList);
         this.ratings = ratings;
         this.companyName = companyName;
