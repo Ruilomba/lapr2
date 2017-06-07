@@ -54,6 +54,7 @@ public class SubmitApplicationUI extends JDialog {
         pack();
         setMinimumSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         setLocationRelativeTo(null);
+        this.setVisible(true);
 
     }
 

@@ -42,8 +42,8 @@ class Main {
         window.setAlwaysOnTop(true);
         window.setVisible(true);
         JFrame p = new JFrame();
-        SubmitApplicationUI subApplUI = new SubmitApplicationUI(p, center);
-        subApplUI.run();
+        SubmitApplicationUI uiSubApp = new SubmitApplicationUI(p, center);
+        uiSubApp.run();
         
     }
 }
