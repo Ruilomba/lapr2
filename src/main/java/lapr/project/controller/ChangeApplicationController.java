@@ -9,6 +9,8 @@ import java.util.List;
 import lapr.project.model.Application;
 import lapr.project.model.Event;
 import lapr.project.model.EventCenter;
+import lapr.project.model.FAERating;
+import lapr.project.model.Keyword;
 import lapr.project.model.User;
 
 /**
@@ -35,6 +37,11 @@ public class ChangeApplicationController {
         this.event=eventCenter.getEventRegistration().getEventOfApplication(a);
     }
     
+    public Application newApplication(List<FAERating> ratings, String description, 
+                List<Keyword> keywordList, String adress, String companyName, 
+                int intendedBoothArea, int inviatation,String phone){
+        return eventCenter.getApplicationRegistration().newApplication(ratings, description, keywordList, adress, companyName, intendedBoothArea, inviatation, phone);
+    }
 
 
 

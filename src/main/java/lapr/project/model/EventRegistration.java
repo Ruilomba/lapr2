@@ -138,6 +138,16 @@ public class EventRegistration {
         }
         return true;
     }
+    
+    public List<Application> getGlobalApplicationList(){
+        List<Application> applicationList= new ArrayList<>();
+        for(Event e : eventList){
+            for(Application a : e.getApplicationRegistration().getApplicationListElements()){
+                applicationList.add(a);
+            }
+        }
+        return applicationList;
+    }
 
     /*
      public List<Event> getListaEventosFAEValidosDecisao(User u) {
