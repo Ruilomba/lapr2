@@ -62,14 +62,15 @@ public class UserDataUpdateUI extends JPanel {
         confirmPasswordLabel.setFont(new Font(confirmPasswordLabel.getFont().getName(), confirmPasswordLabel.getFont().getStyle(), 18));
         confirmPasswordTextField = new JTextField(25);
         submitFormButton = new JButton("Update data");
+        errorMessageLabel = new JLabel("");
         errorMessageLabel.setForeground(Color.red);
     }
 
     private void addUserDataToForm() {
-        User userData = userUpdateController.getCurrentUserData();
-        nameTextField.setText(userData.getName());
-        usernameTextField.setText(userData.getUsername());
-        emailTextField.setText(userData.getEmail());
+        //User userData = userUpdateController.getCurrentUserData();
+        //nameTextField.setText(userData.getName());
+        //usernameTextField.setText(userData.getUsername());
+        //emailTextField.setText(userData.getEmail());
     }
 
     private void addListenersForButtons() {

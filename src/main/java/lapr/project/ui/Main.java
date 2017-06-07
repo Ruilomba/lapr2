@@ -17,13 +17,14 @@ class Main {
      */
     public static void main(String[] args) throws IOException {
         
-        JWindow window = new JWindow();
         EventCenter center;
         center = new EventCenter();
+
+        JWindow window = new JWindow();
         window.setAlwaysOnTop(true);
-        window.setVisible(true);
         MenuUI menu = new MenuUI(center);
         window.setContentPane(menu);
+        window.setVisible(true);
 
         /*
         RatingParameter parameter1 = new RatingParameter("FAE’s knowledge about the event topic", 0, 5, 0);

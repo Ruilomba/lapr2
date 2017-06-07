@@ -31,11 +31,9 @@ public class MenuUI extends JFrame {
     private JMenuItem statisticsMenuItem;
     private JMenuItem userUpdateMenuItem;
     private JMenuItem logoutMenuItem;
-    
-    private JPanel contentPanel;
 
     public MenuUI(EventCenter center) {
-        super("User Authentication");
+        super("Menu");
         eventCenter = center;
         controller = new MenuController(eventCenter);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -43,15 +41,15 @@ public class MenuUI extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new FlowLayout());
         createMenuBar();
-        createContentPanel();
         addListenersToButtons();
+        showUserUpdatePanel();
         this.setVisible(true);
     }
     
     private void createMenuBar() {
         JMenuBar menubar = new JMenuBar();
-        String userName;
-        
+        // TODO: ADD WHEN AUTNENTICATION IS IMPLEMENTED
+        //String userName;
         //userName = controller.getAuthenticatedUserName();
         userNameItem = new JMenuItem("authenticated user");
         menubar.add(userNameItem);
@@ -102,14 +100,6 @@ public class MenuUI extends JFrame {
         setJMenuBar(menubar);
     }
     
-    private void createContentPanel() {
-        contentPanel = new JPanel();
-        contentPanel.setLayout(new FlowLayout());
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        contentPanel.setSize(screenSize);
-        this.add(contentPanel);
-    }
-
     private void addListenersToButtons() {
         statisticsMenuItem.addActionListener((ActionEvent e) -> {
             showStatistics();
@@ -125,15 +115,13 @@ public class MenuUI extends JFrame {
     private void showUserUpdatePanel() {
         UserDataUpdateController userUpdateController = new UserDataUpdateController(eventCenter);
         UserDataUpdateUI userUpdateUI = new UserDataUpdateUI(eventCenter, userUpdateController);
-        contentPanel.removeAll();
-        contentPanel.add(userUpdateUI);
+        setContentPane(userUpdateUI);
     }
     
     private void showStatistics() {
         RatingController ratingController = new RatingController(eventCenter);
         RatingUI ratingUI = new RatingUI(eventCenter, ratingController);
-        contentPanel.removeAll();
-        contentPanel.add(ratingUI);
+        setContentPane(ratingUI);
     }
     
     private void goToLogin() {
