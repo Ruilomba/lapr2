@@ -8,10 +8,8 @@ import lapr.project.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import lapr.project.controller.CreateEventController;
-import lapr.project.states.EventCreatedState;
-import lapr.project.states.EventStateDefinedFAE;
-import lapr.project.states.StartingEventState;
+import lapr.project.controller.*;
+import lapr.project.states.*;
 
 class Main {
 
@@ -48,7 +46,7 @@ class Main {
         RatingParameter parameter1 = new RatingParameter("FAE’s knowledge about the event topic", 0, 5, 0);
         RatingParameter parameter2 = new RatingParameter("FAE’s knowledge about the event topic", 0, 5, 0);
         RatingParameter parameter3 = new RatingParameter("FAE’s knowledge about the event topic", 0, 5, 0);
-        List<RatingParameter> list = new ArrayList<RatingParameter>();
+        List<RatingParameter> list = new ArrayList<>();
         list.add(parameter1);
         list.add(parameter2);
         list.add(parameter3);

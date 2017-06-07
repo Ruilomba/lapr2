@@ -11,8 +11,11 @@ public class AuthenticationService {
 
     private final static String USER_DATA_FILE_PATH = "userData.txt";
     private static User authenticatedUser;
-    private EncryptionService encryption;
+    private static EncryptionService encryption;
     
+    public AuthenticationService() {
+        encryption = new EncryptionService();
+    }
     /**
      * returns authenticated user data
      *
@@ -47,49 +50,6 @@ public class AuthenticationService {
         return addUserInfoToUserDataFile(userdata);
     }
     
-    /**
-     * adds user info to user data file
-     * 
-     * @param userData
-     * @return
-     */
-    private boolean addUserInfoToUserDataFile(String userData) throws IOException {
-        String[] savedUserData = getDecryptedUserData();
-        if (savedUserData != null) {
-            savedUserData[savedUserData.length] = userData;
-            return encryption.writeEncryptedDataToUserDataFile(savedUserData);
-        }
-        return false;
-    }
-
-    /**
-     * @return  decrypted data divided by user
-     * @throws IOException 
-     */
-    private String[] getDecryptedUserData() throws IOException {
-        File userDataFile = new File(USER_DATA_FILE_PATH);
-        if (userDataFile.exists() || userDataFile.createNewFile()) {
-            try (BufferedReader file = new BufferedReader(new FileReader(USER_DATA_FILE_PATH))) {
-                String line;
-                StringBuilder inputString = new StringBuilder();
-                while ((line = file.readLine()) != null) {
-                    inputString.append(line);
-                    inputString.append("\n");
-                }
-                String[] encryptedLines = inputString.toString().split("\n");
-                String[] decryptedLines = new String[encryptedLines.length];
-                for (String l : encryptedLines) {
-                    String decryptedLine = encryption.decryptLineWithRailFenceTranspositionCipher(l);
-                    decryptedLines[decryptedLines.length] = decryptedLine;
-                }
-            }
-            catch (IOException e) {
-                System.out.println("Unable to write decrypted data to tmp file: " + e.getMessage());
-                return null;
-            }
-        }
-        return null;
-    }
     
     /**
      * authenticates user
@@ -206,8 +166,52 @@ public class AuthenticationService {
         }
         return false;
     }
+
+    /**
+     * adds user info to user data file
+     * 
+     * @param userData
+     * @return
+     */
+    private boolean addUserInfoToUserDataFile(String userData) throws IOException {
+        String[] savedUserData = getDecryptedUserData();
+        if (savedUserData != null) {
+            savedUserData[savedUserData.length] = userData;
+            return encryption.writeEncryptedDataToUserDataFile(savedUserData);
+        }
+        return false;
+    }
+
+    /**
+     * @return  decrypted data divided by user
+     * @throws IOException 
+     */
+    private String[] getDecryptedUserData() throws IOException {
+        File userDataFile = new File(USER_DATA_FILE_PATH);
+        if (userDataFile.exists() || userDataFile.createNewFile()) {
+            try (BufferedReader file = new BufferedReader(new FileReader(USER_DATA_FILE_PATH))) {
+                String line;
+                StringBuilder inputString = new StringBuilder();
+                while ((line = file.readLine()) != null) {
+                    inputString.append(line);
+                    inputString.append("\n");
+                }
+                String[] encryptedLines = inputString.toString().split("\n");
+                String[] decryptedLines = new String[encryptedLines.length];
+                for (String l : encryptedLines) {
+                    String decryptedLine = encryption.decryptLineWithRailFenceTranspositionCipher(l);
+                    decryptedLines[decryptedLines.length] = decryptedLine;
+                }
+            }
+            catch (IOException e) {
+                System.out.println("Unable to write decrypted data to tmp file: " + e.getMessage());
+                return null;
+            }
+        }
+        return null;
+    }
     
-    public String buildUserDataString(User user, int shift) {
+    private String buildUserDataString(User user, int shift) {
         return "username=" + user.getUsername()
                 + ";name=" + user.getName()
                 + ";email=" + user.getEmail()
