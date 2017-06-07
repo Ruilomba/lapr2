@@ -47,7 +47,7 @@ public class EventRegistrationTest {
     @Test
     public void getOrganizerEventsTest() throws IOException{
         EventCenter eventCenter=new EventCenter();
-        User u = new User("Rui", "asdsad", "Ruilomba", "1234");
+        User u = new User("Rui", "rui.s.lomba@hotmail.com", "Ruilomba", "1234");
         eventCenter.getUserRegistration().addUserRegistration(u);
         Event e= new Event();
         e.setEventState(new StartingEventState());
