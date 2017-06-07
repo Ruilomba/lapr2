@@ -8,7 +8,7 @@ package lapr.project.model;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import lapr.project.controller.ListApplicationsController;
+import lapr.project.controller.ListGlobalApplicationsController;
 import lapr.project.states.EventCreatedState;
 import lapr.project.states.EventStateDefinedFAE;
 import lapr.project.states.StartingEventState;
@@ -92,7 +92,7 @@ public class EventRegistrationTest {
         e3.getApplicationRegistration().addApplication(new Application());
         e4.getApplicationRegistration().addApplication(new Application());
         e5.getApplicationRegistration().addApplication(new Application());
-        ListApplicationsController cont= new ListApplicationsController(eventCenter);
+        ListGlobalApplicationsController cont= new ListGlobalApplicationsController(eventCenter);
         List<Application> applicationList=new ArrayList<>();
         applicationList=cont.getGlobalApplicationList();
         List<Application> expectedApplicationList= new ArrayList<>();
