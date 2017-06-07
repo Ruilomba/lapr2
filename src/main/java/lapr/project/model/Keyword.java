@@ -103,7 +103,7 @@ public class Keyword implements Exportable, Importable<Keyword> {
 
 	@Override
 	public int hashCode() {
-		return getValue().hashCode();
+		return 31 * getValue().hashCode();
 	}
 
 	@Override

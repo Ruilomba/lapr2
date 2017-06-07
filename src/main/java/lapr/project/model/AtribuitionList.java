@@ -26,7 +26,7 @@ public class AtribuitionList {
         return atribuitionList;
     }
     public Atribuition newAtribuition(Application c , List<FAE> faeList){
-        return new Atribuition(c,faeList);
+        return new Atribuition(c, faeList);
     }
     /**
      * @param atribuitionList the atribuitionList to set

@@ -1,122 +1,61 @@
 package lapr.project.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import lapr.project.utils.Exportable;
+import lapr.project.utils.Importable;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-public class FAERating {
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+public class FAERating implements Importable<FAERating>, Exportable {
     private static final long serialVersionUID = 2L;
+
     private final FAE ratingFae;
-    private final List<RatingParameter> ratingParameters;
-    private float topicKnowledge;
-    private float applicationsAdequency;
-    private float invitationQuantity;
-    private float overallRecomendation;
 
-    /**
-     * Constructor
-     * @param ratingFae FAE responsible for this rating
-     * @param ratingParameters Parameters to be rated
-     */
-    public FAERating(FAE ratingFae, List<RatingParameter> ratingParameters) {
+    private final int topicKnowledge;
+    private final int applicationsAdequency;
+    private final int invitationQuantity;
+    private final int overallRecomendation;
+
+
+    public FAERating(FAE ratingFae, int topicKnowledge, int applicationsAdequency, int invitationQuantity,
+                     int overallRecomendation) {
         this.ratingFae = ratingFae;
-        this.ratingParameters = ratingParameters;
+        this.topicKnowledge = topicKnowledge;
+        this.applicationsAdequency = applicationsAdequency;
+        this.invitationQuantity = invitationQuantity;
+        this.overallRecomendation = overallRecomendation;
     }
 
-    public FAERating(FAE ratingFae, float topicKnowledge, float applicationsAdequency, float invitationQuantity, float overallRecomendation) {
-        this.ratingFae = ratingFae;
-        this.setApplicationsAdequency(applicationsAdequency);
-        this.setTopicKnowledge(topicKnowledge);
-        this.setInvitationQuantity(invitationQuantity);
-        this.setOverallRecomendation(overallRecomendation);
-        this.ratingParameters = new ArrayList<>();
+    public FAE getRatingFae() {
+        return ratingFae;
     }
+
+    public int getTopicKnowledge() {
+        return topicKnowledge;
+    }
+
+    public int getApplicationsAdequency() {
+        return applicationsAdequency;
+    }
+
+    public int getInvitationQuantity() {
+        return invitationQuantity;
+    }
+
+    public int getOverallRecomendation() {
+        return overallRecomendation;
+    }
+
     /**
      * Checks if the rating belongs to the FAE
      * @return true if the rating's FAE equals the FAE
      */
     public boolean isFromFAE(FAE fae) {
         return ratingFae.equals(fae);
-    }
-
-    /**
-     * Applies the FAE rating for the selected parameter
-     * Throws IllegalArgumentException if the value is out of range of the parameter min and max values
-     * @param ratingParameter the parameter to be rated
-     * @param value value of the rating
-     */
-    public void applyRating(RatingParameter ratingParameter, float value){
-        for (RatingParameter arp : ratingParameters) {
-            if(arp.equals(ratingParameter)){
-                arp.applyRating(value);
-                return;
-            }
-        }
-    }
-
-    public void setTopicKnowledge(float topicKnowledge) {
-        if(topicKnowledge < 0 || topicKnowledge > 5){
-            throw new IllegalArgumentException(String.format("Rating value is out of range - range between %f and %f", 0, 5));
-        }
-        this.topicKnowledge = topicKnowledge;
-    }
-
-    public void setApplicationsAdequency(float applicationsAdequency) {
-        if(applicationsAdequency < 0 || applicationsAdequency > 5){
-            throw new IllegalArgumentException(String.format("Rating value is out of range - range between %f and %f", 0, 5));
-        }
-        this.applicationsAdequency = applicationsAdequency;
-    }
-
-    public void setInvitationQuantity(float invitationQuantity) {
-        if(invitationQuantity < 0 || invitationQuantity > 5){
-            throw new IllegalArgumentException(String.format("Rating value is out of range - range between %f and %f", 0, 5));
-        }
-        this.invitationQuantity = invitationQuantity;
-    }
-
-    public void setOverallRecomendation(float overallRecomendation) {
-        if(overallRecomendation < 0 || overallRecomendation > 5){
-            throw new IllegalArgumentException(String.format("Rating value is out of range - range between %f and %f", 0, 5));
-        }
-        this.overallRecomendation = overallRecomendation;
-    }
-
-    public float getTopicKnowledge() {
-        return topicKnowledge;
-    }
-
-    public float getApplicationsAdequency() {
-        return applicationsAdequency;
-    }
-
-    public float getInvitationQuantity() {
-        return invitationQuantity;
-    }
-
-    public float getOverallRecomendation() {
-        return overallRecomendation;
-    }
-
-    /**
-     * Gets rating parameter by name
-     * @param name rating parameter name
-     * @return rating parameter
-     */
-    public RatingParameter getParameterByName(String name){
-        for (RatingParameter rp : this.ratingParameters){
-            if(rp.getName().equals(name)){
-                return rp;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Gets ratings
-     * @return parameter ratings
-     */
-    public List<RatingParameter> getParameters(){
-        return this.ratingParameters;
     }
 
     /**
@@ -127,14 +66,96 @@ public class FAERating {
         float sum = this.getApplicationsAdequency() + this.getTopicKnowledge() + this.getInvitationQuantity() + this.getOverallRecomendation();
         return sum/4;
     }
-    /*float getAverageRating(){
-        if(ratingParameters.size() > 0){
-            float averageRating = 0;
-            for (RatingParameter arp : ratingParameters){
-                averageRating += arp.getValue();
-            }
-            return averageRating/ratingParameters.size();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
         }
-        return 0;
-    }*/
+        if (!(o instanceof FAERating)) {
+            return false;
+        }
+
+        FAERating faeRating = (FAERating) o;
+
+        if (topicKnowledge != faeRating.topicKnowledge) {
+            return false;
+        }
+        if (applicationsAdequency != faeRating.applicationsAdequency) {
+            return false;
+        }
+        if (overallRecomendation != faeRating.overallRecomendation) {
+            return false;
+        }
+        if (applicationsAdequency != faeRating.applicationsAdequency) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = topicKnowledge;
+
+        result = 31 * result + applicationsAdequency;
+        result = 31 * result + invitationQuantity;
+        result = 31 * result + overallRecomendation;
+
+        return result;
+    }
+
+
+  /*  @Override
+    public KeywordExample importContentFromXMLNode(Node node) throws ParserConfigurationException {
+
+        DocumentBuilderFactory factory =
+                DocumentBuilderFactory.newInstance();
+        //Create document builder
+        DocumentBuilder builder = factory.newDocumentBuilder();
+
+        //Obtain a new document
+        Document document = builder.newDocument();
+
+        document.appendChild(document.importNode(node, true));
+
+        NodeList elementsKeyword = document.getElementsByTagName(VALUE_ELEMENT_NAME);
+
+        Node elementKeyword = elementsKeyword.item(0);
+
+        //Get value
+        this.value = elementKeyword.getFirstChild().getNodeValue();
+        return this;
+    }
+*/
+    @Override
+    public FAERating importContentFromXMLNode(Node node) throws ParserConfigurationException {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        //Create document builder
+        DocumentBuilder builder = factory.newDocumentBuilder();
+
+        //Obtain a new document
+        Document document = builder.newDocument();
+
+        document.appendChild(document.importNode(node, true));
+
+        //NodeList elementsKeyword = document.getElementsByTagName(VALUE_ELEMENT_NAME);
+
+        //Node elementKeyword = elementsKeyword.item(0);
+
+        //Get value
+  /*      private final FAE ratingFae;
+
+        private final int topicKnowledge;
+        private final int applicationsAdequency;
+        private final int invitationQuantity;
+        private final int overallRecomendation;
+*/
+        return this;
+    }
+
+    @Override
+    public Node exportContentToXMLNode() throws ParserConfigurationException {
+        return null;
+    }
 }
