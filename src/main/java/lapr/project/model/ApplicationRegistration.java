@@ -85,7 +85,7 @@ public class ApplicationRegistration {
         }
     }
     
-        public Application setData(List<FAERating> ratings, String description, 
+        public Application newApplication(List<FAERating> ratings, String description, 
                 List<Keyword> keywordList, String adress, String companyName, 
                 int intendedBoothArea, int inviatation,String phone){
         Application ap= new Application();
