@@ -17,7 +17,8 @@ class Main {
      */
     public static void main(String[] args) throws IOException {
         JWindow window = new JWindow();
-        EventCenter center = new EventCenter();
+        EventCenter center;
+        center = new EventCenter();
         window.setAlwaysOnTop(true);
         window.setVisible(true);
         MenuUI menu = new MenuUI(center);
