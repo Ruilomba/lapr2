@@ -59,5 +59,9 @@ class Main {
         window.setContentPane(controller.showGlobalAverageRating(center));
         window.setAlwaysOnTop(true);
         window.setVisible(true);
+        JFrame p = new JFrame();
+        SubmitApplicationUI uiSubApp = new SubmitApplicationUI(p, center);
+        uiSubApp.run();
+        
     }
 }
