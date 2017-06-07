@@ -73,8 +73,8 @@
                     <target>1.8</target>
                     <showWarnings>true</showWarnings> <!-- Needs this -->
                     <compilerArgs>
-                        <arg>-Werror</arg>  <!-- Very drastic -->
-                        <arg>-Xlint:all</arg>  <!-- recommended -->
+                        <arg>-Werror</arg><!--  Very drastic -->
+                        <arg>-Xlint:all</arg><!--  recommended -->
                     </compilerArgs>
                     <encoding>UTF-8</encoding>
                 </configuration>

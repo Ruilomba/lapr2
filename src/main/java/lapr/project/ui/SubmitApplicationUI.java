@@ -7,15 +7,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.*;
 import lapr.project.controller.SubmitApplicationController;
 import lapr.project.model.Event;
 import lapr.project.model.EventCenter;
@@ -24,9 +16,10 @@ import lapr.project.model.EventCenter;
  *
  * @author teixe
  */
+/*
 public class SubmitApplicationUI extends JDialog {
 
-    private static final long serialVersionUID = 1L;
+    public static final long serialVersionUID = 1L;
     private final SubmitApplicationController submitApplicationController;
     private final JPanel firstPanel;
     private CardLayout cardLayout;
@@ -107,10 +100,10 @@ public class SubmitApplicationUI extends JDialog {
                 return renderer;
             }
         });
+
         JPanel p = new JPanel(new BorderLayout());
         p.add(eventList, BorderLayout.CENTER);
         return p;
-
     }
 
     private JPanel createBtnPanelPageOne() {
@@ -147,3 +140,4 @@ public class SubmitApplicationUI extends JDialog {
         setVisible(true);
     }
 }
+*/
