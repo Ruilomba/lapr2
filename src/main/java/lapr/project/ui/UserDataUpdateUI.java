@@ -8,7 +8,7 @@ import lapr.project.controller.*;
 import lapr.project.model.*;
 import lapr.project.utils.DataValidationService;
 
-public class UserDataUpdateUI extends JFrame {
+public class UserDataUpdateUI extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private final EventCenter eventCenter;
@@ -30,20 +30,15 @@ public class UserDataUpdateUI extends JFrame {
     private JLabel errorMessageLabel;
 
     public UserDataUpdateUI(EventCenter center) {
-        super("User Registration");
         eventCenter = center;
         controller = new UserDataUpdateController(eventCenter);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(screenSize.width, screenSize.height);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(new FlowLayout());
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(0, 1));
-        this.add(panel);
+        this.setLayout(new GridLayout(0, 1));
         createElements();
         addUserDataToForm();
         addListenersForButtons();
-        addElementsToJPanel(panel);
+        addElementsToJPanel();
         this.setVisible(true);
     }
 
@@ -128,20 +123,20 @@ public class UserDataUpdateUI extends JFrame {
         return true;
     }
 
-    private void addElementsToJPanel(JPanel panel) {
-        panel.add(nameLabel);
-        panel.add(nameTextField);
-        panel.add(usernameLabel);
-        panel.add(usernameTextField);
-        panel.add(emailLabel);
-        panel.add(emailTextField);
-        panel.add(passwordLabel);
-        panel.add(passwordFormatLabel);
-        panel.add(passwordTextField);
-        panel.add(confirmPasswordLabel);
-        panel.add(confirmPasswordTextField);
-        panel.add(submitFormButton);
-        panel.add(errorMessageLabel);
+    private void addElementsToJPanel() {
+        this.add(nameLabel);
+        this.add(nameTextField);
+        this.add(usernameLabel);
+        this.add(usernameTextField);
+        this.add(emailLabel);
+        this.add(emailTextField);
+        this.add(passwordLabel);
+        this.add(passwordFormatLabel);
+        this.add(passwordTextField);
+        this.add(confirmPasswordLabel);
+        this.add(confirmPasswordTextField);
+        this.add(submitFormButton);
+        this.add(errorMessageLabel);
     }
 
     private boolean updateUserData() throws IOException {
