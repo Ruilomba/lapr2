@@ -48,9 +48,8 @@ public class MenuUI extends JFrame {
     
     private void createMenuBar() {
         JMenuBar menubar = new JMenuBar();
-        // TODO: ADD WHEN AUTNENTICATION IS IMPLEMENTED
-        //String userName;
-        //userName = controller.getAuthenticatedUserName();
+        String userName;
+        userName = controller.getAuthenticatedUserName();
         userNameItem = new JMenuItem("authenticated user");
         menubar.add(userNameItem);
         

@@ -5,6 +5,7 @@
  */
 package lapr.project.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import lapr.project.model.Application;
 import lapr.project.model.EventCenter;
