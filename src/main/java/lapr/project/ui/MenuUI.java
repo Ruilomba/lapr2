@@ -101,6 +101,9 @@ public class MenuUI extends JFrame {
     }
     
     private void addListenersToButtons() {
+        userNameItem.addActionListener((ActionEvent e) -> {
+            showWelcomePanel();
+        });
         createEventMenuItem.addActionListener((ActionEvent e) -> {
             showCreateEventPanel();
         });

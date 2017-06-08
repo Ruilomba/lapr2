@@ -18,16 +18,9 @@ public class RatingUI extends JPanel {
     public RatingUI(EventCenter center, RatingController ratingController) {
         this.ratingController = ratingController;
         this.eventCenter = center;
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
-        JPanel panel = new JPanel();
-        panel.setLayout(new SpringLayout());
-        this.add(panel);
-
+        this.setLayout(new SpringLayout());
         this.add(new JLabel("Global average: "));
         this.add(new JLabel(String.format("%f", center.getGlobalSubmissionAverageRating())));
-
-        this.setSize(screenSize.width, screenSize.height);
         this.setLayout(new FlowLayout());
         this.setVisible(true);
     }
