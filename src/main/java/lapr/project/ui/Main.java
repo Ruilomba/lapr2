@@ -18,6 +18,7 @@ class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
+        
 //        User u = new User("Rui", "rui.s.lomba@hotmail.com", "Ruilomba", "1234");
 //        eventCenter.getUserRegistration().addUserRegistration(u);
 //        Event e= new Event();
@@ -35,13 +36,10 @@ class Main {
         
         EventCenter center;
         center = new EventCenter();
-        JWindow window = new JWindow();
-        window.setAlwaysOnTop(true);
         
         // PARA ENTRAR NO MEU
         MenuController menuController = new MenuController(center);
         MenuUI menuUI = new MenuUI(center, menuController);
-        window.setContentPane(menuUI);
         
         /*
         // PARA ENTRAR NA AUTENTICAÇÃO
@@ -49,7 +47,5 @@ class Main {
         UserRegistrationUI registrationUI = new UserRegistrationUI(center, registrationController);
         window.setContentPane(registrationUI);
         */
-        
-        window.setVisible(true);        
     }
 }

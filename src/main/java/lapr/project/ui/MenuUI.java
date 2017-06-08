@@ -49,7 +49,8 @@ public class MenuUI extends JFrame {
     private void createMenuBar() {
         JMenuBar menubar = new JMenuBar();
         String userName;
-        userName = menuController.getAuthenticatedUserName();
+        // TODO: ADD AUTHENTICATED USER
+        //userName = menuController.getAuthenticatedUserName();
         userNameItem = new JMenuItem("authenticated user");
         menubar.add(userNameItem);
         
@@ -128,24 +129,32 @@ public class MenuUI extends JFrame {
         CreateEventController createEventController = new CreateEventController(eventCenter);
         CreateEventUI createEventUI = new CreateEventUI(eventCenter, createEventController);
         setContentPane(createEventUI);
+        this.getContentPane().revalidate();
+        this.getContentPane().repaint();
     }
     
     private void showGlobalApplicationsList() {
         ListGlobalApplicationsController applicationsController = new ListGlobalApplicationsController(eventCenter);
         ListGlobalApplicationsUI applicationsUI = new ListGlobalApplicationsUI(eventCenter, applicationsController);
         setContentPane(applicationsUI);
+        this.getContentPane().revalidate();
+        this.getContentPane().repaint();
     }
 
     private void showUserUpdatePanel() {
         UserDataUpdateController userUpdateController = new UserDataUpdateController(eventCenter);
         UserDataUpdateUI userUpdateUI = new UserDataUpdateUI(eventCenter, userUpdateController);
         setContentPane(userUpdateUI);
+        this.getContentPane().revalidate();
+        this.getContentPane().repaint();
     }
     
     private void showStatistics() {
         RatingController ratingController = new RatingController(eventCenter);
         RatingUI ratingUI = new RatingUI(eventCenter, ratingController);
         setContentPane(ratingUI);
+        this.getContentPane().revalidate();
+        this.getContentPane().repaint();
     }
     
     private void goToLogin() {

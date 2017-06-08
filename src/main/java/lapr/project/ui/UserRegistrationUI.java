@@ -207,7 +207,8 @@ public class UserRegistrationUI extends JFrame {
      * shows menu frame, disposes current frame
      */
     private void goToMenu() {
-        MenuUI menu = new MenuUI(eventCenter);
+        MenuController menuController = new MenuController(eventCenter);
+        MenuUI menu = new MenuUI(eventCenter, menuController);
         menu.setVisible(true);
         this.dispose();
     }

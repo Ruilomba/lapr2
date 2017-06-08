@@ -124,7 +124,8 @@ public class UserLoginUI extends JFrame {
     }
     
     private void goToMenu() {
-        MenuUI menu = new MenuUI(eventCenter);
+        MenuController menuController = new MenuController(eventCenter);
+        MenuUI menu = new MenuUI(eventCenter, menuController);
         menu.setVisible(true);
         this.dispose();
     }
