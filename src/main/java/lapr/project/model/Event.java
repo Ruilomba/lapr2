@@ -2,6 +2,7 @@ package lapr.project.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Timer;
@@ -20,7 +21,7 @@ public class Event implements Serializable {
     private FAEList faeList;
     private OrganizerRegistration organizerRegistration;
     private ApplicationRegistration applicationRegistration;
-    private AtribuitionList atribuitionList;
+    private AtribuitionRegistration atribuitionList;
     private Data endingSubmissionDate;
     private EventType eventType;
     private EventState eventState;
@@ -30,7 +31,7 @@ public class Event implements Serializable {
         this.organizerRegistration = new OrganizerRegistration();
         this.faeList = new FAEList();
         this.applicationRegistration = new ApplicationRegistration();
-        this.atribuitionList = new AtribuitionList();
+        this.atribuitionList = new AtribuitionRegistration();
         this.endDate = new Data();
         this.startDate = new Data();
         this.eventType = new Exhibition();
@@ -51,7 +52,7 @@ public class Event implements Serializable {
         this.faeList = new FAEList(listaFae);
 
         this.applicationRegistration = new ApplicationRegistration();
-        this.atribuitionList = new AtribuitionList();
+        this.atribuitionList = new AtribuitionRegistration();
     }
 
     public void autoSetToClosedApplications() {
@@ -153,7 +154,7 @@ public class Event implements Serializable {
     /**
      * @return the atribuitionList
      */
-    public AtribuitionList getAtribuitionList() {
+    public AtribuitionRegistration getAtribuitionList() {
         return atribuitionList;
     }
 
@@ -251,7 +252,7 @@ public class Event implements Serializable {
     /**
      * @param atribuitionList the atribuitionList to set
      */
-    public void setAtribuitionList(AtribuitionList atribuitionList) {
+    public void setAtribuitionList(AtribuitionRegistration atribuitionList) {
         this.atribuitionList = atribuitionList;
     }
 
@@ -309,6 +310,17 @@ public class Event implements Serializable {
         int result = eventDescription.hashCode();
         result = 31 * result + eventState.getClass().getSimpleName().hashCode();
         return result;
+    }
+
+    boolean containsFae(User u) {
+        for (Iterator<FAE> i = this.faeList.getFaeListElements().listIterator(); i.hasNext();) {
+            FAE fae = i.next();
+            
+            if (fae.isUser(u)) {
+                return true;
+            }            
+        }
+        return false;
     }
 
 }
