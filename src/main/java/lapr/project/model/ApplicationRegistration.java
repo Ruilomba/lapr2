@@ -79,10 +79,11 @@ public class ApplicationRegistration {
     }
 
     
-    public void addApplication(Application a) {
+    public boolean addApplication(Application a) {
         if (validateApplication(a)) {
-            applicationList.add(a);
+            return applicationList.add(a);
         }
+        return false;
     }
     
         public Application newApplication(List<FAERating> ratings, String description, 

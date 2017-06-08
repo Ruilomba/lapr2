@@ -12,6 +12,7 @@ import lapr.project.model.ApplicationRegistration;
 import lapr.project.model.Event;
 import lapr.project.model.EventCenter;
 import lapr.project.model.EventRegistration;
+import lapr.project.model.Keyword;
 import lapr.project.model.User;
 import lapr.project.states.EventStateReceivingApplications;
 
@@ -81,5 +82,17 @@ public class SubmitApplicationController {
     
     public boolean AplicationRegister() {
         return event.getApplicationRegistration().registerApplication(application);
+    }
+
+    public boolean submitApplication(String companyName, String companyAddress, String companyPhone, String description, String keywords, int area, int numberOfInvites) {
+        ApplicationRegistration registration = eventCenter.getApplicationRegistration();
+        List<Keyword> keywordList = new ArrayList<>();
+        String[] keywordsAsStrings = keywords.split(", ");
+        for (String s : keywordsAsStrings) {
+            Keyword newKeyword = new Keyword(s);
+            keywordList.add(newKeyword);
+        }
+        Application newApplication = registration.newApplication(null, description, keywordList, companyAddress, companyName, area, numberOfInvites, companyPhone);
+        return registration.addApplication(newApplication);
     }
 }

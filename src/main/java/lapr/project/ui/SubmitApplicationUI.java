@@ -2,7 +2,6 @@ package lapr.project.ui;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import lapr.project.controller.SubmitApplicationController;
@@ -22,8 +21,10 @@ public class SubmitApplicationUI extends JPanel {
     private JTextField companyAddressTextField;
     private JTextField companyPhoneTextField;
     private JTextField applicationDescriptionTextField;
+    private JTextField applicationKeywordsTextField;
     private JSpinner areaSelector;
     private JSpinner invitationsSelector;
+    private JLabel invalidFormLabel;
 
     public SubmitApplicationUI(EventCenter center, SubmitApplicationController controller) {
         this.eventCenter = center;
@@ -64,6 +65,7 @@ public class SubmitApplicationUI extends JPanel {
             panelSubTitle.setText("Please select the event to which you want to apply.");
             eventList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
             eventList.addListSelectionListener((ListSelectionEvent e) -> {
+                clearForm();
                 String selectedEvent = eventList.getSelectedValue();
                 if (applicationController.selectEventWithTitle(selectedEvent)) {
                     enableApplicationFormPanel();
@@ -109,6 +111,12 @@ public class SubmitApplicationUI extends JPanel {
         panel.add(applicationDescriptionLabel);
         panel.add(applicationDescriptionTextField);
 
+        JLabel applicationKeywordsLabel = new JLabel("Enter keywords describing your application");
+        applicationKeywordsTextField = new JTextField(60);
+        applicationKeywordsTextField.setEditable(false);
+        panel.add(applicationKeywordsLabel);
+        panel.add(applicationKeywordsTextField);
+        
         JLabel areaLabel = new JLabel("Please selected preferred area: ");
         areaSelector = new JSpinner();
         areaSelector.setEnabled(false);
@@ -121,6 +129,9 @@ public class SubmitApplicationUI extends JPanel {
         panel.add(invitationsLabel);
         panel.add(invitationsSelector);
 
+        invalidFormLabel = new JLabel("");
+        panel.add(invalidFormLabel);
+        
         JButton submitApplicationButton = new JButton("Submit application");
         submitApplicationButton.addActionListener((ActionEvent e) -> {
             if (formDataIsValid()) {
@@ -140,19 +151,79 @@ public class SubmitApplicationUI extends JPanel {
         companyAddressTextField.setEditable(true);
         companyPhoneTextField.setEditable(true);
         applicationDescriptionTextField.setEditable(true);
+        applicationKeywordsTextField.setEditable(true);
         areaSelector.setEnabled(true);
         invitationsSelector.setEnabled(true);
     }
 
     private boolean formDataIsValid() {
+        if (companyNameTextField.getText() == null || companyNameTextField.getText().isEmpty()) {
+            invalidFormLabel.setText("Invalid company name");
+            return false;
+        }
+        else if (companyAddressTextField.getText() == null || companyAddressTextField.getText().isEmpty()) {
+            invalidFormLabel.setText("Invalid company address");
+            return false;
+        }
+        else if (companyPhoneTextField.getText() == null || companyPhoneTextField.getText().isEmpty()) {
+            invalidFormLabel.setText("Invalid company phone");
+            return false;
+        }
+        else if (applicationDescriptionTextField.getText() == null || applicationDescriptionTextField.getText().isEmpty()) {
+            invalidFormLabel.setText("Invalid company phone");
+            return false;
+        }
+        else if (applicationKeywordsTextField.getText() == null || applicationDescriptionTextField.getText().isEmpty()) {
+            invalidFormLabel.setText("Invalid keywords");
+            return false;
+        }
+        else {
+            try {
+                Integer.parseInt(areaSelector.getValue().toString());
+            }
+            catch (Exception e) {
+                invalidFormLabel.setText("Invalid area");
+                return false;
+            }
+            try {
+                Integer.parseInt(invitationsSelector.getValue().toString());
+            }
+            catch (Exception e) {
+                invalidFormLabel.setText("Invalid number of invites");
+                return false;
+            }
+        }
         return true;
     }
 
     private boolean submitFormData() {
-        return true;
+        String companyName = companyNameTextField.getText();
+        String companyAddress = companyAddressTextField.getText();
+        String companyPhone = companyPhoneTextField.getText();
+        String applicationDescription = applicationDescriptionTextField.getText();
+        String applicationKeywords = applicationKeywordsTextField.getText();
+        int area, numberOfInvites;
+        try {
+            area = Integer.parseInt(areaSelector.getValue().toString());
+            numberOfInvites = Integer.parseInt(invitationsSelector.getValue().toString());
+        }
+        catch (Exception e) {
+            return false;
+        }
+        return applicationController.submitApplication(companyName, companyAddress, companyPhone, applicationDescription, applicationKeywords, area, numberOfInvites);
     }
 
+    private void clearForm() {
+        companyNameTextField.setText("");
+        companyAddressTextField.setText("");
+        companyPhoneTextField.setText("");
+        applicationDescriptionTextField.setText("");
+        applicationKeywordsTextField.setText("");
+        areaSelector.setValue(0);
+        invitationsSelector.setValue(0);
+    }
+    
     private void showErrorAlert() {
-
+        JOptionPane.showMessageDialog(this, "Application coult not be submitted", "Error", JOptionPane.WARNING_MESSAGE);
     }
 }
