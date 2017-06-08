@@ -1,6 +1,8 @@
 package lapr.project.ui;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import lapr.project.controller.SubmitApplicationController;
@@ -16,17 +18,31 @@ public class SubmitApplicationUI extends JPanel {
     private final EventCenter eventCenter;
     private final SubmitApplicationController applicationController;
     private JList<String> eventList;
-    private JPanel createApplicationFormPanel;
+    private JTextField companyNameTextField;
+    private JTextField companyAddressTextField;
+    private JTextField companyPhoneTextField;
+    private JTextField applicationDescriptionTextField;
+    private JSpinner areaSelector;
+    private JSpinner invitationsSelector;
 
-    public SubmitApplicationUI(EventCenter center,SubmitApplicationController controller) {
+    public SubmitApplicationUI(EventCenter center, SubmitApplicationController controller) {
         this.eventCenter = center;
         this.applicationController = controller;
-        this.setLayout(new GridLayout(0, 2));
+        this.setLayout(new BorderLayout());
+
+        JPanel mainTitlePanel = new JPanel();
+        mainTitlePanel.setLayout(new GridBagLayout());
+        JLabel mainTitle = new JLabel("SUBMIT APPLICATION");
+        mainTitlePanel.add(mainTitle);
+        this.add(mainTitlePanel, BorderLayout.NORTH);
+
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new GridLayout(0, 2));
         JPanel selectEventPanel = createSelectEventPanel();
-        this.add(selectEventPanel);
+        contentPanel.add(selectEventPanel);
         JPanel applicationFormPanel = createApplicationFormPanel();
-        applicationFormPanel.setVisible(false);
-        this.add(applicationFormPanel);
+        contentPanel.add(applicationFormPanel);
+        this.add(contentPanel, BorderLayout.CENTER);
         this.setVisible(true);
     }
 
@@ -35,39 +51,108 @@ public class SubmitApplicationUI extends JPanel {
         panelContainer.setLayout(new GridBagLayout());
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 1));
-        JLabel panelTitle = new JLabel("List of events in submission period");
-        panel.add(panelTitle);
-        JLabel panelSubTitle = new JLabel("Please select the event to which you want to apply.");
-        panel.add(panelSubTitle);
         String[] eventsData = this.applicationController.getEventListInSubmissionPeriodAsStrings();
+        JLabel panelSubTitle = new JLabel("");
+
         eventList = new JList<>(eventsData);
-        eventList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         eventList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
         eventList.setVisibleRowCount(10);
-        eventList.addListSelectionListener((ListSelectionEvent e) -> {
-            String selectedEvent = eventList.getSelectedValue();
-            if (applicationController.selectEventWithTitle(selectedEvent)) {
-                showApplicationFormPanel();            
-            }
-        });
+        if (eventsData.length == 0) {
+            panelSubTitle.setText("Unable to submit application, there are no events in submission period");
+            panelSubTitle.setForeground(Color.red);
+        } else {
+            panelSubTitle.setText("Please select the event to which you want to apply.");
+            eventList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+            eventList.addListSelectionListener((ListSelectionEvent e) -> {
+                String selectedEvent = eventList.getSelectedValue();
+                if (applicationController.selectEventWithTitle(selectedEvent)) {
+                    enableApplicationFormPanel();
+                }
+            });
+        }
+        panel.add(panelSubTitle);
         JScrollPane listScroller = new JScrollPane(eventList);
         listScroller.setPreferredSize(new Dimension(200, 200));
         panel.add(listScroller);
         panelContainer.add(panel);
         return panelContainer;
     }
-    
+
     private JPanel createApplicationFormPanel() {
-        createApplicationFormPanel = new JPanel();
-        createApplicationFormPanel.setLayout(new GridBagLayout());
+        JPanel applicationFormPanel = new JPanel();
+        applicationFormPanel.setLayout(new GridBagLayout());
+
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 1));
-        createApplicationFormPanel.add(panel);
-        createApplicationFormPanel.setVisible(false);
-        return createApplicationFormPanel;
+
+        JLabel companyNameLabel = new JLabel("Enter company name: ");
+        companyNameTextField = new JTextField(40);
+        companyNameTextField.setEditable(false);
+        panel.add(companyNameLabel);
+        panel.add(companyNameTextField);
+
+        JLabel companyAddressLabel = new JLabel("Enter company address: ");
+        companyAddressTextField = new JTextField(60);
+        companyAddressTextField.setEditable(false);
+        panel.add(companyAddressLabel);
+        panel.add(companyAddressTextField);
+
+        JLabel companyPhoneLabel = new JLabel("Enter company phone: ");
+        companyPhoneTextField = new JTextField(20);
+        companyPhoneTextField.setEditable(false);
+        panel.add(companyPhoneLabel);
+        panel.add(companyPhoneTextField);
+
+        JLabel applicationDescriptionLabel = new JLabel("Enter application description: ");
+        applicationDescriptionTextField = new JTextField(60);
+        applicationDescriptionTextField.setEditable(false);
+        panel.add(applicationDescriptionLabel);
+        panel.add(applicationDescriptionTextField);
+
+        JLabel areaLabel = new JLabel("Please selected preferred area: ");
+        areaSelector = new JSpinner();
+        areaSelector.setEnabled(false);
+        panel.add(areaLabel);
+        panel.add(areaSelector);
+
+        JLabel invitationsLabel = new JLabel("Please select preferred number of invitations: ");
+        invitationsSelector = new JSpinner();
+        invitationsSelector.setEnabled(false);
+        panel.add(invitationsLabel);
+        panel.add(invitationsSelector);
+
+        JButton submitApplicationButton = new JButton("Submit application");
+        submitApplicationButton.addActionListener((ActionEvent e) -> {
+            if (formDataIsValid()) {
+                if (!submitFormData()) {
+                    showErrorAlert();
+                }
+            }
+        });
+
+        applicationFormPanel.add(panel);
+
+        return applicationFormPanel;
     }
-    
-    private void showApplicationFormPanel() {
-        createApplicationFormPanel.setVisible(true);
+
+    private void enableApplicationFormPanel() {
+        companyNameTextField.setEditable(true);
+        companyAddressTextField.setEditable(true);
+        companyPhoneTextField.setEditable(true);
+        applicationDescriptionTextField.setEditable(true);
+        areaSelector.setEnabled(true);
+        invitationsSelector.setEnabled(true);
+    }
+
+    private boolean formDataIsValid() {
+        return true;
+    }
+
+    private boolean submitFormData() {
+        return true;
+    }
+
+    private void showErrorAlert() {
+
     }
 }
