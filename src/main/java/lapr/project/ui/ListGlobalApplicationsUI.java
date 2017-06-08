@@ -41,10 +41,10 @@ public class ListGlobalApplicationsUI extends JPanel {
         } else {
             applicationsList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
             applicationsList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-            applicationsList.setVisibleRowCount(-1);
+            applicationsList.setVisibleRowCount(10);
             JScrollPane listScroller = new JScrollPane(applicationsList);
             listScroller.setPreferredSize(new Dimension(200, 200));
-            this.add(applicationsList);
+            this.add(listScroller);
         }
 
         this.setVisible(true);

@@ -30,10 +30,10 @@ public class ShowEventStandsInformationUI extends JPanel {
         standList = new JList<String>(standStrings);
         standList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         standList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-        standList.setVisibleRowCount(-1);
+        standList.setVisibleRowCount(10);
         JScrollPane listScroller = new JScrollPane(standList);
         listScroller.setPreferredSize(new Dimension(200, 200));
-        this.add(standList);
+        this.add(listScroller);
         this.setVisible(true);
     }
 }

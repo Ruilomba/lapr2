@@ -18,13 +18,12 @@ public class MenuUI extends JFrame {
     private JMenuItem showEventKeywordsMenuItem;
     private JMenu applicationsMenu;
     private JMenuItem listApplications;
+    private JMenuItem submitApplicationMenuItem;
     private JMenuItem decideApplicationMenuItem;
-    private JMenuItem assingApplicationMenuItem;
     private JMenuItem changeRemoveApplicationMenuItem;
     private JMenu standsMenu;
     private JMenuItem showStandsMenuItem;
     private JMenuItem createStandMenuItem;
-    private JMenuItem assignStandMenuItem;
     private JMenu importExportMenu;
     private JMenuItem importDataMenuItem;
     private JMenuItem exportDataMenuItem;
@@ -63,22 +62,20 @@ public class MenuUI extends JFrame {
         
         applicationsMenu = new JMenu("Applications");
         listApplications = new JMenuItem("List applications");
+        submitApplicationMenuItem = new JMenuItem("Submit application");
         decideApplicationMenuItem = new JMenuItem("Decide application");
-        assingApplicationMenuItem = new JMenuItem("Assign application");
         changeRemoveApplicationMenuItem = new JMenuItem("Change or remove application");
         applicationsMenu.add(listApplications);
+        applicationsMenu.add(submitApplicationMenuItem);
         applicationsMenu.add(decideApplicationMenuItem);
-        applicationsMenu.add(assingApplicationMenuItem);
         applicationsMenu.add(changeRemoveApplicationMenuItem);
         menubar.add(applicationsMenu);
         
         standsMenu = new JMenu("Stands");
         showStandsMenuItem = new JMenuItem("Show stands");
         createStandMenuItem = new JMenuItem("Create stand");
-        assignStandMenuItem = new JMenuItem("Assign stand");
         standsMenu.add(showStandsMenuItem);
         standsMenu.add(createStandMenuItem);
-        standsMenu.add(assignStandMenuItem);
         menubar.add(standsMenu);
         
         importExportMenu = new JMenu("Import/Export data");

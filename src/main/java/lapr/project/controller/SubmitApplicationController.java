@@ -5,6 +5,7 @@
  */
 package lapr.project.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import lapr.project.model.Application;
 import lapr.project.model.ApplicationRegistration;
@@ -30,6 +31,19 @@ public class SubmitApplicationController {
         this.eventCenter = ec;
     }
 
+    /**
+     * Returns list of event titles that are within the submission period of
+     * applications as list of strings
+     * @return 
+     */
+    public String[] getEventListInSubmissionPeriodAsStrings() {
+        List<Event> eventsInSubmissionPeriod = getEventListInSubmissionPeriod();
+        String[] eventsAsStrings = new String[eventsInSubmissionPeriod.size()];
+        for (Event e : eventsInSubmissionPeriod) {
+            eventsAsStrings[eventsAsStrings.length - 1] = e.getTitle();
+        }
+        return eventsAsStrings;
+    }
     /**
      * Returns list of events that are within the submission period of
      * applications
