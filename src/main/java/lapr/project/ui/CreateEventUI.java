@@ -17,9 +17,10 @@ import lapr.project.model.User;
  */
 public class CreateEventUI extends JPanel {
 
+    private static final long serialVersionUID = 1L;
     private final EventCenter eventCenter;
     private final CreateEventController createEventController;
-    private JComboBox comboEvents;
+    private JComboBox<String> comboEvents;
     private JLabel eventSelection;
     private final int BUTTON_WIDTH = 300;
     private final int BUTTON_HEIGHT = 50;
@@ -41,16 +42,17 @@ public class CreateEventUI extends JPanel {
         eventSelection = new JLabel("Please select event Type");
         eventSelection.setVisible(true);
         String[] eventTipes = {"Exhibition", "Congress"};
-        comboEvents = new JComboBox(eventTipes);
+        comboEvents = new JComboBox<String>(eventTipes);
         comboEvents.setVisible(true);
         comboEvents.setSelectedIndex(1);
         comboEvents.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == comboEvents) {
-                    JComboBox box = (JComboBox) e.getSource();
-                    String msg = (String) box.getSelectedItem();
-                    switch (msg) {
+                    /*
+                        JComboBox<String> box = (JComboBox)e.getSource();
+                        String msg = (String) box.getSelectedItem();
+                        switch (msg) {
                         case "Exhibition":
                             eventSelection.setText("You have selected an exhibition");
                             createEventController.startNewEvent();
@@ -61,7 +63,8 @@ public class CreateEventUI extends JPanel {
                             createEventController.startNewEvent();
                             createEventController.setEventType(new Congress());
                             break;
-                    }
+                        }
+                     */
                 }
             }
         });

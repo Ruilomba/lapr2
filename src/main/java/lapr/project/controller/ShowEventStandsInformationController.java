@@ -1,6 +1,7 @@
 package lapr.project.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import lapr.project.model.EventCenter;
 import lapr.project.model.Stand;
@@ -14,19 +15,19 @@ import lapr.project.model.Stand;
  *
  * @author Miguel Barros
  */
-public class ShowEventStandInformationController {
+public class ShowEventStandsInformationController {
 
     private final EventCenter eventCenter;
 
-    public ShowEventStandInformationController(EventCenter eventCenter) {
+    public ShowEventStandsInformationController(EventCenter eventCenter) {
 
         this.eventCenter = eventCenter;
 
     }
 
     public List<Stand> getShowEventStandInformation() {
-
-        return eventCenter.getStandRegistration().getListStands();
+//        return eventCenter.getStandRegistration().getListStands();
+        return new ArrayList<>();
     }
 
     public String[] getStandAsStrings() {

@@ -107,7 +107,9 @@ public class MenuUI extends JFrame {
         createEventMenuItem.addActionListener((ActionEvent e) -> {
             showCreateEventPanel();
         });
-        
+        showStandsMenuItem.addActionListener((ActionEvent e) -> {
+            showStandsPanel();
+        });
         listApplications.addActionListener((ActionEvent e) -> {
             showGlobalApplicationsList();
         });
@@ -140,6 +142,14 @@ public class MenuUI extends JFrame {
         ListGlobalApplicationsController applicationsController = new ListGlobalApplicationsController(eventCenter);
         ListGlobalApplicationsUI applicationsUI = new ListGlobalApplicationsUI(eventCenter, applicationsController);
         setContentPane(applicationsUI);
+        this.getContentPane().revalidate();
+        this.getContentPane().repaint();
+    }
+    
+    private void showStandsPanel() {
+        ShowEventStandsInformationController standsController = new ShowEventStandsInformationController(eventCenter);
+        ShowEventStandsInformationUI standsUI = new ShowEventStandsInformationUI(eventCenter, standsController);
+        setContentPane(standsUI);
         this.getContentPane().revalidate();
         this.getContentPane().repaint();
     }

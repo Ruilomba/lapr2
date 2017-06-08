@@ -21,18 +21,14 @@ public class StandRegistration {
      * @param listaStands
      */
     public StandRegistration(ArrayList<Stand> listStand) {
-
         this.listStand = new ArrayList<>(listStand);
-
     }
 
     /**
      *
      */
     public StandRegistration() {
-
         this.listStand = new ArrayList<>();
-
     }
 
     /**
@@ -40,7 +36,10 @@ public class StandRegistration {
      * @return
      */
     public ArrayList<Stand> getListStands() {
-        return listStand;
+        if (listStand == null) {
+            listStand = new ArrayList<Stand>();
+        }
+        return listStand;            
     }
 
     /**
