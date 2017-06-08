@@ -8,7 +8,7 @@ package lapr.project.controller;
 import java.util.List;
 import lapr.project.model.Application;
 import lapr.project.model.AtribuitionAlgorithm;
-import lapr.project.model.AtribuitionList;
+import lapr.project.model.AtribuitionRegistration;
 import lapr.project.model.Event;
 import lapr.project.model.EventCenter;
 import lapr.project.model.User;
@@ -43,13 +43,13 @@ public class AssingApplicationController {
         return eventCenter.getAlgorithmRegistration().getAlgorithmList();
     }
     
-    public AtribuitionList selectAlgoritmo(AtribuitionAlgorithm a) {
-        AtribuitionList atribuitionList= new AtribuitionList();
+    public AtribuitionRegistration selectAlgoritmo(AtribuitionAlgorithm a) {
+        AtribuitionRegistration atribuitionList= new AtribuitionRegistration();
         atribuitionList = a.getAlgorithmAtribuitionList(event);
         return atribuitionList;
     }
     
-    public void registerAtribuitions(AtribuitionList list) {
+    public void registerAtribuitions(AtribuitionRegistration list) {
         event.setAtribuitionList(list);
     }
     

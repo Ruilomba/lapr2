@@ -10,5 +10,5 @@ package lapr.project.model;
  * @author RuiSL
  */
 public interface AtribuitionAlgorithm {
-    public AtribuitionList getAlgorithmAtribuitionList(Event e);    
+    public AtribuitionRegistration getAlgorithmAtribuitionList(Event e);    
 }

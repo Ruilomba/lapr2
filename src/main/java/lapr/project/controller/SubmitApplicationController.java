@@ -5,6 +5,7 @@
  */
 package lapr.project.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import lapr.project.model.Application;
 import lapr.project.model.ApplicationRegistration;
@@ -31,6 +32,19 @@ public class SubmitApplicationController {
     }
 
     /**
+     * Returns list of event titles that are within the submission period of
+     * applications as list of strings
+     * @return 
+     */
+    public String[] getEventListInSubmissionPeriodAsStrings() {
+        List<Event> eventsInSubmissionPeriod = getEventListInSubmissionPeriod();
+        String[] eventsAsStrings = new String[eventsInSubmissionPeriod.size()];
+        for (Event e : eventsInSubmissionPeriod) {
+            eventsAsStrings[eventsAsStrings.length - 1] = e.getTitle();
+        }
+        return eventsAsStrings;
+    }
+    /**
      * Returns list of events that are within the submission period of
      * applications
      *
@@ -44,15 +58,26 @@ public class SubmitApplicationController {
      * Select the desired event
      *
      * @param e
-     * @throws EventoException
+     * @return true if event exists in event registration
      */
-    public void selectEvent(Event e) {
-        if ((this.event = eventCenter.getEventRegistration().getEvent(e)) == null) {
-            System.out.println("No matching event");
-            throw new NullPointerException();
-        }
+    public boolean selectEvent(Event e) {
+        return eventCenter.getEventRegistration().getEvent(e) != null;
     }
-
+    
+    /**
+     * selects event with title selected in UI
+     * @param eventTitle
+     * @return 
+     */
+    public boolean selectEventWithTitle(String eventTitle) {
+        List<Event> eventList = eventCenter.getEventRegistration().getEventList();
+        for (Event e : eventList) {
+            if (e.getTitle().equalsIgnoreCase(eventTitle)) {
+                return selectEvent(e);
+            }
+        }
+        return false;
+    }
     
     public boolean AplicationRegister() {
         return event.getApplicationRegistration().registerApplication(application);

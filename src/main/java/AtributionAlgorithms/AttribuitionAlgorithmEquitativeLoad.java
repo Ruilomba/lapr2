@@ -12,7 +12,7 @@ import java.util.List;
 import lapr.project.model.Application;
 import lapr.project.model.Atribuition;
 import lapr.project.model.AtribuitionAlgorithm;
-import lapr.project.model.AtribuitionList;
+import lapr.project.model.AtribuitionRegistration;
 import lapr.project.model.Event;
 import lapr.project.model.FAE;
 import lapr.project.model.FAEList;
@@ -29,7 +29,7 @@ private static final long serialVersionUID =1L;
     }
 
     @Override
-    public AtribuitionList getAlgorithmAtribuitionList(Event e) {
+    public AtribuitionRegistration getAlgorithmAtribuitionList(Event e) {
         List<Application> noAtribuitionApplicationList = new ArrayList<>();
         try {
             noAtribuitionApplicationList = e.getApplicationsWithoutAtribuition();
@@ -39,10 +39,10 @@ private static final long serialVersionUID =1L;
         FAEList eventFaeList = e.getFaeList();
 
         if (noAtribuitionApplicationList.isEmpty() || eventFaeList.isEmpty()) {
-            return new AtribuitionList();
+            return new AtribuitionRegistration();
         }
 
-        AtribuitionList atribuitionList = new AtribuitionList();
+        AtribuitionRegistration atribuitionList = new AtribuitionRegistration();
         List<FAE> faeList = eventFaeList.getFaeListElements();
 //        int[] listaNumeroAtribuicoesPorFAE = new int[listaFAE.size()];
 //

@@ -12,7 +12,7 @@ import java.util.Scanner;
 import lapr.project.model.Application;
 import lapr.project.model.Atribuition;
 import lapr.project.model.AtribuitionAlgorithm;
-import lapr.project.model.AtribuitionList;
+import lapr.project.model.AtribuitionRegistration;
 import lapr.project.model.Event;
 import lapr.project.model.FAE;
 import lapr.project.model.FAEList;
@@ -43,18 +43,18 @@ public class AtribuitionByNumerOfFae implements AtribuitionAlgorithm {
     }
 
     @Override
-    public AtribuitionList getAlgorithmAtribuitionList(Event e) {
+    public AtribuitionRegistration getAlgorithmAtribuitionList(Event e) {
         Scanner in= new Scanner(System.in);
         List<Application> applicationsWithoutAtribuition = e.getApplicationsWithoutAtribuition();
         FAEList eventFaeList = e.getFaeList();
 
         if (applicationsWithoutAtribuition.isEmpty() || eventFaeList.isEmpty()) {
-            return new AtribuitionList();
+            return new AtribuitionRegistration();
         }
         System.out.println("What is the number of Fae you would like in each application?");
         int n=in.nextInt();
         setPRETENDED_FAE(n);
-        AtribuitionList atribuitionList = new AtribuitionList();
+        AtribuitionRegistration atribuitionList = new AtribuitionRegistration();
         List<FAE> listaFae = eventFaeList.getFaeListElements();
         int faeTotalNum = listaFae.size();
 

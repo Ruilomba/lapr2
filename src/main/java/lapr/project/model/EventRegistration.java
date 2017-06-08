@@ -1,6 +1,7 @@
 package lapr.project.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import lapr.project.states.EventCreatedState;
 import lapr.project.states.EventState;
@@ -151,4 +152,22 @@ public class EventRegistration {
      return output;
      }
      */
+    public List<Event> getEventListOfFae(User u) {
+
+        List<Event> faeEventList = new ArrayList<Event>();
+
+        if (u != null) {
+
+            for (Iterator<Event> ev = this.eventList.listIterator(); ev.hasNext();) {
+                Event e = ev.next();
+
+                if (e.containsFae(u)) {
+                    faeEventList.add(e);
+
+                }
+            }
+        }
+        return faeEventList;
+    }
 }
+    
