@@ -1,12 +1,10 @@
 package lapr.project.ui;
 
 import java.io.IOException;
-import java.util.List;
 import javax.swing.*;
-import lapr.project.controller.*;
+import lapr.project.controller.MenuController;
 import lapr.project.controller.UserRegistrationController;
 import lapr.project.model.*;
-import lapr.project.states.StartingEventState;
 
 class Main {
 
@@ -20,11 +18,6 @@ class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-        EventCenter eventCenter=new EventCenter();
-        CreateEventController createController= new CreateEventController(eventCenter);
-        CreateEventUI create= new CreateEventUI(eventCenter, createController);
-        create.setVisible(true);
-        System.out.println("dasdjasjind");
 //        User u = new User("Rui", "rui.s.lomba@hotmail.com", "Ruilomba", "1234");
 //        eventCenter.getUserRegistration().addUserRegistration(u);
 //        Event e= new Event();
@@ -44,9 +37,19 @@ class Main {
         center = new EventCenter();
         JWindow window = new JWindow();
         window.setAlwaysOnTop(true);
+        
+        // PARA ENTRAR NO MEU
+        MenuController menuController = new MenuController(center);
+        MenuUI menuUI = new MenuUI(center, menuController);
+        window.setContentPane(menuUI);
+        
+        /*
+        // PARA ENTRAR NA AUTENTICAÇÃO
         UserRegistrationController registrationController = new UserRegistrationController(center);
         UserRegistrationUI registrationUI = new UserRegistrationUI(center, registrationController);
         window.setContentPane(registrationUI);
+        */
+        
         window.setVisible(true);        
     }
 }

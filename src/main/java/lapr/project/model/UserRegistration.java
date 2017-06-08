@@ -64,8 +64,16 @@ public class UserRegistration implements Serializable {
      * @throws IOException
      */
     public boolean addUserRegistration(User u) throws IOException {
-        if (validateUser(u) && authentication.registerUser(u)) {
-            return addUser(u);
+        if (validateUser(u)) {
+            try {
+                if (authentication.registerUser(u)) {
+                    return addUser(u);
+                }
+            }
+            catch (IOException e) {
+                System.out.println(e.getMessage());
+                return false;
+            }
         }
         return false;
     }

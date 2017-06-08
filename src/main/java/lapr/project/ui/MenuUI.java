@@ -10,7 +10,7 @@ public class MenuUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private final EventCenter eventCenter;
-    private final MenuController controller;
+    private final MenuController menuController;
 
     private JMenuItem userNameItem;
     private JMenu eventsMenu;
@@ -32,24 +32,24 @@ public class MenuUI extends JFrame {
     private JMenuItem userUpdateMenuItem;
     private JMenuItem logoutMenuItem;
 
-    public MenuUI(EventCenter center) {
+    public MenuUI(EventCenter center, MenuController controller) {
         super("Menu");
         eventCenter = center;
-        controller = new MenuController(eventCenter);
+        menuController = controller;
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(screenSize.width, screenSize.height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new FlowLayout());
         createMenuBar();
         addListenersToButtons();
-        showUserUpdatePanel();
+        showWelcomePanel();
         this.setVisible(true);
     }
     
     private void createMenuBar() {
         JMenuBar menubar = new JMenuBar();
         String userName;
-        userName = controller.getAuthenticatedUserName();
+        userName = menuController.getAuthenticatedUserName();
         userNameItem = new JMenuItem("authenticated user");
         menubar.add(userNameItem);
         
@@ -100,6 +100,10 @@ public class MenuUI extends JFrame {
     }
     
     private void addListenersToButtons() {
+        createEventMenuItem.addActionListener((ActionEvent e) -> {
+            showCreateEventPanel();
+        });
+        
         listApplications.addActionListener((ActionEvent e) -> {
             showGlobalApplicationsList();
         });
@@ -115,6 +119,17 @@ public class MenuUI extends JFrame {
         });
     }
 
+    private void showWelcomePanel() {
+        WelcomePanel welcomePanel = new WelcomePanel();
+        setContentPane(welcomePanel);
+    }
+    
+    private void showCreateEventPanel() {
+        CreateEventController createEventController = new CreateEventController(eventCenter);
+        CreateEventUI createEventUI = new CreateEventUI(eventCenter, createEventController);
+        setContentPane(createEventUI);
+    }
+    
     private void showGlobalApplicationsList() {
         ListGlobalApplicationsController applicationsController = new ListGlobalApplicationsController(eventCenter);
         ListGlobalApplicationsUI applicationsUI = new ListGlobalApplicationsUI(eventCenter, applicationsController);

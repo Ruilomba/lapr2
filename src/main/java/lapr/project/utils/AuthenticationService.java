@@ -10,6 +10,8 @@ import lapr.project.model.User;
 public class AuthenticationService {
 
     private final static String USER_DATA_FILE_PATH = "userData.txt";
+    private final static String userDataFieldDividerChar = "\t";
+            
     private static User authenticatedUser;
     private static EncryptionService encryption;
     
@@ -63,7 +65,7 @@ public class AuthenticationService {
         String[] savedUserData = getDecryptedUserData();
         if (savedUserData != null) {
             for (String userData : savedUserData) {
-                String[] fields = userData.split(";");
+                String[] fields = userData.split(userDataFieldDividerChar);
                 String storedUsernameField = fields[0];
                 String storedNameField = fields[1];
                 String storedEmailField = fields[2];
@@ -112,7 +114,7 @@ public class AuthenticationService {
         String[] savedUserData = getDecryptedUserData();
         if (savedUserData != null) {
             for (int i = 0; i < savedUserData.length; i++) {
-                String[] fields = savedUserData[i].split(";");
+                String[] fields = savedUserData[i].split(userDataFieldDividerChar);
                 String storedUsernameField = fields[0];
                 String storedNameField = fields[1];
                 String storedEmailField = fields[2];
@@ -174,10 +176,23 @@ public class AuthenticationService {
      * @return
      */
     private boolean addUserInfoToUserDataFile(String userData) throws IOException {
-        String[] savedUserData = getDecryptedUserData();
+        String[] savedUserData;
+        try {
+            savedUserData = getDecryptedUserData();            
+        }
+        catch (IOException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
         if (savedUserData != null) {
-            savedUserData[savedUserData.length] = userData;
-            return encryption.writeEncryptedDataToUserDataFile(savedUserData);
+            savedUserData[savedUserData.length - 1] = userData;
+            try {
+                return encryption.writeEncryptedDataToUserDataFile(savedUserData);                                
+            }
+            catch (IOException e) {
+                System.out.println(e.getMessage());
+                return false;
+            }
         }
         return false;
     }
@@ -188,7 +203,7 @@ public class AuthenticationService {
      */
     private String[] getDecryptedUserData() throws IOException {
         File userDataFile = new File(USER_DATA_FILE_PATH);
-        if (userDataFile.exists() || userDataFile.createNewFile()) {
+        if (userDataFile.exists()) {
             try (BufferedReader file = new BufferedReader(new FileReader(USER_DATA_FILE_PATH))) {
                 String line;
                 StringBuilder inputString = new StringBuilder();
@@ -208,15 +223,18 @@ public class AuthenticationService {
                 return null;
             }
         }
+        else if (userDataFile.createNewFile()) {
+            return new String[1];
+        }
         return null;
     }
     
     private String buildUserDataString(User user, int shift) {
         return "username=" + user.getUsername()
-                + ";name=" + user.getName()
-                + ";email=" + user.getEmail()
-                + ";password=" + user.getPassword()
-                + ";shift=" + String.valueOf(shift) + "\n";
+                + userDataFieldDividerChar + "name=" + user.getName()
+                + userDataFieldDividerChar + "email=" + user.getEmail()
+                + userDataFieldDividerChar + "password=" + user.getPassword()
+                + userDataFieldDividerChar + "shift=" + String.valueOf(shift) + "\n";
     }
 
 }
