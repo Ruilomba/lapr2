@@ -33,8 +33,14 @@ public class CreateEventUI extends JPanel {
         userList = new ArrayList<>();
         setLayout(new GridLayout(0, 2));
         createComponents();
-        this.add(comboEvents);
-        this.add(eventSelection);
+        JPanel selectTypeOfEventPanelContainer = new JPanel();
+        selectTypeOfEventPanelContainer.setLayout(new GridBagLayout());
+        JPanel selectTypeOfEventPanel = new JPanel();
+        selectTypeOfEventPanel.setLayout(new GridLayout(0, 1));
+        selectTypeOfEventPanel.add(eventSelection);
+        selectTypeOfEventPanel.add(comboEvents);
+        selectTypeOfEventPanelContainer.add(selectTypeOfEventPanel);
+        this.add(selectTypeOfEventPanelContainer);
         setVisible(true);
     }
 

@@ -32,17 +32,10 @@ public class UserDataUpdateUI extends JPanel {
     public UserDataUpdateUI(EventCenter center, UserDataUpdateController controller) {
         eventCenter = center;
         userUpdateController = controller;
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setSize(screenSize.width, screenSize.height);
-        this.setLayout(new GridLayout(0, 1));
-        createElements();
-        addUserDataToForm();
-        addListenersForButtons();
-        addElementsToJPanel();
-        this.setVisible(true);
-    }
-
-    private void createElements() {
+        this.setLayout(new GridBagLayout());
+        
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new GridLayout(0, 1));
         nameLabel = new JLabel("Name");
         nameLabel.setFont(new Font(nameLabel.getFont().getName(), nameLabel.getFont().getStyle(), 18));
         nameTextField = new JTextField(30);
@@ -64,6 +57,25 @@ public class UserDataUpdateUI extends JPanel {
         submitFormButton = new JButton("Update data");
         errorMessageLabel = new JLabel("");
         errorMessageLabel.setForeground(Color.red);
+        
+        addUserDataToForm();
+        addListenersForButtons();
+        
+        contentPanel.add(nameLabel);
+        contentPanel.add(nameTextField);
+        contentPanel.add(usernameLabel);
+        contentPanel.add(usernameTextField);
+        contentPanel.add(emailLabel);
+        contentPanel.add(emailTextField);
+        contentPanel.add(passwordLabel);
+        contentPanel.add(passwordFormatLabel);
+        contentPanel.add(passwordTextField);
+        contentPanel.add(confirmPasswordLabel);
+        contentPanel.add(confirmPasswordTextField);
+        contentPanel.add(submitFormButton);
+        contentPanel.add(errorMessageLabel);
+        this.add(contentPanel);
+        this.setVisible(true);
     }
 
     private void addUserDataToForm() {
@@ -126,21 +138,6 @@ public class UserDataUpdateUI extends JPanel {
         return true;
     }
 
-    private void addElementsToJPanel() {
-        this.add(nameLabel);
-        this.add(nameTextField);
-        this.add(usernameLabel);
-        this.add(usernameTextField);
-        this.add(emailLabel);
-        this.add(emailTextField);
-        this.add(passwordLabel);
-        this.add(passwordFormatLabel);
-        this.add(passwordTextField);
-        this.add(confirmPasswordLabel);
-        this.add(confirmPasswordTextField);
-        this.add(submitFormButton);
-        this.add(errorMessageLabel);
-    }
 
     private boolean updateUserData() throws IOException {
         String name = nameTextField.getText();
