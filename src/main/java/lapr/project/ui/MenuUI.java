@@ -104,13 +104,15 @@ public class MenuUI extends JFrame {
         createEventMenuItem.addActionListener((ActionEvent e) -> {
             showCreateEventPanel();
         });
+        submitApplicationMenuItem.addActionListener((ActionEvent e) -> {
+            showSubmitApplicationPanel();
+        });
         showStandsMenuItem.addActionListener((ActionEvent e) -> {
             showStandsPanel();
         });
         listApplications.addActionListener((ActionEvent e) -> {
             showGlobalApplicationsList();
         });
-        
         statisticsMenuItem.addActionListener((ActionEvent e) -> {
             showStatistics();
         });
@@ -124,7 +126,7 @@ public class MenuUI extends JFrame {
 
     private void showWelcomePanel() {
         WelcomePanel welcomePanel = new WelcomePanel();
-        setContentPane(welcomePanel);
+        this.setContentPane(welcomePanel);
         this.getContentPane().revalidate();
         this.getContentPane().repaint();
     }
@@ -132,7 +134,15 @@ public class MenuUI extends JFrame {
     private void showCreateEventPanel() {
         CreateEventController createEventController = new CreateEventController(eventCenter);
         CreateEventUI createEventUI = new CreateEventUI(eventCenter, createEventController);
-        setContentPane(createEventUI);
+        this.setContentPane(createEventUI);
+        this.getContentPane().revalidate();
+        this.getContentPane().repaint();
+    }
+    
+    private void showSubmitApplicationPanel() {
+        SubmitApplicationController newApplicationController = new SubmitApplicationController(eventCenter);
+        SubmitApplicationUI newApplicationUI = new SubmitApplicationUI(eventCenter, newApplicationController);
+        this.setContentPane(newApplicationUI);
         this.getContentPane().revalidate();
         this.getContentPane().repaint();
     }
@@ -140,7 +150,7 @@ public class MenuUI extends JFrame {
     private void showGlobalApplicationsList() {
         ListGlobalApplicationsController applicationsController = new ListGlobalApplicationsController(eventCenter);
         ListGlobalApplicationsUI applicationsUI = new ListGlobalApplicationsUI(eventCenter, applicationsController);
-        setContentPane(applicationsUI);
+        this.setContentPane(applicationsUI);
         this.getContentPane().revalidate();
         this.getContentPane().repaint();
     }
@@ -148,7 +158,7 @@ public class MenuUI extends JFrame {
     private void showStandsPanel() {
         ShowEventStandsInformationController standsController = new ShowEventStandsInformationController(eventCenter);
         ShowEventStandsInformationUI standsUI = new ShowEventStandsInformationUI(eventCenter, standsController);
-        setContentPane(standsUI);
+        this.setContentPane(standsUI);
         this.getContentPane().revalidate();
         this.getContentPane().repaint();
     }
@@ -156,7 +166,7 @@ public class MenuUI extends JFrame {
     private void showUserUpdatePanel() {
         UserDataUpdateController userUpdateController = new UserDataUpdateController(eventCenter);
         UserDataUpdateUI userUpdateUI = new UserDataUpdateUI(eventCenter, userUpdateController);
-        setContentPane(userUpdateUI);
+        this.setContentPane(userUpdateUI);
         this.getContentPane().revalidate();
         this.getContentPane().repaint();
     }
@@ -164,7 +174,7 @@ public class MenuUI extends JFrame {
     private void showStatistics() {
         RatingController ratingController = new RatingController(eventCenter);
         RatingUI ratingUI = new RatingUI(eventCenter, ratingController);
-        setContentPane(ratingUI);
+        this.setContentPane(ratingUI);
         this.getContentPane().revalidate();
         this.getContentPane().repaint();
     }

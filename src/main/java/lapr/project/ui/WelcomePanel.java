@@ -11,20 +11,17 @@ public class WelcomePanel extends JPanel {
     public WelcomePanel() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(screenSize.width, screenSize.height);
-        this.setLayout(new BorderLayout());
+        this.setLayout(new GridBagLayout());
         
-        JPanel labelPanel = new JPanel();
-        labelPanel.setLayout(new GridBagLayout());
+        JPanel containerPanel = new JPanel();
+        containerPanel.setLayout(new GridLayout(0, 1));
+        
         JLabel mainLabel = new JLabel("Exibition Fair Center Management Software");
         mainLabel.setFont(new Font(mainLabel.getFont().getName(), mainLabel.getFont().getStyle(), 25));
-        labelPanel.add(mainLabel);
-        this.add(labelPanel, BorderLayout.NORTH);
+        containerPanel.add(mainLabel);
         
-        JPanel authorsContainerPanel = new JPanel();
-        authorsContainerPanel.setLayout(new GridBagLayout());
         JPanel authorsPanel = new JPanel();
         authorsPanel.setLayout(new GridLayout(0, 1));
-        
         JLabel authors = new JLabel("Authors");
         authorsPanel.add(authors);
         JLabel author1 = new JLabel("Francisco Loureiro - 1100904");
@@ -37,9 +34,9 @@ public class WelcomePanel extends JPanel {
         authorsPanel.add(author4);
         JLabel author5 = new JLabel("Rui Lomba - 1151168");
         authorsPanel.add(author5);
-        authorsContainerPanel.add(authorsPanel);
-        this.add(authorsContainerPanel, BorderLayout.CENTER);
 
+        containerPanel.add(authorsPanel);
+        this.add(containerPanel);
         this.setVisible(true);
     }
 }
