@@ -154,19 +154,20 @@ public class EventRegistration {
      */
     public List<Event> getEventListOfFae(User u) {
 
-        List<Event> FaeEventList = new ArrayList<Event>();
+        List<Event> faeEventList = new ArrayList<Event>();
 
         if (u != null) {
+
             for (Iterator<Event> ev = this.eventList.listIterator(); ev.hasNext();) {
-                Event e = (Event) ev.next();
+                Event e = ev.next();
 
                 if (e.containsFae(u)) {
-                    FaeEventList.add(e);
+                    faeEventList.add(e);
 
                 }
             }
         }
-        return FaeEventList;
+        return faeEventList;
     }
 }
     
