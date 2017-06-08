@@ -20,7 +20,11 @@ class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-//        EventCenter eventCenter=new EventCenter();
+        EventCenter eventCenter=new EventCenter();
+        CreateEventController createController= new CreateEventController(eventCenter);
+        CreateEventUI create= new CreateEventUI(eventCenter, createController);
+        create.setVisible(true);
+        System.out.println("dasdjasjind");
 //        User u = new User("Rui", "rui.s.lomba@hotmail.com", "Ruilomba", "1234");
 //        eventCenter.getUserRegistration().addUserRegistration(u);
 //        Event e= new Event();
