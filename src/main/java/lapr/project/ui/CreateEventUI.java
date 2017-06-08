@@ -27,13 +27,8 @@ public class CreateEventUI extends JPanel {
     private final int BUTTON_WIDTH = 300;
     private final int BUTTON_HEIGHT = 50;
     private JList<String> userListPrinted;
-<<<<<<< HEAD
     private String[] userList;
     private JPanel userListPanelContainer; 
-=======
-    private final List<User> userList;
-    private JPanel userListPanelContainer;
->>>>>>> 6f2ab4220360faa6f8687783ad536614e91077ac
 
     public CreateEventUI(EventCenter eventCenter, CreateEventController createEventController) {
         this.eventCenter = eventCenter;
@@ -75,7 +70,6 @@ public class CreateEventUI extends JPanel {
                 System.out.println(invalidCastException.getMessage());
             }
         });
-<<<<<<< HEAD
         JPanel selectTypeOfEventPanelContainer = new JPanel();
         selectTypeOfEventPanelContainer.setLayout(new GridBagLayout());
         JPanel selectTypeOfEventPanel = new JPanel();
@@ -84,9 +78,6 @@ public class CreateEventUI extends JPanel {
         selectTypeOfEventPanel.add(comboEvents);
         selectTypeOfEventPanelContainer.add(selectTypeOfEventPanel);
         this.add(selectTypeOfEventPanelContainer);
-=======
-
->>>>>>> 6f2ab4220360faa6f8687783ad536614e91077ac
         userListPanelContainer = new JPanel();
         userListPanelContainer.setLayout(new GridBagLayout());
         JPanel userListPanel = new JPanel();
@@ -99,7 +90,6 @@ public class CreateEventUI extends JPanel {
         this.add(userListPanelContainer);
     }
     
-<<<<<<< HEAD
     private void showUserList(){
     userListPanelContainer.setVisible(true);
     }
@@ -122,9 +112,4 @@ public class CreateEventUI extends JPanel {
         return userListPrinted;
     }
     
-=======
-    private void showUserList() {
-        userListPanelContainer.setVisible(true);
     }
->>>>>>> 6f2ab4220360faa6f8687783ad536614e91077ac
-}
