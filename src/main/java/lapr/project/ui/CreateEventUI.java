@@ -5,6 +5,8 @@ import java.awt.event.*;
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import lapr.project.controller.*;
 import lapr.project.model.Congress;
 import lapr.project.model.EventCenter;
@@ -25,26 +27,21 @@ public class CreateEventUI extends JPanel {
     private final int BUTTON_WIDTH = 300;
     private final int BUTTON_HEIGHT = 50;
     private JList<String> userListPrinted;
-    private final List<User> userList;
+    private String[] userList;
+    private JPanel userListPanelContainer; 
 
     public CreateEventUI(EventCenter eventCenter, CreateEventController createEventController) {
         this.eventCenter = eventCenter;
         this.createEventController = createEventController;
-        userList = new ArrayList<>();
+        userList = new String[createEventController.getUserCount()];
         setLayout(new GridLayout(0, 2));
         createComponents();
-        JPanel selectTypeOfEventPanelContainer = new JPanel();
-        selectTypeOfEventPanelContainer.setLayout(new GridBagLayout());
-        JPanel selectTypeOfEventPanel = new JPanel();
-        selectTypeOfEventPanel.setLayout(new GridLayout(0, 1));
-        selectTypeOfEventPanel.add(eventSelection);
-        selectTypeOfEventPanel.add(comboEvents);
-        selectTypeOfEventPanelContainer.add(selectTypeOfEventPanel);
-        this.add(selectTypeOfEventPanelContainer);
+        
         setVisible(true);
     }
 
     private void createComponents() {
+        
         eventSelection = new JLabel("Please select event Type");
         eventSelection.setVisible(true);
         String[] eventTipes = {"Exhibition", "Congress"};
@@ -56,32 +53,63 @@ public class CreateEventUI extends JPanel {
                 String msg = comboEvents.getSelectedItem().toString();
                 switch (msg) {
                     case "Exhibition":
-                        showUserList();
                         eventSelection.setText("You have selected an exhibition");
                         createEventController.startNewEvent();
                         createEventController.setEventType(new Exhibition());
+                        showUserList();
                         break;
                     case "Congress":
-                        showUserList();
                         eventSelection.setText("You have selected a congress");
                         createEventController.startNewEvent();
                         createEventController.setEventType(new Congress());
+                        showUserList();
+
                         break;
                 }
             } catch (Exception invalidCastException) {
                 System.out.println(invalidCastException.getMessage());
             }
         });
-    }
-    
-    private void showUserList() {
-        JPanel userListPanelContainer = new JPanel();
+        JPanel selectTypeOfEventPanelContainer = new JPanel();
+        selectTypeOfEventPanelContainer.setLayout(new GridBagLayout());
+        JPanel selectTypeOfEventPanel = new JPanel();
+        selectTypeOfEventPanel.setLayout(new GridLayout(0, 1));
+        selectTypeOfEventPanel.add(eventSelection);
+        selectTypeOfEventPanel.add(comboEvents);
+        selectTypeOfEventPanelContainer.add(selectTypeOfEventPanel);
+        this.add(selectTypeOfEventPanelContainer);
+        userListPanelContainer = new JPanel();
         userListPanelContainer.setLayout(new GridBagLayout());
         JPanel userListPanel = new JPanel();
         userListPanel.setLayout(new GridLayout(0, 1));
         JLabel chooseUsersLabel = new JLabel("Please select users you wish to add as organisers of the event");
         userListPanel.add(chooseUsersLabel);
+        userListPanel.add(createUserList());
         userListPanelContainer.add(userListPanel);
+        userListPanelContainer.setVisible(false);
         this.add(userListPanelContainer);
     }
+    
+    private void showUserList(){
+    userListPanelContainer.setVisible(true);
+    }
+    
+    public JList<String> createUserList(){
+        JLabel onlyTwo= new JLabel("Please select only two users");
+        userList=createEventController.getUsersAsStrings();
+        userListPrinted = new  JList<String>(userList);
+        userListPrinted.addListSelectionListener((ListSelectionEvent e)->{
+            List<String> userNames=userListPrinted.getSelectedValuesList();
+            if(userNames.size()==2){
+                onlyTwo.setVisible(false);
+                createEventController.associateOrganizer(userNames.get(0));
+                createEventController.associateOrganizer(userNames.get(1));
+            } else{
+                onlyTwo.setVisible(true);
+            }
+        });
+        userListPrinted.setVisible(true);
+        return userListPrinted;
+    }
+    
 }

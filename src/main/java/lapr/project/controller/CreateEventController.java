@@ -12,6 +12,8 @@ import lapr.project.model.OrganizerRegistration;
 import lapr.project.model.UserRegistration;
 import lapr.project.model.User;
 import java.util.Date;
+import java.util.List;
+import lapr.project.model.Application;
 import lapr.project.model.EventType;
 import lapr.project.utils.Data;
 
@@ -23,6 +25,7 @@ public class CreateEventController {
 
     private final EventCenter eventCenter;
     private Event event;
+    private UserRegistration userRegistration;
 
     public CreateEventController(EventCenter eventCenter) {
         this.eventCenter = eventCenter;
@@ -53,11 +56,11 @@ public class CreateEventController {
         event.setLocal(local);
     }
 
-    public UserRegistration getUserList() {
-        return eventCenter.getUserRegistration();
+    public void getUserListController() {
+        this.userRegistration=eventCenter.getUserRegistration();       
     }
 
-    public boolean associateOrganizer(UserRegistration userRegistration, String username) {
+    public boolean associateOrganizer(String username) {
         OrganizerRegistration registoOrganizadores = event.getOrganizerRegistration();
         for (User u : userRegistration.getUserList()) {
             if (username.equalsIgnoreCase(u.getUsername())) {
@@ -71,13 +74,25 @@ public class CreateEventController {
         }
         return false;
     }
-    public boolean validateEvento(Event e){
-        return eventCenter.getEventRegistration().validatesEvent(e);
+    public String[] getUsersAsStrings() {
+        List<User> users = userRegistration.getUserList();
+        String[] data = new String[users.size()];
+        for (User user : users) {
+            data[data.length] = user.getUsername();
+        }
+        return data;
+    }
+    public boolean validateEvento(){
+        return eventCenter.getEventRegistration().validatesEvent(event);
+    }
+    public int getUserCount(){
+        List<User> userList=userRegistration.getUserList();
+        return userList.size();
     }
     
-    public boolean registerEvent(Event e) {
-        if(e.setCreated()){
-            eventCenter.getEventRegistration().registerEvento(e);
+    public boolean registerEvent() {
+        if(event.setCreated()){
+            eventCenter.getEventRegistration().registerEvento(event);
             return true;
         }
         return false;
