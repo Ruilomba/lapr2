@@ -30,7 +30,7 @@ public class UserLoginUI extends JFrame {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(screenSize.width, screenSize.height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(new FlowLayout());
+        this.setLayout(new GridBagLayout());
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0,1));
         this.add(panel);

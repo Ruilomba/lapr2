@@ -85,8 +85,9 @@ public class CreateEventController {
     public boolean validateEvento(){
         return eventCenter.getEventRegistration().validatesEvent(event);
     }
+
     public int getUserCount(){
-        List<User> userList=userRegistration.getUserList();
+        List<User> userList = userRegistration.getUserList();
         return userList.size();
     }
     
