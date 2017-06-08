@@ -56,11 +56,13 @@ public class CreateEventUI extends JPanel {
                 String msg = comboEvents.getSelectedItem().toString();
                 switch (msg) {
                     case "Exhibition":
+                        showUserList();
                         eventSelection.setText("You have selected an exhibition");
                         createEventController.startNewEvent();
                         createEventController.setEventType(new Exhibition());
                         break;
                     case "Congress":
+                        showUserList();
                         eventSelection.setText("You have selected a congress");
                         createEventController.startNewEvent();
                         createEventController.setEventType(new Congress());
@@ -70,5 +72,16 @@ public class CreateEventUI extends JPanel {
                 System.out.println(invalidCastException.getMessage());
             }
         });
+    }
+    
+    private void showUserList() {
+        JPanel userListPanelContainer = new JPanel();
+        userListPanelContainer.setLayout(new GridBagLayout());
+        JPanel userListPanel = new JPanel();
+        userListPanel.setLayout(new GridLayout(0, 1));
+        JLabel chooseUsersLabel = new JLabel("Please select users you wish to add as organisers of the event");
+        userListPanel.add(chooseUsersLabel);
+        userListPanelContainer.add(userListPanel);
+        this.add(userListPanelContainer);
     }
 }
