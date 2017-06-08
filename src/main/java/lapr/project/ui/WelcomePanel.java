@@ -7,12 +7,6 @@ import javax.swing.*;
 public class WelcomePanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    private final JLabel mainLabel;
-    private final JLabel author1;
-    private final JLabel author2;
-    private final JLabel author3;
-    private final JLabel author4;
-    private final JLabel author5;
     
     public WelcomePanel() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -21,7 +15,7 @@ public class WelcomePanel extends JPanel {
         
         JPanel labelPanel = new JPanel();
         labelPanel.setLayout(new GridBagLayout());
-        mainLabel = new JLabel("Exibition Fair Center Management Software");
+        JLabel mainLabel = new JLabel("Exibition Fair Center Management Software");
         mainLabel.setFont(new Font(mainLabel.getFont().getName(), mainLabel.getFont().getStyle(), 25));
         labelPanel.add(mainLabel);
         this.add(labelPanel, BorderLayout.NORTH);
@@ -30,15 +24,18 @@ public class WelcomePanel extends JPanel {
         authorsContainerPanel.setLayout(new GridBagLayout());
         JPanel authorsPanel = new JPanel();
         authorsPanel.setLayout(new GridLayout(0, 1));
-        author1 = new JLabel("Author name 1 + number");
+        
+        JLabel authors = new JLabel("Authors");
+        authorsPanel.add(authors);
+        JLabel author1 = new JLabel("Francisco Loureiro - 1100904");
         authorsPanel.add(author1);        
-        author2 = new JLabel("Author name 2 + number");
+        JLabel author2 = new JLabel("Ines Martins - 1151037");
         authorsPanel.add(author2);
-        author3 = new JLabel("Author name 3 + number");
+        JLabel author3 = new JLabel("José Teixeira - 1101240");
         authorsPanel.add(author3);
-        author4 = new JLabel("Author name 4 + number");
+        JLabel author4 = new JLabel("Luis Barros - 1091237");
         authorsPanel.add(author4);
-        author5 = new JLabel("Author name 5 + number");
+        JLabel author5 = new JLabel("Rui Lomba - 1151168");
         authorsPanel.add(author5);
         authorsContainerPanel.add(authorsPanel);
         this.add(authorsContainerPanel, BorderLayout.CENTER);

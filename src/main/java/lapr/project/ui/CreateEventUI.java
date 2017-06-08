@@ -42,30 +42,26 @@ public class CreateEventUI extends JPanel {
         eventSelection = new JLabel("Please select event Type");
         eventSelection.setVisible(true);
         String[] eventTipes = {"Exhibition", "Congress"};
-        comboEvents = new JComboBox<String>(eventTipes);
+        comboEvents = new JComboBox<>(eventTipes);
         comboEvents.setVisible(true);
         comboEvents.setSelectedIndex(1);
-        comboEvents.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == comboEvents) {
-                    /*
-                        JComboBox<String> box = (JComboBox)e.getSource();
-                        String msg = (String) box.getSelectedItem();
-                        switch (msg) {
-                        case "Exhibition":
-                            eventSelection.setText("You have selected an exhibition");
-                            createEventController.startNewEvent();
-                            createEventController.setEventType(new Exhibition());
-                            break;
-                        case "Congress":
-                            eventSelection.setText("You have selected a congress");
-                            createEventController.startNewEvent();
-                            createEventController.setEventType(new Congress());
-                            break;
-                        }
-                     */
+        comboEvents.addActionListener((ActionEvent e) -> {
+            try {
+                String msg = comboEvents.getSelectedItem().toString();
+                switch (msg) {
+                    case "Exhibition":
+                        eventSelection.setText("You have selected an exhibition");
+                        createEventController.startNewEvent();
+                        createEventController.setEventType(new Exhibition());
+                        break;
+                    case "Congress":
+                        eventSelection.setText("You have selected a congress");
+                        createEventController.startNewEvent();
+                        createEventController.setEventType(new Congress());
+                        break;
                 }
+            } catch (Exception invalidCastException) {
+                System.out.println(invalidCastException.getMessage());
             }
         });
     }

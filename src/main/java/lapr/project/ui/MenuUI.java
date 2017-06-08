@@ -128,6 +128,8 @@ public class MenuUI extends JFrame {
     private void showWelcomePanel() {
         WelcomePanel welcomePanel = new WelcomePanel();
         setContentPane(welcomePanel);
+        this.getContentPane().revalidate();
+        this.getContentPane().repaint();
     }
     
     private void showCreateEventPanel() {
