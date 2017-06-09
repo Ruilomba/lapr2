@@ -5,6 +5,7 @@
  */
 package lapr.project.controller;
 
+import java.util.ArrayList;
 import lapr.project.model.EventCenter;
 import lapr.project.model.Event;
 import lapr.project.model.Organizer;
@@ -29,6 +30,7 @@ public class CreateEventController {
 
     public CreateEventController(EventCenter eventCenter) {
         this.eventCenter = eventCenter;
+        userRegistration=eventCenter.getUserRegistration();
     }
 
     private Event newEventAux() {
@@ -56,9 +58,6 @@ public class CreateEventController {
         event.setLocal(local);
     }
 
-    public void getUserListController() {
-        this.userRegistration=eventCenter.getUserRegistration();       
-    }
 
     public boolean associateOrganizer(String username) {
         OrganizerRegistration registoOrganizadores = event.getOrganizerRegistration();

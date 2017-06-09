@@ -96,7 +96,11 @@ public class CreateEventUI extends JPanel {
     
     public JList<String> createUserList(){
         JLabel onlyTwo= new JLabel("Please select only two users");
+        try{
         userList=createEventController.getUsersAsStrings();
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this, "No users","Error",JOptionPane.ERROR_MESSAGE);
+        }
         userListPrinted = new  JList<String>(userList);
         userListPrinted.addListSelectionListener((ListSelectionEvent e)->{
             List<String> userNames=userListPrinted.getSelectedValuesList();
