@@ -148,15 +148,15 @@ public class EncryptionService {
         for (char c : lineChars) {
             switch (count) {
                 case 0:
-                    vector1[vector1.length] = c;
+                    vector1[count] = c;
                     count++;
                     break;
                 case 1:
-                    vector2[vector2.length] = c;
+                    vector2[count] = c;
                     count++;
                     break;
                 case 2:
-                    vector3[vector3.length] = c;
+                    vector3[count] = c;
                     count = 0;
                     break;
             }
