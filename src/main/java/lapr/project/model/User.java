@@ -37,20 +37,20 @@ public class User implements Serializable {
         return password;
     }
 
-    public void setName(String nome) {
-        this.name = name;
+    public void setName(String n) {
+        this.name = n;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String e) {
+        this.email = e;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String u) {
+        this.username = u;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String p) {
+        this.password = p;
     }
     
     public boolean validates() {

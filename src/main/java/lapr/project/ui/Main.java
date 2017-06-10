@@ -38,14 +38,11 @@ class Main {
         center = new EventCenter();
         
         // PARA ENTRAR NO MEU
-        MenuController menuController = new MenuController(center);
-        MenuUI menuUI = new MenuUI(center, menuController);
+        // MenuController menuController = new MenuController(center);
+        // MenuUI menuUI = new MenuUI(center, menuController);
         
-        /*
         // PARA ENTRAR NA AUTENTICAÇÃO
         UserRegistrationController registrationController = new UserRegistrationController(center);
         UserRegistrationUI registrationUI = new UserRegistrationUI(center, registrationController);
-        window.setContentPane(registrationUI);
-        */
     }
 }

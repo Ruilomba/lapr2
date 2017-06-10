@@ -11,13 +11,14 @@ public class AuthenticationService {
 
     private final static String USER_DATA_FILE_PATH = "userData.txt";
     private final static String userDataFieldDividerChar = "\t";
-            
+
     private static User authenticatedUser;
     private static EncryptionService encryption;
-    
+
     public AuthenticationService() {
         encryption = new EncryptionService();
     }
+
     /**
      * returns authenticated user data
      *
@@ -35,7 +36,7 @@ public class AuthenticationService {
     public void setAuthenticatedUser(User user) {
         authenticatedUser = user;
     }
-    
+
     /**
      * registers new user
      *
@@ -51,8 +52,7 @@ public class AuthenticationService {
         userdata = buildUserDataString(user, userShift);
         return addUserInfoToUserDataFile(userdata);
     }
-    
-    
+
     /**
      * authenticates user
      *
@@ -66,34 +66,46 @@ public class AuthenticationService {
         if (savedUserData != null) {
             for (String userData : savedUserData) {
                 String[] fields = userData.split(userDataFieldDividerChar);
-                String storedUsernameField = fields[0];
-                String storedNameField = fields[1];
-                String storedEmailField = fields[2];
-                String storedPasswordField = fields[3];
-                String storedShiftValue = fields[4];
-                String storedUsername = storedUsernameField.split("=")[1];
-                String storedName = storedNameField.split("=")[1];
-                String storedEmail = storedEmailField.split("=")[1];
-                String storedPassword = storedPasswordField.split("=")[1];
-                String storedShift = storedShiftValue.split("=")[1];
-                int intShift;
-                try {
-                    intShift = Integer.parseInt(storedShift);
-                } catch (NumberFormatException e) {
-                    System.out.println("Unable to parse user shift");
-                    return false;
-                }
-                if (intShift > 0) {
-                    String decryptedPassword = encryption.decryptWithCeaserCipher(storedPassword, intShift);
-                    if (storedUsername.equals(usernameOrEmail) || storedEmail.equals(usernameOrEmail)) {
-                        if (decryptedPassword.equals(password)) {
-                            User registeredUser = new User();
-                            registeredUser.setName(storedName);
-                            registeredUser.setUsername(storedUsername);
-                            registeredUser.setEmail(storedEmail);
-                            registeredUser.setPassword(decryptedPassword);
-                            setAuthenticatedUser(registeredUser);
-                            return true;
+
+                if (fields.length == 5) {
+                    String storedUsernameField = fields[0];
+                    String storedNameField = fields[1];
+                    String storedEmailField = fields[2];
+                    String storedPasswordField = fields[3];
+                    String storedShiftValue = fields[4];
+                    String storedUsername, storedName, storedEmail, storedPassword, storedShift;
+                    if (storedUsernameField.contains("=") && 
+                            storedNameField.contains("=") &&
+                            storedEmailField.contains("=") &&
+                            storedPasswordField.contains("=") &&
+                            storedShiftValue.contains("=")) {
+
+                        storedUsername = storedUsernameField.split("=")[1];
+                        storedName = storedNameField.split("=")[1];
+                        storedEmail = storedEmailField.split("=")[1];
+                        storedPassword = storedPasswordField.split("=")[1];
+                        storedShift = storedShiftValue.split("=")[1];
+
+                        int intShift;
+                        try {
+                            intShift = Integer.parseInt(storedShift);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Unable to parse user shift");
+                            return false;
+                        }
+                        if (intShift > 0) {
+                            String decryptedPassword = encryption.decryptWithCeaserCipher(storedPassword, intShift);
+                            if (storedUsername.equals(usernameOrEmail) || storedEmail.equals(usernameOrEmail)) {
+                                if (decryptedPassword.equals(password)) {
+                                    User registeredUser = new User();
+                                    registeredUser.setName(storedName);
+                                    registeredUser.setUsername(storedUsername);
+                                    registeredUser.setEmail(storedEmail);
+                                    registeredUser.setPassword(decryptedPassword);
+                                    setAuthenticatedUser(registeredUser);
+                                    return true;
+                                }
+                            }
                         }
                     }
                 }
@@ -102,7 +114,6 @@ public class AuthenticationService {
         return false;
     }
 
-    
     /**
      * updates current user data in userData file
      *
@@ -161,7 +172,7 @@ public class AuthenticationService {
                         }
                         String newUserDataString = buildUserDataString(newUserData, intShift);
                         savedUserData[i] = newUserDataString;
-                        return encryption.writeEncryptedDataToUserDataFile(savedUserData);
+                        return encryption.writeDataToUserDataFile(savedUserData);
                     }
                 }
             }
@@ -171,25 +182,35 @@ public class AuthenticationService {
 
     /**
      * adds user info to user data file
-     * 
+     *
      * @param userData
      * @return
      */
     private boolean addUserInfoToUserDataFile(String userData) throws IOException {
         String[] savedUserData;
         try {
-            savedUserData = getDecryptedUserData();            
-        }
-        catch (IOException e) {
+            savedUserData = getDecryptedUserData();
+        } catch (IOException e) {
             System.out.println(e.getMessage());
             return false;
         }
         if (savedUserData != null) {
-            savedUserData[savedUserData.length - 1] = userData;
-            try {
-                return encryption.writeEncryptedDataToUserDataFile(savedUserData);                                
+            String[] fullUserData;
+            if (savedUserData.length > 0) {
+                int count = 0;
+                fullUserData = new String[(savedUserData.length + 1)];
+                for (String u : savedUserData) {
+                    fullUserData[count] = u;
+                    count++;
+                }
+                fullUserData[count] = userData;
+            } else {
+                fullUserData = new String[1];
+                fullUserData[0] = userData;
             }
-            catch (IOException e) {
+            try {
+                return encryption.writeDataToUserDataFile(fullUserData);
+            } catch (IOException e) {
                 System.out.println(e.getMessage());
                 return false;
             }
@@ -198,37 +219,43 @@ public class AuthenticationService {
     }
 
     /**
-     * @return  decrypted data divided by user
-     * @throws IOException 
+     * @return decrypted data divided by user
+     * @throws IOException
      */
     private String[] getDecryptedUserData() throws IOException {
-        File userDataFile = new File(USER_DATA_FILE_PATH);
+        File userDataFile;
+        userDataFile = new File(USER_DATA_FILE_PATH);
         if (userDataFile.exists()) {
-            try (BufferedReader file = new BufferedReader(new FileReader(USER_DATA_FILE_PATH))) {
-                String line;
-                StringBuilder inputString = new StringBuilder();
-                while ((line = file.readLine()) != null) {
-                    inputString.append(line);
-                    inputString.append("\n");
-                }
-                String[] encryptedLines = inputString.toString().split("\n");
-                String[] decryptedLines = new String[encryptedLines.length];
-                for (String l : encryptedLines) {
-                    String decryptedLine = encryption.decryptLineWithRailFenceTranspositionCipher(l);
-                    decryptedLines[decryptedLines.length] = decryptedLine;
-                }
-            }
-            catch (IOException e) {
+            BufferedReader br;
+            try {
+                br = new BufferedReader(new FileReader(USER_DATA_FILE_PATH));
+            } catch (IOException e) {
                 System.out.println("Unable to write decrypted data to tmp file: " + e.getMessage());
                 return null;
             }
-        }
-        else if (userDataFile.createNewFile()) {
-            return new String[1];
+
+            String line;
+            StringBuilder inputString = new StringBuilder();
+            while ((line = br.readLine()) != null) {
+                inputString.append(line);
+                inputString.append("\n");
+            }
+
+            String[] encryptedLines = inputString.toString().split("\n");
+            String[] decryptedLines = new String[encryptedLines.length];
+            int count = 0;
+            for (String l : encryptedLines) {
+                String decryptedLine = encryption.decryptLineWithRailFenceTranspositionCipher(l);
+                decryptedLines[count] = decryptedLine;
+                count++;
+            }
+            return decryptedLines;
+        } else if (userDataFile.createNewFile()) {
+            return new String[0];
         }
         return null;
     }
-    
+
     private String buildUserDataString(User user, int shift) {
         return "username=" + user.getUsername()
                 + userDataFieldDividerChar + "name=" + user.getName()
