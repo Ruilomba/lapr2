@@ -12,6 +12,7 @@ import lapr.project.model.EventCenter;
 import lapr.project.model.FAERating;
 import lapr.project.model.Keyword;
 import lapr.project.model.User;
+import lapr.project.utils.AuthenticationService;
 
 /**
  *
@@ -28,6 +29,11 @@ public class ChangeApplicationController {
         this.eventCenter=eventCenter;
     }
     
+    public String getAuthenticatedUserUsername() {
+        AuthenticationService authentication = new AuthenticationService();
+        User authenticatedUser = authentication.getAuthenticatedUser();
+        return authenticatedUser.getUsername();
+    }
     
     public List<Application> getApplicationsValidForSubmission(String username){
         User u= eventCenter.getUserRegistration().getUserWithUsername(username);
@@ -69,5 +75,9 @@ public class ChangeApplicationController {
 
     public void registerChange(Application ap){
         this.application=ap;
+    }
+
+    public boolean updateApplicationData(String companyName, String companyAddress, String companyPhone, String applicationDescription, String applicationKeywords, int area, int numberOfInvites) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
