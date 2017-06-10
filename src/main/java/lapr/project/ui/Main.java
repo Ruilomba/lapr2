@@ -1,6 +1,8 @@
 package lapr.project.ui;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 import lapr.project.controller.MenuController;
 import lapr.project.controller.UserRegistrationController;
@@ -19,6 +21,7 @@ class Main {
      */
     public static void main(String[] args) throws IOException {
         
+      
 //        User u = new User("Rui", "rui.s.lomba@hotmail.com", "Ruilomba", "1234");
 //        eventCenter.getUserRegistration().addUserRegistration(u);
 //        Event e= new Event();

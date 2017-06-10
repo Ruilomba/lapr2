@@ -39,10 +39,6 @@ public class ChangeApplicationController {
         User u= eventCenter.getUserRegistration().getUserWithUsername(username);
         return eventCenter.getEventRegistration().getApplicationsVaidForSubmission(u);
     }
-    public void selectApplication(Application a){
-        this.application=a;
-        this.event=eventCenter.getEventRegistration().getEventOfApplication(a);
-    }
     public String[] getApplicationsAsString(String username){
         List<Application> applicationList=getApplicationsValidForSubmission(username);
         String[] applicationAsString= new String[applicationList.size()];
@@ -51,6 +47,10 @@ public class ChangeApplicationController {
             applicationAsString[applicationAsString.length]=a.toString()+". from event "+e.getEventDescription();
         }
         return applicationAsString;
+    }
+    public void selectApplication(Application a){
+        this.application=a;
+        this.event=eventCenter.getEventRegistration().getEventOfApplication(a);
     }
     
     public Application getApplication(String applicationAsString){

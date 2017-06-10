@@ -85,7 +85,7 @@ public class SubmitApplicationController {
     }
 
     public boolean submitApplication(String companyName, String companyAddress, String companyPhone, String description, String keywords, int area, int numberOfInvites) {
-        ApplicationRegistration registration = eventCenter.getApplicationRegistration();
+        ApplicationRegistration registration = event.getApplicationRegistration();
         List<Keyword> keywordList = new ArrayList<>();
         String[] keywordsAsStrings = keywords.split(", ");
         for (String s : keywordsAsStrings) {

@@ -30,20 +30,22 @@ public class ApplicationRegistration {
     public ApplicationRegistration(ApplicationRegistration otherRegister) {
         this.applicationList = new ArrayList<>(otherRegister.getApplicationListElements());
     }
+    //nao esta a ser utilizado 
     
-    public List<Application> getApplicationsFromFAE(FAE FAE, Event e) {
-        List<Application> output = new ArrayList<>();
-        List<FAE> listaFaes = e.getFaeList().getFaeListElements();
-
-        for (Application a : applicationList) {
-
-            if (listaFaes.contains(FAE)) {
-                output.add(a);
-            }
-        }
-
-        return output;
-    }
+    
+//    public List<Application> getApplicationsFromFAE(FAE FAE, Event e) {
+//        List<Application> output = new ArrayList<>();
+//        List<FAE> listaFaes = e.getFaeList().getFaeListElements();
+//
+//        for (Application a : applicationList) {
+//
+//            if (listaFaes.contains(FAE)) {
+//                output.add(a);
+//            }
+//        }
+//
+//        return output;
+//    }
 
     public List<Application> getApplicationListElements() {
         return new ArrayList<>(this.applicationList);

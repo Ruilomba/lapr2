@@ -115,6 +115,15 @@ public class Event implements Serializable {
         }
         return applicationList;
     }
+    public boolean registerAtribuition(Atribuition a){
+        for(Application ap:applicationRegistration.getApplicationListElements()){
+            if(ap.equals(a.getApplication())){
+                atribuitionList.registerAtribuition(a);
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * @return the startDate
@@ -312,9 +321,8 @@ public class Event implements Serializable {
         return result;
     }
 
-    boolean containsFae(User u) {
-        for (Iterator<FAE> i = this.faeList.getFaeListElements().listIterator(); i.hasNext();) {
-            FAE fae = i.next();
+    public boolean containsFae(User u) {
+        for (FAE fae: faeList.getFaeListElements()){
             
             if (fae.isUser(u)) {
                 return true;

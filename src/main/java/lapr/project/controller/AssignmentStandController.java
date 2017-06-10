@@ -5,7 +5,6 @@
  */
 package lapr.project.controller;
 
-import java.awt.Event;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,6 @@ public class AssignmentStandController implements Serializable{
     public AssignmentStandController (EventCenter eventCenter) {
         this.eventCenter = eventCenter;
         this.eventRegistration = eventCenter.getEventRegistration();
-        this.appRegistration = eventCenter.getApplicationRegistration();
         this.stdRegistration = eventCenter.getStandRegistration();
     }
 
@@ -46,7 +44,7 @@ public class AssignmentStandController implements Serializable{
             this.event = e;
             eventRegistration = eventCenter.getEventRegistration();
             eventRegistration.getEventDecideList(null);
-          
+            this.appRegistration=event.getApplicationRegistration();
         }   
             
         public ArrayList<Stand> getStandList(){
