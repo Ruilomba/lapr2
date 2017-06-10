@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package lapr.project.ui;
 
 import javax.swing.JLabel;
@@ -20,23 +15,35 @@ import lapr.project.utils.AuthenticationService;
  * @author RuiSL
  */
 public class ChangeApplicationUI extends JPanel {
+
     private static final long serialVersionUID = 1L;
- private final EventCenter eventCenter;
- private final ChangeApplicationController changeController;
- private String[] applicationList;
- private User u;
- private Application a;
-// private JPanel changeApplicationDataInput;
+    private final EventCenter eventCenter;
+    private final ChangeApplicationController changeController;
+    private String[] applicationList;
+    private User u;
+    private Application a;
+
+    // Variables declaration - do not modify                     
+    private JList<String> applicationSelectList;
+    private javax.swing.JPanel changeApplicationDataInput;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel labelApplicationSelect;
+    // End of variables declaration                   
+
+    // private JPanel changeApplicationDataInput;
+
     /**
      * Creates new form ChangeApplicationUI
      */
     public ChangeApplicationUI(EventCenter eventCenter, ChangeApplicationController changeController) {
+        this.eventCenter = eventCenter;
+        this.changeController = changeController;
+
         AuthenticationService authentication = new AuthenticationService();
-        u=authentication.getAuthenticatedUser();
-        String userName=u.getUsername();
-        this.eventCenter=eventCenter;
-        this.changeController=changeController;
-        applicationList=changeController.getApplicationsAsString(userName);
+        u = authentication.getAuthenticatedUser();
+        String userName = u.getUsername();
+        applicationList = changeController.getApplicationsAsString(userName);
         initComponents();
     }
 
@@ -60,12 +67,12 @@ public class ChangeApplicationUI extends JPanel {
         javax.swing.GroupLayout changeApplicationDataInputLayout = new javax.swing.GroupLayout(changeApplicationDataInput);
         changeApplicationDataInput.setLayout(changeApplicationDataInputLayout);
         changeApplicationDataInputLayout.setHorizontalGroup(
-            changeApplicationDataInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 175, Short.MAX_VALUE)
+                changeApplicationDataInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 175, Short.MAX_VALUE)
         );
         changeApplicationDataInputLayout.setVerticalGroup(
-            changeApplicationDataInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 128, Short.MAX_VALUE)
+                changeApplicationDataInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 128, Short.MAX_VALUE)
         );
 
         applicationSelectList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -80,47 +87,37 @@ public class ChangeApplicationUI extends JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelApplicationSelect, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(changeApplicationDataInput, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(213, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelApplicationSelect, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(changeApplicationDataInput, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(213, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelApplicationSelect)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(changeApplicationDataInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(labelApplicationSelect)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(changeApplicationDataInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(23, Short.MAX_VALUE))
         );
-    }// </editor-fold>                        
+    }
+// </editor-fold>                        
 
-    private void applicationSelectListValueChanged(javax.swing.event.ListSelectionEvent evt) {                                                   
-       Object a=applicationSelectList.getSelectedValue();
-       String applicationString= (String) a;
-       Application ap=changeController.getApplication(applicationString);
-       changeController.selectApplication(ap);
-       JLabel label= new JLabel("Application chosen");
-       label.setVisible(true);
-       changeApplicationDataInput.setVisible(true);
-       a=ap;
-    }                                                  
-
-
-    // Variables declaration - do not modify                     
-    private JList<String> applicationSelectList;
-    private javax.swing.JPanel changeApplicationDataInput;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel labelApplicationSelect;
-    // End of variables declaration                   
+    private void applicationSelectListValueChanged(javax.swing.event.ListSelectionEvent evt) {
+        Object a = applicationSelectList.getSelectedValue();
+        String applicationString = (String) a;
+        Application ap = changeController.getApplication(applicationString);
+        changeController.selectApplication(ap);
+        JLabel label = new JLabel("Application chosen");
+        label.setVisible(true);
+        changeApplicationDataInput.setVisible(true);
+        a = ap;
+    }
 }
-
-
