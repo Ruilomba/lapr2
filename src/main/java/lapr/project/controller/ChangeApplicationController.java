@@ -68,7 +68,7 @@ public class ChangeApplicationController {
     public Application newApplication(List<FAERating> ratings, String description, 
                 List<Keyword> keywordList, String adress, String companyName, 
                 int intendedBoothArea, int inviatation,String phone){
-        return eventCenter.getApplicationRegistration().newApplication(ratings, description, keywordList, adress, companyName, intendedBoothArea, inviatation, phone);
+        return event.getApplicationRegistration().newApplication(ratings, description, keywordList, adress, companyName, intendedBoothArea, inviatation, phone);
     }
 
 
