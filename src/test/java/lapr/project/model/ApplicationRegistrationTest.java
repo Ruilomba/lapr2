@@ -73,4 +73,22 @@ public class ApplicationRegistrationTest {
         boolean answer=register.validateApplication(a);
         assertEquals(false, answer);
     }
+    @Test
+    public void getApplicationsFromFaeTest(){
+        User u1 = new User();
+        User u2 = new User();
+        User u3 = new User();
+        FAE f1= new FAE();
+        FAE f2= new FAE();
+        FAE f3= new FAE();
+        f1.setUser(u1);
+        f1.setUser(u2);
+        f1.setUser(u3);
+        Application a=new Application();
+        a.setDescription("eventoNulo");
+        Application a1=new Application();
+        a1.setDescription("eventoDasBananas");
+        Application a2=new Application();
+        a2.setDescription("eventoDasCenouras");
+    }
 }

@@ -66,7 +66,7 @@ public class AtribuitionRegistration {
         for (int i = 0; i < this.atribuitionList.size(); i++) {
             List<FAE> temp = this.atribuitionList.get(i).getFaeList();
             for (int j = 0; j < temp.size(); j++) {
-                if (temp.get(j).getUser().equals(fae)) {
+                if (temp.get(j).getUser().equals(fae.getUser())) {
                     atrList.add(this.atribuitionList.get(i));
                 }
             }

@@ -33,6 +33,15 @@ public class EventRegistration {
         }
         return null;
     }
+    public List<Application> getApplicationsOfFae(FAE fae){
+        List<Application> applicationList= new ArrayList<>();
+        for(Event e: eventList){
+            for(Atribuition a : e.getAtribuitionList().getAtribuitionListOfFae(fae)){
+                applicationList.add(a.getApplication());
+            }
+        }
+        return applicationList;
+    }
 
     /**
      * a ser editado // public List<Event> getAvailableToApplicationEventList()

@@ -16,8 +16,8 @@ public class Atribuition {
     private Application application;
     private List<FAE> faeList;
 
-    public Atribuition(Application c, List<FAE> faeList) {
-        this.application = c;
+    public Atribuition(Application a, List<FAE> faeList) {
+        this.application = a;
         this.faeList = new ArrayList<>(faeList);
     }
     public Atribuition() {
