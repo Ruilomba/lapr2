@@ -81,7 +81,7 @@ public class SubmitApplicationController {
     }
     
     public boolean AplicationRegister() {
-        return event.getApplicationRegistration().registerApplication(application);
+        return event.getApplicationRegistration().addApplication(application);
     }
 
     public boolean submitApplication(String companyName, String companyAddress, String companyPhone, String description, String keywords, int area, int numberOfInvites) {
