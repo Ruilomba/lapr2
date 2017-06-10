@@ -76,6 +76,9 @@ public class ChangeApplicationController {
     public void registerChange(Application ap){
         this.application=ap;
     }
+    public void removeApplication(){
+        eventCenter.getEventRegistration().getEventOfApplication(application).getApplicationRegistration().getApplicationListElements().remove(application);
+    }
 
     public boolean updateApplicationData(String companyName, String companyAddress, String companyPhone, String applicationDescription, String applicationKeywords, int area, int numberOfInvites) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
