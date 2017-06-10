@@ -63,7 +63,6 @@ public class CreateEventUI extends JPanel {
                         createEventController.startNewEvent();
                         createEventController.setEventType(new Congress());
                         showUserList();
-
                         break;
                 }
             } catch (Exception invalidCastException) {

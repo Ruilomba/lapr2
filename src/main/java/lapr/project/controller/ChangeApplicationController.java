@@ -21,6 +21,7 @@ public class ChangeApplicationController {
     private final EventCenter eventCenter;
     private Application application;
     private Event event;
+    
 
     
     public ChangeApplicationController(EventCenter eventCenter){
@@ -35,6 +36,27 @@ public class ChangeApplicationController {
     public void selectApplication(Application a){
         this.application=a;
         this.event=eventCenter.getEventRegistration().getEventOfApplication(a);
+    }
+    public String[] getApplicationsAsString(String username){
+        List<Application> applicationList=getApplicationsValidForSubmission(username);
+        String[] applicationAsString= new String[applicationList.size()];
+        for(Application a : applicationList){
+            Event e=eventCenter.getEventRegistration().getEventOfApplication(a);
+            applicationAsString[applicationAsString.length]=a.toString()+". from event "+e.getEventDescription();
+        }
+        return applicationAsString;
+    }
+    
+    public Application getApplication(String applicationAsString){
+        String[]msg= applicationAsString.trim().split(".");
+        String applicationString=msg[0];
+        List<Application> applicationList= eventCenter.getEventRegistration().getGlobalApplicationList();
+        for(Application a : applicationList){
+            if(a.toString().equalsIgnoreCase(applicationString)){
+                return a;
+            }
+        }
+        return null;
     }
     
     public Application newApplication(List<FAERating> ratings, String description, 
