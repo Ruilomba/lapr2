@@ -49,14 +49,6 @@ public class ApplicationRegistration {
         return new ArrayList<>(this.applicationList);
     }
 
-    
-    public boolean registerApplication(Application a) {
-        if (!applicationList.contains(a)) {
-            return this.applicationList.add(a);
-        }
-        return false;
-    }
-
     public boolean validateApplication(Application a) {
         if (applicationList.contains(a)) {
             return false;

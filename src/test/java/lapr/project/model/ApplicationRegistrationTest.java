@@ -64,4 +64,13 @@ public class ApplicationRegistrationTest {
         boolean answer=register.hasApplication(a);
         assertEquals(true, answer);
     }
+    @Test
+    public void validatesApplicationTest(){
+        Application a=new Application();
+        a.setDescription("eventoNulo");
+        ApplicationRegistration register= new ApplicationRegistration();
+        register.addApplication(a);
+        boolean answer=register.validateApplication(a);
+        assertEquals(false, answer);
+    }
 }
