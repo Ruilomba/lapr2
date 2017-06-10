@@ -41,17 +41,17 @@ public class Application implements Importable<Application>, Exportable, Seriali
      * @param keywordList Keyword List
      */
 
-    public Application(List<FAERating> ratings, String description, List<Keyword> keywordList,
-            String companyName, String phone, int area, int invitation) {
+    public Application(List<FAERating> ratings, String description, 
+                List<Keyword> keywordList, String adress, String companyName, 
+                int intendedBoothArea, int inviatation,String phone) {
         this.description = description;
         this.keywordList.addAll(keywordList);
-
-        this.keywordList.addAll(keywordList);
+        this.address=adress;
         this.ratings = ratings;
         this.companyName = companyName;
         this.phone = phone;
-        this.intendedBoothArea = area;
-        this.invitation = invitation;
+        this.intendedBoothArea = intendedBoothArea;
+        this.invitation = inviatation;
     }
 
     /**
