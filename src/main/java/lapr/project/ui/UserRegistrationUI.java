@@ -138,7 +138,6 @@ public class UserRegistrationUI extends JFrame {
             errorMessageLabel.setText("Confirm password is invalid");
             return false;
         }
-        // TODO: not working
         else if (!password.matches(".*\\d+.*")) {
             errorMessageLabel.setText("The user password must include a number");
             return false;

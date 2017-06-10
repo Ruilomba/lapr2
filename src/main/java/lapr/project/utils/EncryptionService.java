@@ -13,7 +13,7 @@ public class EncryptionService {
     private final static String USER_DATA_FILE_PATH = "userData.txt";
 
     public EncryptionService() {
-        
+
     }
 
     /**
@@ -61,116 +61,141 @@ public class EncryptionService {
     /**
      * writes user data encrypted with rail fence cipher
      *
-     * @param encryptedData
+     * @param decryptedData
      * @return
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public boolean writeEncryptedDataToUserDataFile(String[] encryptedData) throws FileNotFoundException, IOException {
+    public boolean writeDataToUserDataFile(String[] decryptedData) throws FileNotFoundException, IOException {
         File userDataFile = new File(USER_DATA_FILE_PATH);
         if (userDataFile.exists() || userDataFile.createNewFile()) {
-            try (FileWriter fw = new FileWriter(userDataFile, true)) {
-                for (String encryptedLine : encryptedData) {
-                    fw.write(encryptedLine);
-                }
-                //fw.close();
-                return true;
+            FileWriter fw;
+            try {
+                fw = new FileWriter(userDataFile, true);
             } catch (Exception e) {
-                System.out.println("Unable to write user info to " + USER_DATA_FILE_PATH + " file");
+                System.out.println("Unable to write user info to " + USER_DATA_FILE_PATH + " file: " + e.getMessage());
                 return false;
             }
+            for (String line : decryptedData) {
+                String encryptedLine = encryptLineWithRailFenceTranspositionCipher(line);
+                fw.write(encryptedLine);
+                fw.write("\n");
+            }
+            fw.close();
+            return true;
         }
         return false;
-    }
-
-    private void removeTmpFile(File file) {
-        if (file.exists()) {
-            file.delete();
-        }
     }
 
     /**
      * encrypts user data with rail fence transposition cipher
      *
-     * @param line
+     * @param originalLine
      * @return
      */
-    public String encryptLineWithRailFenceTranspositionCipher(String line) {
-        char[] lineChars = line.toCharArray();
-        char[] vector1 = new char[lineChars.length];
-        char[] vector2 = new char[lineChars.length];
-        char[] vector3 = new char[lineChars.length];
+    public String encryptLineWithRailFenceTranspositionCipher(String originalLine) {
+        
+        String cleanLine = originalLine.split("\n")[0];
+        char[] lineChars = cleanLine.toCharArray();
+
+        List<String> vector1 = new ArrayList<>();
+        List<String> vector2 = new ArrayList<>();
+        List<String> vector3 = new ArrayList<>();
+
         int count = 0;
         for (char c : lineChars) {
             switch (count) {
                 case 0:
-                    vector1[vector1.length] = c;
+                    vector1.add(String.valueOf(c));
                     count++;
                     break;
                 case 1:
-                    vector2[vector2.length] = c;
+                    vector2.add(String.valueOf(c));
                     count++;
                     break;
                 case 2:
-                    vector3[vector3.length] = c;
+                    vector3.add(String.valueOf(c));
                     count = 0;
-                    break;
-                default:
                     break;
             }
         }
-        char[] encryptedLineChars = new char[lineChars.length];
-        for (char c : vector1) {
-            encryptedLineChars[encryptedLineChars.length] = c;
+
+        String[] encryptedLineChars = new String[lineChars.length];
+        int count2 = 0;
+        for (String c : vector1) {
+            encryptedLineChars[count2] = c;
+            count2++;
         }
-        for (char c : vector2) {
-            encryptedLineChars[encryptedLineChars.length] = c;
+        for (String c : vector2) {
+            encryptedLineChars[count2] = c;
+            count2++;
         }
-        for (char c : vector3) {
-            encryptedLineChars[encryptedLineChars.length] = c;
+        for (String c : vector3) {
+            encryptedLineChars[count2] = c;
+            count2++;
         }
-        return Arrays.toString(encryptedLineChars);
+        String encryptedLineString = "";
+        for (String encryptedChar : encryptedLineChars) {
+            encryptedLineString = encryptedLineString.concat(encryptedChar);
+        }
+        return encryptedLineString;
     }
-
+    
     /**
-     * decrypts line with rail fence transposition cipher
-     *
-     * @param encryptedLine
-     * @return
+     * 
+     * @param originalLine
+     * @return 
      */
-    public String decryptLineWithRailFenceTranspositionCipher(String encryptedLine) {
-        char[] lineChars = encryptedLine.toCharArray();
-        char[] vector1 = new char[lineChars.length];
-        char[] vector2 = new char[lineChars.length];
-        char[] vector3 = new char[lineChars.length];
+    public String decryptLineWithRailFenceTranspositionCipher(String originalLine) {
+        
+        String cleanLine = originalLine.split("\n")[0];
+        int lineLength = cleanLine.length();
+        
+        double doubleFirstThirdMaxIndex = (double)lineLength/3;
+        double roundedUpFirstThirdMaxIndex = Math.floor(doubleFirstThirdMaxIndex);
+        int firstThirdMaxIndex = (int)roundedUpFirstThirdMaxIndex;
+        int extraCharsCount = lineLength - (firstThirdMaxIndex * 3);
+        int secondThirdMaxIndex = firstThirdMaxIndex * 2;
 
+        if (extraCharsCount > 0) {
+            firstThirdMaxIndex += 1;
+            secondThirdMaxIndex += 1;
+        }
+        if (extraCharsCount > 1) {
+            secondThirdMaxIndex += 1;
+        }
+        
+        String substring1 = cleanLine.substring(0, firstThirdMaxIndex);
+        String substring2 = cleanLine.substring(firstThirdMaxIndex, secondThirdMaxIndex);
+        String substring3 = cleanLine.substring(secondThirdMaxIndex, lineLength);
+        
+        char[] substring1Chars = substring1.toCharArray();
+        char[] substring2Chars = substring2.toCharArray();
+        char[] substring3Chars = substring3.toCharArray();
+        
+        String decryptedLineString = "";
         int count = 0;
-        for (char c : lineChars) {
+        int currentIndex = 0;
+        for (int i = 0; i < lineLength; i++) {
             switch (count) {
                 case 0:
-                    vector1[count] = c;
+                    String newChar1 = String.valueOf(substring1Chars[currentIndex]);
+                    decryptedLineString = decryptedLineString.concat(newChar1);
                     count++;
                     break;
                 case 1:
-                    vector2[count] = c;
+                    String newChar2 = String.valueOf(substring2Chars[currentIndex]);
+                    decryptedLineString = decryptedLineString.concat(newChar2);
                     count++;
                     break;
                 case 2:
-                    vector3[count] = c;
+                    String newChar3 = String.valueOf(substring3Chars[currentIndex]);
+                    decryptedLineString = decryptedLineString.concat(newChar3);
                     count = 0;
+                    currentIndex++;
                     break;
             }
         }
-        char[] encryptedLineChars = new char[lineChars.length];
-        for (char c : vector1) {
-            encryptedLineChars[encryptedLineChars.length] = c;
-        }
-        for (char c : vector2) {
-            encryptedLineChars[encryptedLineChars.length] = c;
-        }
-        for (char c : vector3) {
-            encryptedLineChars[encryptedLineChars.length] = c;
-        }
-        return Arrays.toString(encryptedLineChars);
+        return decryptedLineString;
     }
 }

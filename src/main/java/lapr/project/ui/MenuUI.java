@@ -48,9 +48,8 @@ public class MenuUI extends JFrame {
     private void createMenuBar() {
         JMenuBar menubar = new JMenuBar();
         String userName;
-        // TODO: ADD AUTHENTICATED USER
-        //userName = menuController.getAuthenticatedUserName();
-        userNameItem = new JMenuItem("authenticated user");
+        userName = menuController.getAuthenticatedUserName();
+        userNameItem = new JMenuItem(userName);
         menubar.add(userNameItem);
         
         eventsMenu = new JMenu("Events");
@@ -116,6 +115,9 @@ public class MenuUI extends JFrame {
         statisticsMenuItem.addActionListener((ActionEvent e) -> {
             showStatistics();
         });
+        changeRemoveApplicationMenuItem.addActionListener((ActionEvent e) -> {
+            showChangeApplicationPanel();
+        });
         userUpdateMenuItem.addActionListener((ActionEvent e) -> {
             showUserUpdatePanel();
         });
@@ -151,6 +153,14 @@ public class MenuUI extends JFrame {
         ListGlobalApplicationsController applicationsController = new ListGlobalApplicationsController(eventCenter);
         ListGlobalApplicationsUI applicationsUI = new ListGlobalApplicationsUI(eventCenter, applicationsController);
         this.setContentPane(applicationsUI);
+        this.getContentPane().revalidate();
+        this.getContentPane().repaint();
+    }
+    
+    private void showChangeApplicationPanel() {
+        ChangeApplicationController changeAppController = new ChangeApplicationController(eventCenter);
+        ChangeApplicationUI changeApplicationUI = new ChangeApplicationUI(eventCenter, changeAppController);
+        this.setContentPane(changeApplicationUI);
         this.getContentPane().revalidate();
         this.getContentPane().repaint();
     }
