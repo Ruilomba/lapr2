@@ -10,7 +10,7 @@ package lapr.project.model;
  * @author RuiSL
  */
 public class Decision {
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 1L;
     private boolean acceptance;
     private String justificacao;
 
