@@ -26,6 +26,7 @@ public class Application implements Importable<Application>, Exportable, Seriali
     private static final String KEYWORDS_ELEMENT_NAME = "keywords";
     private List<Keyword> keywordList = new ArrayList<Keyword>();
     private List<FAERating> ratings;
+    private Decision decision;
     private String description = "";
     private String companyName;
     private String address;
